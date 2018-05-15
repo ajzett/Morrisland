@@ -3,6 +3,10 @@
 from abc import ABC, abstractmethod
 from enum import IntEnum, auto
 
+# Allow Gilbo to see Dependencies
+import sys
+sys.path.append('./deps/')
+
 # 3rd Party Libraries
 import numpy as np
 from dispatcher import Signal
