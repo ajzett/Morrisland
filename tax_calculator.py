@@ -53,9 +53,6 @@ black_belt = G.weapon('Black Belt', 'A weapon worn around the waist. Grants user
 # black_suit_prebuff = G.weapon()
 # black_suit_buffed = G.weapon()
 
-# Armor #
-pass
-
 # Entity-related #
 
 # Collections
