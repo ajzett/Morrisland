@@ -129,7 +129,11 @@ G.head_necromancer.add_dialogue(get4, "Nathik: It doesn't surprise me that you d
 G.head_wizard.add_dialogue(get1, "Tenaxx: Ah yes, our champion! Young again and ready to save us... again.")
 G.head_wizard.add_dialogue(get2, "Tenaxx: Nonsence, The memory loss is a slight oddity, but you are still my long time friend.")
 G.head_wizard.add_dialogue(get3, "Tenaxx: It's great to see you again, Barnabas. Now down to business.")
-
+G.head_witch.add_dialogue(get1, "Morena: Don't Ma'am me you little worm. You still owe me for that last card game.")
+G.head_witch.add_dialogue(get2, "Morena: Oh yes. The memory loss. Ironicly, I forgot about that. We were very good friends before you died.")
+G.head_witch.add_dialogue(get3, "Morena: I trained you quite a bit back in our day. You were a very powerful witch.")
+G.head_witch.add_dialogue(get4, "Morena: One of my best aprintises. It is very good that you're now back.")
+G.head_witch.add_dialogue(get5, "Morena: Well of course. Tell me, what's the last thing you remember?")
 
 #
 # End of NPCs
@@ -402,6 +406,18 @@ elif one_of_five is 3:
     G.write("Tenaxx calls everyone over.")
     Tenaxx_s = Tenaxx_s + 1
 elif one_of_five is 4:
+    G.write("You walk over to the old lady. You can just run if she starts screaming again.")
+    G.write("Hello Ma'am")
+    G.head_witch.say(get1)
+    G.write("Steve: I'm sorry, but I don't know who you think I am.")
+    G.write("The woman looks at you through squinted eyes.")
+    G.head_witch.say(get2)
+    G.head_witch.say(get3)
+    G.head_witch.say(get4)
+    G.write("A witch? Those are real?")
+    G.write("At this the Morena laughs.")
+    G.head_witch.say(get5)
+    G.write("Before you can say anything the oldest men of the five calls everyone over.")
     Morena_s = Morena_s + 1
 elif one_of_five is 5:
     Dredall_s = Dredall_s + 1
