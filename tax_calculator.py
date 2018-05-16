@@ -25,6 +25,8 @@ msg_noodles = G.heal_item('MSG Noodles', "Alton Brown's noodles, now with 150% m
 lo_mein = G.heal_item('Lo Mein', "Alton Brown's signature Lo Mein. You'd slurp the noodles if he weren't watching.", 7, 15)
 sushi_roll = G.heal_item('California Roll', 'California Roll hand-crafted by Alton Brown. You can smell the seacost.', 5, 5)
 
+stim_pack = G.heal_item('Stim Pack', 'A stim pack issued by FBI agents that frequently see combat.', 500, 10)
+
 # Debuffs
 surprise_debuff = G.stat_item("Caught By Surprise", "Someone was caught by surprise and suffered the consequence.", 0, 1, -5, -5, -5, -7)
 defense_down = G.stat_item ('Defense Down', "The bearer's defense has been lowered.", 0, 3, -5, 0, -10)
@@ -66,11 +68,54 @@ black_suit_buffed = G.weapon('Herculean Brawn', "After injection of a mysterious
 # Entity-related #
 
 # Collections
+user_collection = G.player_collection(50, [tso_chicken, lo_mein, msg_noodles], [])
+user_collection.add_item(noodles, 2)
+user_collection.add_item(sushi_roll, 3)
 
+black_suit_collection = G.battler_collection(1000, [black_suit_prebuff, black_suit_buffed], [black_suit_prebuff])
+black_suit_collection.add_item(stim_pack, 6)
 # Stat Lists
+user_stats = G.battler_stats(100, 10, 10, 10)
+black_suit_stats = G.battler_stats(300, 12, 15, 10)
+
+# Battlers
+user = G.player('Ed', None, None, None, user_collection, user_stats)
+black_suit = G.battler('The Man in the Black Suit', None, None, None, black_suit_collection, black_suit_stats)
 
 # NPCs
 narrator = G.NPC('Narrator', None, None, None)
+narrator.add_dialogue('get-user-name', 'What is your name?')
+narrator.add_dialogue('describe-setting', ["You find yourself at \"Alton Brown's Noodle Shack\".", 'You come here once a month to stock up on noodle-related supplies, and --- as he so lovingly puts it --- "oriental wares".', '\n\nAlton has been so good to you for so long, you feel like you should tip him.', 'Will you tip?'])
+narrator.add_dialogue('user-tipped', 'You decided to tip Alton. After all, he deserves it.')
+narrator.add_dialogue('user-no-tip', "You decided not to tip Alton. It would set a precedent, and you'd always have to tip from now on.")
+
+alton_brown = G.NPC('Alton Brown', None, None, None)
+alton_brown.add_dialogue('thanks-for-tipping', f"Thanks, {user.name}. It means a lot that you'd support my small business.")
+
 black_suit_narrator = G.NPC('The Man in the black suit', None, None, None)
 
-# Battlers
+#
+# Main Function #
+#
+
+def main():
+    print('Tax Calculator 2: The Audit\nWritten using Gilbo-API (© 2018 Adam Zett)\n')
+    input('Press enter to begin.')
+    G.clr_console()
+    narrator.say('describe-setting')
+    user_tipped = None
+    while user_tipped is None:
+        user_tipped = input('Yes or No: ')
+        if user_tipped.lower() == 'yes':
+            user_tipped = True
+            narrator.say('user-tipped')
+            alton_brown.say('thanks-for-tipping')
+        elif user_tipped.lower() == 'no':
+            user_tipped = False
+            narrator.say('user-no-tip')
+        else:
+            print('Invalid selection.')
+            user_tipped = None
+
+if __name__ == '__main__':
+    main()
