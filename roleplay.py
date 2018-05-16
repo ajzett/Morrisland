@@ -5,6 +5,20 @@ import Gilbo as G
 
 
 G.loc_man()
+
+#
+# Story Variables #
+#
+class_type = 0
+#Standing with characters
+Droxone_s = 0
+Nathik_s = 0
+Tenaxx_s = 0
+Morena_s = 0
+Dredall_s = 0
+
+
+
 #
 # !PUT ALL ITEMS HERE! #
 #
@@ -87,7 +101,7 @@ G.cat.add_dialogue(meowq, "Meow?")
 G.cat.add_dialogue(meowl, "Meow!")
 G.cat.add_dialogue(meow, "Meow.")
 G.cat.add_dialogue(purr, "purrrrrr")
-G.knife
+G.knifeman.add_dialogue(cops, "Are you a cop?")
 G.phone.add_dialogue(hello, "Hello Steve. It is time to wake up. You have work at 8:00. It is going to rain tod...")
 G.steves_boss.add_dialogue(greating, "Hello Steve. You are falling behind on all your work. Come see me after your shift.")
 G.steves_boss.add_dialogue(fired, "I'm sorry, but we have to let you go. We're downsizing. Please clear out you stuff by tomorrow morning.")
@@ -96,6 +110,25 @@ G.pes_emily.add_dialogue(look_out, "Look Out! A car!")
 G.head_witch.add_dialogue(first, "We got em! We got em!")
 G.head_necromancer.add_dialogue(first, "I told you we would get the right spirit evetually.")
 G.head_summoner.add_dialogue(first, "Shut up necromancer. I only tolerate you while you're useful.")
+G.head_witch.add_dialogue(insult_n, "He doesn't remember you Nathik! Hehehe! He doesn't remember you!")
+G.head_witch.add_dialogue(insult_n2, "He's the reason you're undead and he doesn't even remember you!")
+G.head_necromancer.add_dialogue(insult_w, "Nathik: I may be dead, but at least I don't age anymore... Morena.")
+G.head_summoner.add_dialogue(calm, "Now now, Nathik be nice. Morena stop beating up the necromancer with your cane, please.")
+G.head_wizard.add_dialogue(hello, "Dredall will calm them down soon enough. It's been a long time Barnabas.")
+G.head_wizard.add_dialogue(confustion, "Memory loss isn't a normal side effect of resurection.")
+G.head_wizard.add_dialogue(blame, "Droxone, your devises must be off.")
+G.head_alchemist.add_dialogue(sigh, "Droxone: Not as off as your brain you old sack of glitter.")
+G.head_wizard.add_dialogue(hearinglose, "What did you say? I can't hear so well anymore.")
+G.head_alchemist.add_dialogue(backtrack, "Droxone: I said none of my stuff is the issue, Tenaxx. Check Morena's potion.")
+G.head_alchemist.add_dialogue(get1, "Droxone: Hi Barnabus. I'm Droxone, the new alchemist on the team.")
+G.head_alchemist.add_dialogue(get2, "Droxone: The resurrection chambers, where you're always brought back.")
+G.head_necromancer.add_dialogue(get1, "Nathik: Oh yes. You...")
+G.head_necromancer.add_dialogue(get2, "Nathik: You were always stupid Barnabas. You were always forgetful.")
+G.head_necromancer.add_dialogue(get3, "Nathik: You only ever succeded because of what others did. What we gave up.")
+G.head_necromancer.add_dialogue(get4, "Nathik: It doesn't surprise me that you don't remember anything. Why worry your pretty head over it, ay?")
+G.head_wizard.add_dialogue(get1, "Tenaxx: Ah yes, our champion! Young again and ready to save us... again.")
+G.head_wizard.add_dialogue(get2, "Tenaxx: Nonsence, The memory loss is a slight oddity, but you are still my long time friend.")
+G.head_wizard.add_dialogue(get3, "Tenaxx: It's great to see you again, Barnabas. Now down to business.")
 
 
 #
@@ -214,18 +247,6 @@ durable_potion = G.buff_item("Durable Potion", "", 10, 5, hp=20, armr=6)
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 steve = G.player("Steve", G.loc_man, 1, 3, )
 
 chamber = G.array_map("Chamber")
@@ -250,7 +271,7 @@ G.clr_console
 G.write("The cat jumps down onto the floor and goes into the other room. You hear the TV turn on.")
 G.write("Do you follow the cat?")
 morning = input("1:yes, 2:no")
-while morning =! 1 or 2:
+while morning != 1 or 2:
     morning = input("1:yes, 2:no")
 if morning is 1:
     G.write("You follow the cat into the other room. The news is on the TV.")
@@ -285,6 +306,18 @@ if morning is 1:
     G.write("The cat is sitting on your desk.")
     G.cat.say(purr)
     G.clr_console
+    G.write("You leave the office building with a medium box of stuff.")
+    G.write("You look back up at your old office building.")
+    G.write("The cat is sitting on a ledge, staring at you.")
+    G.pes_emily.say(move)
+    G.write("Sorry")
+    G.write("What is with that cat? We does it keep following you?")
+    G.cat.say(meowl)
+    G.write("While staring at the cat, you hear brakes scretching")
+    G.pes_emily.say(look_out)
+    G.write("You hear a crunch and everything goes black.")
+
+
 
 elif morning is 2:
     G.write("You ignore the cat and get ready to go to work.")
@@ -295,3 +328,80 @@ elif morning is 2:
     G.write("You should get to work early.")
     G.clr_console
     G.write("You walk out onto the street.")
+    G.write("You hear sirens.")
+    G.write("That's not important. You take your usual route to work.")
+    G.write("If you cut through this ally it will be faster.")
+    G.write("You here someone walking behind you.")
+    G.clr_console
+    G.knifeman.say(cops)
+    G.write("Before you can respond to the man he thrusts his hand toward your stomach.")
+    G.write("Did he punch you?")
+    G.write("You look down.")
+    G.write("There's a knife sticking out of your gut.")
+    G.write("The last thing you see is the cat.")
+    G.cat.say(purr)
+    G.clr_console
+G.head_witch.say(first)
+G.head_necromancer.say(first)
+G.head_summoner.say(first)
+G.write("Whaaa?")
+G.write("Who are y...")
+G.write("You voice trails off as you look up at five old 'people'.")
+G.write("A super old and croutched woman started crowing.")
+G.head_witch.say(insult_n)
+G.head_witch.say(insult_n2)
+G.head_necromancer.say(insult_w)
+G.write("The woman, Morena, slapped the talking corpse.")
+G.write("The two started squabbling even more.")
+G.clr_console
+G.head_summoner.say(calm)
+G.write("The man who had just spoken was really tall.")
+G.write("You look down from his face to his body.")
+G.write("He has a horses body.")
+G.head_wizard.say(hello)
+G.write("B-b-b-barn who?")
+G.head_wizard.say(confustion)
+G.head_wizard.say(blame)
+G.head_alchemist.say(sigh)
+G.head_wizard.say(hearinglose)
+G.head_alchemist.say(backtrack)
+G.write("Now the other two start squablling")
+G.write("Who do you want to talk to?")
+one_of_five = input("1:Droxone, 2:Nathik, 3:Tenaxx, 4:Morena, 5:Dredall")
+if one_of_five is 1:
+    G.write("You get up off the table.")
+    G.write("You walk over to Droxone, who is by far the youngest of all the five.")
+    G.write("Hello?")
+    G.head_alchemist.say(get1)
+    G.write("Steve: I'll start with a simple question, where am I?")
+    G.write("The men, who can't be much older than you, looks very confused.")
+    G.head_alchemist.say(get2)
+    G.write("Steve: My name isn't Barnabas, it's Steve.")
+    G.write("Before he can say anything else someone calls everyone to attention.")
+    Droxone_s = Droxone_s + 1
+elif one_of_five is 2:
+    G.write("For some reason, you walk over to the courpse, Nathik.")
+    G.write("Maybe it's because you liked his joke.")
+    G.write("Hello, sir?")
+    G.head_necromancer.say(get1)
+    G.write("Steve: Umm... Where am I and who do you think I am?")
+    G.write("This brings an actual expression of shock to Nathik's face.")
+    G.head_necromancer.say(get2)
+    G.head_necromancer.say(get3)
+    G.head_necromancer.say(get4)
+    G.write("You keep you mouth shut. Nathik seems to be brooding now. You slowly walk away.")
+    Nathik_s = Nathik_s + 1
+elif one_of_five is 3:
+    G.write("The older guy seems like the most aprotchable of the five.")
+    G.write("The think his name is Tenaxx?")
+    G.write("Hello... sir.")
+    G.head_wizard.say(get1)
+    G.write("Steve: I'm sorry sir, but I don't think I am who you think I am.")
+    G.head_wizard.say(get2)
+    G.head_wizard.say(get3)
+    G.write("Tenaxx calls everyone over.")
+    Tenaxx_s = Tenaxx_s + 1
+elif one_of_five is 4:
+    Morena_s = Morena_s + 1
+elif one_of_five is 5:
+    Dredall_s = Dredall_s + 1
