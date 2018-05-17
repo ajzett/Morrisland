@@ -12,6 +12,8 @@ from sys import stdout
 # Story Variables #
 #
 class_type = 0
+honesty = 0
+curiosity = False
 #Standing with characters
 Droxone_s = 0
 Nathik_s = 0
@@ -26,11 +28,11 @@ Dredall_s = 0
 #
 
 # Consumables(ie. arrows, mana, etc...)
-mana = item("Mana", "Used to fuel spells", 10)
+mana = G.item("Mana", "Used to fuel spells", 10)
 
 arrow = G.item("Arrow", "A common arrow, can be found almost anywhere", .1)
 cursed_arrow = G.item("A cursed arrow", "", 10)
-snipers_arrow = G.item("Will always hit and cit", "", 10)
+snipers_arrow = G.item("Will always hit and crit", "", 10)
 black_arrow = G.item("Negates all armor", "", 10)
 life_drain_arrow = G.item("Drains the health of anything hit with it", "", 10)
 rope_arrow = G.item("Launches a rope a long distance", "", 5)
@@ -169,8 +171,26 @@ arms_master_npc.add_dialogue("sad", "Greg: That's to bad. I wanted to ask you ab
 arms_master_npc.add_dialogue("expl1", "Greg: I do believe todays sparing session should turn into a history lession. Maybe I can jog your memory.")
 arms_master_npc.add_dialogue("expl2", "Greg: Where you are is easy enough. You are in the resurrection fortress in ______, which is on the continent of _______, in The Ancient Lands.")
 arms_master_npc.add_dialogue("expl3", "Greg: Most people just call it Alnues.")
-arms_master_npc.add_dialogue("ask", "Greg: Is any of this jogging a memory?")
+arms_master_npc.add_dialogue("ask", "Greg: Is any of this jogging your memory?")
 arms_master_npc.add_dialogue("expl4", "Greg: We have ages that are 300 years long. This is the seventh age. Barnabas was born in the first, as was Tenaxx the Stormmaster.")
+arms_master_npc.add_dialogue("expl5", "Greg: The two of you along with 4 other people who are long sinse dead killed the world dragon.")
+arms_master_npc.add_dialogue("expl6", "Greg: Morena replaced the other witch as high cover leader afterward. The necromancer vanished, as did the summoner.")
+arms_master_npc.add_dialogue("expl7", "Greg: The origonal alchemist died of old age. As have most of the rest. Droxone is in his thirties.")
+arms_master_npc.add_dialogue("expl8", "Greg: Every time the world dragon comes back, the five resurect you to help them kill it.")
+arms_master_npc.add_dialogue("lieyes", "Greg: This perfectly fine. At least we know the memories are there now.")
+arms_master_npc.add_dialogue("lieno", "Greg: We'll keep trying. You'll remember who you were eventually.")
+arms_master_npc.add_dialogue("lieyes2", "Greg: Let us see how much you remember of fighting, ay?")
+arms_master_npc.add_dialogue("lieno2", "Greg: I don't believe we should spar today. I don't think you remember how.")
+arms_master_npc.add_dialogue("gowhere", "Greg: Would you like me to take you anywhere?")
+arms_master_npc.add_dialogue("treasure", "Greg: Somewhere very interesting.")
+arms_master_npc.add_dialogue("coolstuff", "Greg: Welcome to the Treasury. This room holds some of the most amazing things in Alnues and beyond.")
+head_wizard.add_dialogue("studyhello", "Tenaxx: Why hello Barnabas. How was your sparing session?")
+head_wizard.add_dialogue("plan1", "Tenaxx: Same as always, but you don't remember.")
+head_wizard.add_dialogue("plan2", "Tenaxx: We go to the Huninst Chain, where the world dragon always appears.")
+head_wizard.add_dialogue("plan3", "Tenaxx: Droxone will prep a battle area with his things to make it easier.")
+head_wizard.add_dialogue("plan4", "Tenaxx: Nathik provides the cannon fodder, Dredall provides the might, I provide protection from his fire, Morena keeps us all alive.")
+head_wizard.add_dialogue("roles", "Tenaxx: I'm a wizard, weilder of elemental powers. Nathik is a necromancer. Dredall is a beast summoner. Droxone is an alchemist. Morena is a witch.")
+head_wizard.add_dialogue("")
 
 
 
@@ -294,7 +314,7 @@ steve_using = []
 steve_inv = G.player_collection(10, steve_stuff, steve_using)
 arms_m_stuff = [shield_sword, daggar, basic_armor, minor_health]
 arms_m_using = []
-arms_m_inv = G.battler_collection(arms_m_stuff, arms_m_using)
+arms_m_inv = G.battler_collection(50, arms_m_stuff, arms_m_using)
 arms_m_inv.equip(basic_armor)
 arms_m_inv.equip(shield_sword)
 
@@ -368,6 +388,7 @@ if morning is 1:
     G.write("While staring at the cat, you hear brakes scretching")
     pes_emily.say("look_out")
     G.write("You hear a crunch and everything goes black.")
+    curiosity = True
 
 
 else:
@@ -501,6 +522,7 @@ for i in range(len(weapon_choice)):
     print(weapon_choice[i].name)
 
 wc = int(input("What will you choice?"))
+os.system('clr')
 steve_inv.add_item(weapon_choice[wc], 1)
 steve_inv.equip(weapon_choice[wc])
 G.write(weapon_choice[wc].dscrpt)
@@ -521,6 +543,7 @@ elif weapon_choice[wc].name is "Wand":
         head_witch.say("wait")
 else:
     head_summoner.say("wrong_weapon")
+os.system('clr')
 head_summoner.say("train")
 G.write("Steve: Does it have to be a master? Why not a beginner?")
 G.write("Steve: Not that I don't know what I'm doing, which I totally do.")
@@ -539,12 +562,14 @@ if help is 1:
     G.write("Before leaving, Morena walks over and says in a lowered voice,")
     head_witch.say("come")
 G.write("The other four walk away in different dirrections with little more than a word.")
+os.system('clr')
 G.write("You hear the Arms Master cough.")
 arms_master_npc.say("first")
 G.write("Oh, umm... I don't now how.")
 arms_master_npc.say("confus")
 G.write("You have to pass for this guy. You think about your answer.")
 G.write("Steve: Something went amiss in this resurection. I seem to have lost all my memories.")
+os.system('clr')
 G.write("A thoughtful expression comes over Gregs face.")
 arms_master_npc.say("realize")
 arms_master_npc.say("sad")
@@ -552,10 +577,77 @@ G.write("Steve: I don't even know where I am or what I'm supose to do.")
 arms_master_npc.say("expl1")
 arms_master_npc.say("expl2")
 arms_master_npc.say("expl3")
+os.system('clr')
 arms_master_npc.say("ask")
 G.write("Steve: No.")
 arms_master_npc.say("expl4")
+arms_master_npc.say("expl5")
+arms_master_npc.say("expl6")
+arms_master_npc.say("expl7")
+arms_master_npc.say("expl8")
+os.system('clr')
+arms_master_npc.say("ask")
+G.write("You could just lie? You could tell him it rings a bell.")
+G.write("Will you lie?")
+lie = int(input("1: yes, 2:no"))
+if lie is 1:
+    G.write("Steve: All of that sounds very familiar. I still can't remember specifics though.")
+    arms_master_npc.say("lieyes")
+    honesty = honesty - 1
+    arms_master_npc.say("lieyes2")
+    first_battle = G.battle_manager()
+    first_battle.battle(steve, arms_master)
+else:
+    G.write("Steve: I still don't know what you're talking about.")
+    arms_master_npc.say("lieno")
+    arms_master_npc.say("lieno2")
+    honesty = honesty + 1
 
+arms_master_npc.say("gowhere")
+G.write("")
+G.write("1: Your Chambers")
+if help is 1:
+    G.write("2: The Library")
+else:
+    G.write("2: To talk to Morena")
+G.write("3: To talk to Tenaxx")
+G.write("4: To talk to Dredall")
+G.write("5: To talk to Droxone")
+G.write("6: To talk to Nathik")
+if curiosity is True:
+    G.write("7: Somewhere interesting")
+going = int(input("Where would you like to go?"))
 
-first_battle = G.battle_manager()
-first_battle.battle(steve, arms_master)
+if going is 1:
+    G.write("The Arms Master takes you to you chambers. A small but nice stone room. There's a bed in the corner.")
+    G.write("As you lay down of the bed you think maybe you'll wake up from this dream soon.")
+elif going is 2:
+    pass
+elif going is 3:
+    G.write("While taking you to Tenaxx, Greg tells you that he is so old because he's a wizard. This place is so weird you don't even question it.")
+    G.write("The Arms Master leaves you at the door to Tenaxx's study. You knock, and here a muffled invitation to enter.")
+    head_wizard.say("studyhello")
+    G.write("Steve: Sparing was fine. I was wondering what the plan was exsactly for dealing with this world dragon?")
+    head_wizard.say("plan1")
+    head_wizard.say("plan2")
+    head_wizard.say("plan3")
+    head_wizard.say("plan4")
+    G.write("Steve: Okay, how do you do that?")
+    head_wizard.say("roles")
+    G.write("Steve: ")
+elif going is 4:
+    G.write("Centaur! That's what he's called! Greg seems to take it for granted that Centaur are real.")
+
+elif going is 5:
+    G.write("Droxone seemed like the nicest one there. He's also your age. Greg admits that he's a little wierd, but you don't care anymore.")
+
+elif going is 6:
+    G.write("For some reason you want to talk to Nathik. The Arms Master looks vissably nervious.")
+
+elif going is 7:
+    G.write("After a moment of thought, Greg grins and leads you deep into the fortress.")
+    G.write("You go down to many staircases to count. Your legs are burning by the time you reach your destination.")
+    G.write("Steve: What is this place?")
+    arms_master_npc.say("treasure")
+    G.write("He takes out a key and opens a small steel door. The sound of metal on stone makes both of you wince.")
+    arms_master_npc.say("coolstuff")
