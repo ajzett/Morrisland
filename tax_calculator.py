@@ -92,6 +92,7 @@ suit_narrator = G.NPC('The man in a black suit', None, None, None)
 suit_narrator.add_dialogue('initial-encounter', '"Where do you think you\'re going?"')
 suit_narrator.add_dialogue('tax-confront', "\"Thought you'd just be able to get away with evading taxes?\"")
 suit_narrator.add_dialogue('avoid-this', ["\"Well, you might've been able to avoid taxes...\"", "\"but you won't be able to avoid this!\""])
+suit_narrator.add_dialogue('use-buff', '"I was hoping it would\'t come to this..."')
 
 narrator = G.NPC('Narrator', None, None, None)
 narrator.add_dialogue('get-user-name', 'What is your name?')
@@ -102,6 +103,7 @@ narrator.add_dialogue('try-to-leave', ["You take your things and turn to leave. 
 narrator.add_dialogue('enemy-spotted', ['The figure steps forward, and the sun retreats behind it like water, revealing a man in a black suit.', 'You stare at each other as a deep silence falls upon the earth, like something seen in a classic Western movie.', 'You turn around, but Alton is nowhere to be seen.', 'Calling out, he responds from under the counter.'])
 narrator.add_dialogue('back-to-reality', ['Your head snaps back from where Alton lay beneath the counter.', f'{suit_narrator.name} now faces you fists raised, ready to pounce.'])
 narrator.add_dialogue('enemy-attacks', [f'{suit_narrator.name} runs forward towards you and takes a swing.', 'You drop to the ground in an effort to dodge.', 'He tries to kick you, but you roll away.', 'Adrenaline begins to pump through your veins as you desparately attempt being hit. You have nothing to defend yourself with.', '\n\nOn the ground, you notice three weapons that Alton stores under tables.', 'The oppurtunity to grab one arises.', 'Which do you choose?'])
+narrator.add_dialogue('use-item', 'PLACEHOLDER')
 
 #
 # Functions #
@@ -109,6 +111,13 @@ narrator.add_dialogue('enemy-attacks', [f'{suit_narrator.name} runs forward towa
 def let_read():
     input('Press enter to continue')
     G.clr_console()
+
+def bat_check():
+    if black_suit.stats.health <= 50:
+        suit_narrator.say('use-item')
+        narrator.say('use-item')
+        black_suit.use_item(black_suit_buff)
+        black_suit.equip(black_suit_buffed)
 
 def win():
     pass
@@ -301,18 +310,18 @@ def main():
 
         if weapon_choice == '1':
             user.equip(katana)
-            katana_bat_man.battle(user, black_suit)
+            katana_bat_man.battle(user, black_suit, bat_check)
         elif weapon_choice == '2':
             print('Special effects: Stamina will regenerate once per turn to allow for the use of special attacks.')
             let_read()
             user.equip(black_belt)
-            belt_bat_man.battle(user, black_suit)
+            belt_bat_man.battle(user, black_suit, bat_check)
         elif weapon_choice == '3':
             print('Special effects: Stamina will regenerate and two random attacks will be generated twice every turn, and the player can choose from one each time.')
             let_read()
             user.equip(chop_sticks)
             user.add_item(spray_can, 5)
-            chop_bat_man.battle(user, black_suit)
+            chop_bat_man.battle(user, black_suit, bat_check)
         else:
             print('Invalid input')
 
