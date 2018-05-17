@@ -2,7 +2,6 @@ from sys import path
 path.append('./Gilbo/')
 path.append('./Gilbo/deps/')
 import Gilbo as G
-from Gilbo import item
 import os
 from sys import stdout
 
@@ -151,8 +150,13 @@ head_wizard.add_dialogue("expo3", "Tenaxx: Now, Barnabas. You seem to be having 
 head_alchemist.add_dialogue("shock", "Droxone: Wait, you actually don't remember anything?")
 head_summoner.add_dialogue("solution", "Dredall: There is a way to test this. Come Barnabas.")
 head_summoner.add_dialogue("weapon", "Dredall: Pick a weapon to use. We shall see how much you remember.")
-
-
+head_summoner.add_dialogue("warhammer", "Dredall: I see you must remember something to pick such a weapon.")
+head_summoner.add_dialogue("wrong_weapon", "Dredall: I didn't think you enjoied using that weapon.")
+head_witch.add_dialogue("wand", "Morena: I see you finally want to learn a better way to win battles. May I aid you?")
+head_witch.add_dialogue("(:", "Morena: I look forward to it.")
+head_witch.add_dialogue("wait", "Morena: The offer stays open if you have a change of heart.")
+head_summoner.add_dialogue("train", "Dredall: Now that you have chosen a weapon. You may practice here. I will call our arms master to duel with you.")
+head_necromancer.add_dialogue("rust", "Nathik: Nonsence. You aren't made of metal.")
 
 
 #
@@ -268,12 +272,20 @@ durable_potion = G.stat_item("Durable Potion", "", 10, 5, hp=20, armr=6)
 
 weapon_choice = [daggar, sword, rapier, quarterstaff, brass_knuckles, long_bow, short_bow, cross_bow, axe, pike, mace, spear, warhammer, blowgun, club, shield_sword, oak_wand]
 
-steve_stats = G.battler_stats(100, 5, 0, 5, 2)
-steve_inv = {}
+steve_stats = G.battler_stats(100, 5, 0, 5, 1)
+arms_master_stats = G.battler_stats(100, 10, 0, 7, 3)
+steve_stuff = []
+steve_using = []
+steve_inv = G.player_collection(10, steve_stuff, steve_using)
+arms_m_stuff = [shield_sword, daggar, basic_armor, minor_health]
+arms_m_using = []
+arms_m_inv = G.battler_collection(arms_m_stuff, arms_m_using)
+arms_m_inv.equip(basic_armor)
+arms_m_inv.equip(shield_sword)
 
 
 steve = G.player("Steve", G.loc_man, 1, 3, steve_inv, steve_stats)
-
+arms_master = G.battler("Greg", G.loc_man, 2, 3, )
 #chamber = G.array_map("Chamber")
 #chamber.layout = G.np.array([[G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall][G.Tiles.Wall, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt,]])
 
@@ -474,3 +486,34 @@ for i in range(len(weapon_choice)):
     print(weapon_choice[i].name)
 
 wc = int(input("What will you choice?"))
+steve_inv.add_item(weapon_choice[wc], 1)
+steve_inv.equip(weapon_choice[wc])
+G.write(weapon_choice[wc].dscrpt)
+
+if weapon_choice[wc].name is "War Hammer":
+    head_summoner.say("warhammer")
+    Dredall_s = Dredall_s + 1
+elif weapon_choice[wc].name is "Wand":
+    head_witch.say("wand")
+    help = int(input("1: yes, 2: no"))
+    if help is 1:
+        G.write("You don't know how this works. Some help sounds like a great idea.")
+        head_witch.say("(:")
+        Morena_s = Morena_s + 1
+
+    else:
+        G.write("You aren't sure you trust her just yet.")
+        head_witch.say("wait")
+else:
+    head_summoner.say("wrong_weapon")
+head_summoner.say("train")
+G.write("Steve: Does it have to be a master? Why not a beginner?")
+G.write("Steve: Not that I don't know what I'm doing, which I totally do.")
+G.write("Steve: I may be rusty.")
+head_necromancer.say("rust")
+G.write("It occurs to you that these people might not know the same sayings as you.")
+os.system('clr')
+G.write("Dredall leads a grizled looking man in leather armor over to you.")
+
+first_battle = G.battle_manager()
+first_battle.battle(steve, arms_master)
