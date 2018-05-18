@@ -196,6 +196,16 @@ head_summoner.add_dialogue("home", "Dredall: Your home has long sinse fallen int
 head_summoner.add_dialogue("earth", "Dredall: I had feared this. We cannot send you back. You must aid us whether you wish to or not.")
 head_summoner.add_dialogue("useless", "Dredall: It can be anyone. We only need someone to focus our power through. It doesn't matter that you've never weilded a weapon before.")
 head_summoner.add_dialogue("truth", "Dredall: The others just need to believe you're real. As do the people.")
+head_summoner.add_dialogue("defen", "Dredall: Yes, this is the first time we grabbed the wrong soul from the afterlife.")
+head_summoner.add_dialogue("goaway", "Dredall: For the sake of this world you are going to go through with this.")
+head_alchemist.add_dialogue("radio", "Droxone: Just open the door and come in. I can see you, Barnabas.")
+head_alchemist.add_dialogue("blewup", "Droxone: Hey, sorry for my appearance. I just had a mishap.")
+head_alchemist.add_dialogue("memoryloss", "Droxone: Wow, you must have memory loss. Barnabas wouldn't every accept anything less then to prostate at his feet.")
+head_alchemist.add_dialogue("thought", "Droxone: Hmm... It is possible. I don't understand how they track down the right spirit, I just prep the body.")
+head_alchemist.add_dialogue("body", "Droxone: You haven't looked in a mirror have you? You have a different body than you did when you were alive.")
+head_alchemist.add_dialogue("body2", "Droxone: Nathik and I have to make a body before the other three get your spirit.")
+head_alchemist.add_dialogue("body3", "Droxone: Some of your parts are mechanical, others were reanimated. I then tie it all together with a Phylosophers Stone.")
+
 
 
 #
@@ -663,10 +673,32 @@ elif going is 4:
     G.write("Steve: But I've never held a sword in my life. I didn't even get into fights at school. I'm useless.")
     head_summoner.say("useless")
     head_summoner.say("truth")
-
+    G.write("Steve: Have you ever gotten the right person?!")
+    head_summoner.say("defen")
+    head_summoner.say("goaway")
+    G.write("With that you're shoed out the door. You hear it lock behind you.")
 elif going is 5:
     G.write("Droxone seemed like the nicest one there. He's also your age. Greg admits that he's a little wierd, but you don't care anymore.")
-
+    G.write("As soon as you stop in front of the door Greg indicated, you can hear ticking from inside.")
+    G.write("A voice that sounds like it's coming through a really old radio eminates from a point behind the door.")
+    G.write("Radio: Droxone will be with you in a moment. Please do not open the door for your own safety.")
+    G.write("There's more crashing and banging from inside. Was that a small explosion?")
+    head_alchemist.say("radio")
+    G.write("You open the door with a lot of caution. The room beyond is the biggest and most confusing mess you've ever seem.")
+    G.write("The smell of burning chemicals permiates the air. You can see burn marks on the wall behind a metal table covered in gizmozes of all shapes.")
+    G.write("Another table is covered in what looked like a chemistry set of steroids.")
+    G.write("Smoke covers the ceiling. Some of the machines are whirring, some glowing, most are skaing and making noise.")
+    G.write("Droxone is standing over at the third table covered in parts. It's exident what he was building blew up in him face.")
+    head_alchemist.say("blewup")
+    G.write("Steve: I don't mind. It's your lab.")
+    head_alchemist.say("memoryloss")
+    G.write("Steve: I think you have the wrong person. I'm not Barnabas. My name is Steve.")
+    G.write("At that he turns and looks at you.")
+    head_alchemist.say("thought")
+    G.write("Steve: What do you mean prep the body?")
+    head_alchemist.say("body")
+    head_alchemist.say("body2")
+    head_alchemist.say("body3")
 elif going is 6:
     G.write("For some reason you want to talk to Nathik. The Arms Master looks vissably nervious.")
 
@@ -677,3 +709,4 @@ elif going is 7:
     arms_master_npc.say("treasure")
     G.write("He takes out a key and opens a small steel door. The sound of metal on stone makes both of you wince.")
     arms_master_npc.say("coolstuff")
+
