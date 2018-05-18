@@ -42,8 +42,9 @@ bolt = G.item("A plain crossbow bolt", "", 1)
 dart = G.item("", "", 1)
 
 # Legendary Items
-philosophers_stone = G.item("A stone that can give you eternal life", "", 200)
-shanams_ring = G.item("A ring that lets your summon a massive creature to fight for you", "", 200)
+nathiks_soul_box = G.item("Green glowing box", "A box that Nathik can store souls in.", 1000)
+philosophers_stone = G.item("A stone that can give you eternal life", "", 2000)
+shanams_ring = G.item("A ring that lets your summon a massive creature to fight for you", "", 2000f)
 bruldrins_stone = G.item("Makes the owner a God of Death", "", 3000)
 
 
@@ -190,8 +191,11 @@ head_wizard.add_dialogue("plan2", "Tenaxx: We go to the Huninst Chain, where the
 head_wizard.add_dialogue("plan3", "Tenaxx: Droxone will prep a battle area with his things to make it easier.")
 head_wizard.add_dialogue("plan4", "Tenaxx: Nathik provides the cannon fodder, Dredall provides the might, I provide protection from his fire, Morena keeps us all alive.")
 head_wizard.add_dialogue("roles", "Tenaxx: I'm a wizard, weilder of elemental powers. Nathik is a necromancer. Dredall is a beast summoner. Droxone is an alchemist. Morena is a witch.")
-head_wizard.add_dialogue("")
-
+head_summoner.add_dialogue("great", "Dredall: Hello, Barnabas. What brings you here?")
+head_summoner.add_dialogue("home", "Dredall: Your home has long sinse fallen into the sea. You know this.")
+head_summoner.add_dialogue("earth", "Dredall: I had feared this. We cannot send you back. You must aid us whether you wish to or not.")
+head_summoner.add_dialogue("useless", "Dredall: It can be anyone. We only need someone to focus our power through. It doesn't matter that you've never weilded a weapon before.")
+head_summoner.add_dialogue("truth", "Dredall: The others just need to believe you're real. As do the people.")
 
 
 #
@@ -634,9 +638,31 @@ elif going is 3:
     head_wizard.say("plan4")
     G.write("Steve: Okay, how do you do that?")
     head_wizard.say("roles")
-    G.write("Steve: ")
+    G.write("Steve: Uhh... okay.")
+    G.write("You pretend to understand a word he's talking about.")
+    G.write("He doesn't seem to notice and is now rambling on using words you don't understand.")
+    G.write("You think he's talking about his powers, but you can't be sure.")
+    G.write("You look around. The study is full of interesting stuff that probably shouldn't be touched.")
+    if curiosity is True:
+        G.write("While the old wizard keeps rambling, you walk over to a shelf covered in odd things.")
+        G.write("You pick up an odd contraption that looks like a box made of filigree.")
+        G.write("Particles start swirling inside and glowing green. There is a little ingraved N on the metal.")
+        G.write("You pocket the box.")
+        steve.collection.add_item(nathiks_soul_box)
+    G.write("You leave the room. Tenaxx doesn't notice. You can hear him still talking as you close the door.")
 elif going is 4:
-    G.write("Centaur! That's what he's called! Greg seems to take it for granted that Centaur are real.")
+    G.write("Centaur! That's what he's called! Greg seems to take it for granted that Centaurs are real.")
+    G.write("The door to his study is really tall, but you suppose it has to be.")
+    G.write("Greg leaves you at the door.")
+    G.write("Before you can knock the door opens.")
+    head_summoner.say("great")
+    G.write("Steve: I was wondering when I can go home?")
+    head_summoner.say("home")
+    G.write("Steve: I mean earth. My home is earth, and I want to go back to it?")
+    head_summoner.say("earth")
+    G.write("Steve: But I've never held a sword in my life. I didn't even get into fights at school. I'm useless.")
+    head_summoner.say("useless")
+    head_summoner.say("truth")
 
 elif going is 5:
     G.write("Droxone seemed like the nicest one there. He's also your age. Greg admits that he's a little wierd, but you don't care anymore.")
