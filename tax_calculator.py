@@ -111,7 +111,7 @@ narrator.add_dialogue('the-plunge', ['You get a bad feeling as he flicks off his
 # Functions #
 #
 def let_read():
-    input('Press enter to continue')
+    input('(Press enter to continue.)')
     G.clr_console()
 
 class dialogue_index(G.IntEnum):
@@ -130,23 +130,23 @@ def bat_check(manager):
         user.collection.add_item(stamina)
 
     if (manager.percent_health(black_suit) < 90) and (dialogue == 0):
-        write(["You call out to your opponent.", '"C\'mon man, do we really have to do this?"'])
-        write(['"When did you get the impression that I was doing this because I', 'HAD', 'to?"', 'he chirps back.'])
-        write(['"You do get paid to do this, right?', 'This has to be a paid job."'])
-        write([f'{black_suit.name}\'s face suddenly displays an intense tranquility.', '\n\n"This...', 'this is divine penance!', 'Punishment for the worst of criminals!', 'I would never ask for money.'])
+        G.write(["You call out to your opponent.", '"C\'mon man, do we really have to do this?"'])
+        G.write(['"When did you get the impression that I was doing this because I', 'HAD', 'to?"', 'he chirps back.'])
+        G.write(['"You do get paid to do this, right?', 'This has to be a paid job."'])
+        G.write([f'{black_suit.name}\'s face suddenly displays an intense tranquility.', '\n\n"This...', 'this is divine penance!', 'Punishment for the worst of criminals!', 'I would never ask for money.'])
         advance_dialogue()
     elif (manager.percent_health(black_suit) < 70) and (dialogue == 1):
-        write(['Despite your progress in battle, you attempt to plead with the man.', '\n\n"How is this a solution?"'])
-        write(['"What is the alternative?', 'Getting away with tax avoidance?"'])
-        write("You didn't even give me a chance to pay for it!")
-        write('"Yeah, I\'ve heard that one before. \'I was just about to pay my taxes, IRS!\' It\'s a steaming load."')
+        G.write(['Despite your progress in battle, you attempt to plead with the man.', '\n\n"How is this a solution?"'])
+        G.write(['"What is the alternative?', 'Getting away with tax avoidance?"'])
+        G.write("You didn't even give me a chance to pay for it!")
+        G.write('"Yeah, I\'ve heard that one before. \'I was just about to pay my taxes, IRS!\' It\'s a steaming load."')
         advance_dialogue()
     elif (manager.percent_health(black_suit) < 30) and (dialogue == 3):
-        write('"It\'s about the terrorists."')
-        write(["You're taken aback by that statement.", '\n\n"What?"'])
-        write('"We use that money to fend off the terrorists," he continues.')
-        write('"..and?"')
-        write('"Choosing to avoid helping the fight against the terrorists is"', '\b...', 'terrorism itself!"')
+        G.write('"It\'s about the terrorists."')
+        G.write(["You're taken aback by that statement.", '\n\n"What?"'])
+        G.write('"We use that money to fend off the terrorists," he continues.')
+        G.write('"..and?"')
+        G.write('"Choosing to avoid helping the fight against the terrorists is"', '\b...', 'terrorism itself!"')
         advance_dialogue()
 
     if manager.percent_health(black_suit) <= 50:
@@ -161,36 +161,65 @@ def bat_check(manager):
             black_suit.equip(black_suit_buffed)
             black_suit.entity_dict['used_buff'] = True
         elif (black_suit.entity_dict['used_buff'] is True) and (dialogue == 2):
-            write(["Let's say that I DID forget to pay tax.", 'What would forgetting one time matter?'])
-            write(["It isn't just you, you see?", "It's everyone.", 'If everyone forgot to pay their taxes one time all together...', "it's unthinkable."])
-            write(['"The Government can handle about $0.05 less one time from everyone in their lives,', 'can\'t they?"'])
-            write(['"You\'re terminally shortsighted."'])
+            G.write(["Let's say that I DID forget to pay tax.", 'What would forgetting one time matter?'])
+            G.write(["It isn't just you, you see?", "It's everyone.", 'If everyone forgot to pay their taxes one time all together...', "it's unthinkable."])
+            G.write(['"The Government can handle about $0.05 less one time from everyone in their lives,', 'can\'t they?"'])
+            G.write(['"You\'re terminally shortsighted."'])
             advance_dialogue()
 
     for effect in manager.effect_dict['reverse_effect_player']:
         if effect[2] == "General Tso's Chicken":
             if effect[0] == manager.battle_dict['turn_counter'] + itm.duration - 1:
-                write('The ghost of General Tso\'s chicken rises from the deep.\n')
-            write('General Tso\'s chicken helps you by doing 15 damage to the enemy.')
+                G.write('The ghost of General Tso\'s chicken rises from the deep.\n')
+            G.write('General Tso\'s chicken helps you by doing 15 damage to the enemy.')
             manager.hit_animate()
             black_suit.stats.health -= 15
 
     if (manager.percent_health(user) <= 50) and (user_tipped is True):
         if dialogue[dialogue_index.alton] is None:
-            write(['Alton brown leaps out from behind the counter', '"\n\nI will defend this tipping customer!"', 'he says as a chair grazes the top of his head.', '"...from behind the counter!"'])
+            G.write(['Alton brown leaps out from behind the counter', '"\n\nI will defend this tipping customer!"', 'he says as a chair grazes the top of his head.', '"...from behind the counter!"'])
             dialogue[dialogue_index.alton] = 0
 
-        write('Alton brown tosses mugs at the Man in the Black Suit, dealing 15 damage.')
+        G.write('Alton brown tosses mugs at the Man in the Black Suit, dealing 15 damage.')
         let_read()
         manager.hit_animate()
         black_suit.stats.health -= 15
 
+def cli_color(win, fallback):
+    import os
+    if os.name == 'nt':
+        # change windows terminal color
+        os.system(win)
+    else:
+        # change linux terminal color
+        os.system(fallback)
 
-def win():
+def win(manager):
     pass
 
-def lose():
-    pass
+def lose(manager):
+    # Player dies
+    temp_effect_list = ['Mysterious Orange Liquid']
+    for effect in manager.effect_dict['reverse_effect_enemy']:
+        temp_effect_list.append(effect[2])
+
+    G.clr_console()
+    cli_color('color F0', 'setterm -term linux -back <background_colour> -fore <text_color> -clear')
+
+    if 'Mysterious Orange Liquid' in temp_effect_list:
+        G.write(['The giant Governmental beast rears back to deliver an enormous blow.', 'You try to jump out of the way, but your legs give out.', '\n\nYou fall to the ground in pain.', f'\n\n{black_suit.name} looks as if he pities you, even for but a moment.'])
+        let_read()
+
+        G.write(['He takes a step closer.', 'Unable to face your fate, you close my eyes.', '\n\nTime slows down as you become keenly aware of your own heartbeat.', "You notice that you hadn't ever thought about your heart -- the force that had kept your life in motion -- until it was about to stop beating."])
+        let_read()
+
+        G.write(['You begin to hear the wind around his fist as it draws nearer.', 'Your will to live screams out like a cry during a moment of silence.', '\n\nYou think to yourself how few pennies it would have taken to save your life.', 'Was this worth the cost?'])
+        let_read()
+
+    else:
+        pass
+
+    G.write(["You realize that there's no use in questioning your choices now.", "Everything you've done has been set in stone.", "\n\nIn the end, everyone pays the same price.", 'The only difference is how you count the cost.'])
 
 #
 # Battle Managers
@@ -199,10 +228,10 @@ def lose():
 class base_bat_man(G.battle_manager):
     def player_win(self, plyr, enemy):
         # The player wins
-        win()
+        win(self)
     def player_lose(self, plyr, enemy):
         # The player loses
-        lose()
+        lose(self)
 
 class chop_bat_man(base_bat_man):
     def plyr_choose_attack(self, plyr):
@@ -337,3 +366,5 @@ def main():
 
 if __name__ == '__main__':
     main()
+    # bat_man = base_bat_man()
+    # lose(bat_man)
