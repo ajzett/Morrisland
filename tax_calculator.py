@@ -93,6 +93,8 @@ suit_narrator.add_dialogue('initial-encounter', '"Where do you think you\'re goi
 suit_narrator.add_dialogue('tax-confront', "\"Thought you'd just be able to get away with evading taxes?\"")
 suit_narrator.add_dialogue('avoid-this', ["\"Well, you might've been able to avoid taxes...\"", "\"but you won't be able to avoid this!\""])
 suit_narrator.add_dialogue('use-buff', '"I was hoping it would\'t come to this..."')
+suit_narrator.add_dialogue('the-plunge',  ["\n\n\"Command,\" he begins as a sly smile crosses his face,",  "\"this guy isn't cooperating.\"", "\"I'm going to use...", "the system.\"\n\n"])
+suit_narrator.add_dialogue('spare-the-cash', '"You just couldn\'t spare the 9%, could you?"')
 
 narrator = G.NPC('Narrator', None, None, None)
 narrator.add_dialogue('get-user-name', 'What is your name?')
@@ -103,7 +105,8 @@ narrator.add_dialogue('try-to-leave', ["You take your things and turn to leave. 
 narrator.add_dialogue('enemy-spotted', ['The figure steps forward, and the sun retreats behind it like water, revealing a man in a black suit.', 'You stare at each other as a deep silence falls upon the earth, like something seen in a classic Western movie.', 'You turn around, but Alton is nowhere to be seen.', 'Calling out, he responds from under the counter.'])
 narrator.add_dialogue('back-to-reality', ['Your head snaps back from where Alton lay beneath the counter.', f'{suit_narrator.name} now faces you fists raised, ready to pounce.'])
 narrator.add_dialogue('enemy-attacks', [f'{suit_narrator.name} runs forward towards you and takes a swing.', 'You drop to the ground in an effort to dodge.', 'He tries to kick you, but you roll away.', 'Adrenaline begins to pump through your veins as you desparately attempt being hit. You have nothing to defend yourself with.', '\n\nOn the ground, you notice three weapons that Alton stores under tables.', 'The oppurtunity to grab one arises.', 'Which do you choose?'])
-narrator.add_dialogue('use-item', 'PLACEHOLDER')
+narrator.add_dialogue('use-item', [f'A breafcase comes crashing through the roof. {black_suit.name} reaches up to catch it with perfect timing, as if it had happened a million times before.', "Out of the breafcase, he takes a needle containing a strange, orange liquid.", f"{black_suit.name} raises his hand to his ear and speaks into a small microphone."])
+narrator.add_dialogue('the-plunge', ['You get a bad feeling as he flicks off his earpiece.', "You hear the buzzing of wild chatter from the man's earpiece, which now hangs from his shirt.", 'As he drains the liquid you stand transfixed as he swells into a grotesquely muscular creature.', "His suit tears with his newly increased size.", "\n\nThe very moment when you become grounded enough to run, he glares at you.", 'He grins.'])
 
 #
 # Functions #
@@ -112,12 +115,74 @@ def let_read():
     input('Press enter to continue')
     G.clr_console()
 
-def bat_check():
-    if black_suit.stats.health <= 50:
-        suit_narrator.say('use-item')
-        narrator.say('use-item')
-        black_suit.use_item(black_suit_buff)
-        black_suit.equip(black_suit_buffed)
+class dialogue_index(G.IntEnum):
+    black_suit = 0
+    alton = 1
+
+dialogue = [0, None]
+
+def advance_dialogue():
+    dialogue[dialogue_index.black_suit] += 1
+    let_read()
+
+user_tipped = None
+def bat_check(manager):
+    if (manager.percent_health(black_suit) < 90) and (dialogue == 0):
+        write(["You call out to your opponent.", '"C\'mon man, do we really have to do this?"'])
+        write(['"When did you get the impression that I was doing this because I', 'HAD', 'to?"', 'he chirps back.'])
+        write(['"You do get paid to do this, right?', 'This has to be a paid job."'])
+        write([f'{black_suit.name}\'s face suddenly displays an intense tranquility.', '\n\n"This...', 'this is divine penance!', 'Punishment for the worst of criminals!', 'I would never ask for money.'])
+        advance_dialogue()
+    elif (manager.percent_health(black_suit) < 70) and (dialogue == 1):
+        write(['Despite your progress in battle, you attempt to plead with the man.', '\n\n"How is this a solution?"'])
+        write(['"What is the alternative?', 'Getting away with tax avoidance?"'])
+        write("You didn't even give me a chance to pay for it!")
+        write('"Yeah, I\'ve heard that one before. \'I was just about to pay my taxes, IRS!\' It\'s a steaming load."')
+        advance_dialogue()
+    elif (manager.percent_health(black_suit) < 30) and (dialogue == 3):
+        write('"It\'s about the terrorists."')
+        write(["You're taken aback by that statement.", '\n\n"What?"'])
+        write('"We use that money to fend off the terrorists," he continues.')
+        write('"..and?"')
+        write('"Choosing to avoid helping the fight against the terrorists is"', '\b...', 'terrorism itself!"')
+        advance_dialogue()
+
+    if manager.percent_health(black_suit) <= 50:
+        if black_suit.entity_dict['used_buff'] is False:
+            suit_narrator.say('use-item')
+            narrator.say('use-item')
+            suit_narrator.say('the-plunge')
+            narrator.say('the-plunge')
+            suit_narrator.say('spare-the-cash')
+            let_read()
+            black_suit.use_item(black_suit_buff)
+            black_suit.equip(black_suit_buffed)
+            black_suit.entity_dict['used_buff'] = True
+        elif (black_suit.entity_dict['used_buff'] is True) and (dialogue == 2):
+            write(["Let's say that I DID forget to pay tax.", 'What would forgetting one time matter?'])
+            write(["It isn't just you, you see?", "It's everyone.", 'If everyone forgot to pay their taxes one time all together...', "it's unthinkable."])
+            write(['"The Government can handle about $0.05 less one time from everyone in their lives,', 'can\'t they?"'])
+            write(['"You\'re terminally shortsighted."'])
+            advance_dialogue()
+
+    for effect in manager.effect_dict['reverse_effect_player']:
+        if effect[2] == "General Tso's Chicken":
+            if effect[0] == manager.battle_dict['turn_counter'] + itm.duration - 1:
+                write('The ghost of General Tso\'s chicken rises from the deep.\n')
+            write('General Tso\'s chicken helps you by doing 15 damage to the enemy.')
+            manager.hit_animate()
+            black_suit.stats.health -= 15
+
+    if (manager.percent_health(user) <= 50) and (user_tipped is True):
+        if dialogue[dialogue_index.alton] is None:
+            write(['Alton brown leaps out from behind the counter', '"\n\nI will defend this tipping customer!"', 'he says as a chair grazes the top of his head.', '"...from behind the counter!"'])
+            dialogue[dialogue_index.alton] = 0
+
+        write('Alton brown tosses mugs at the Man in the Black Suit, dealing 15 damage.')
+        let_read()
+        manager.hit_animate()
+        black_suit.stats.health -= 15
+
 
 def win():
     pass
@@ -130,10 +195,10 @@ def lose():
 #
 # Black belt
 class belt_bat_man(G.battle_manager):
-    def player_win:
+    def player_win(self):
         win()
 
-    def player_lose:
+    def player_lose(self):
         lose()
 
 class katana_bat_man(belt_bat_man):
@@ -217,7 +282,7 @@ class katana_bat_man(belt_bat_man):
             self.player_lose(plyr, enemy)
 
 class chop_bat_man(katana_bat_man):
-    def plyr_choose_attack:
+    def plyr_choose_attack(self, plyr):
         while True:
             choices = [self.randnum(len(plyr.attacks)), self.randnum(len(plyr.attacks))]
             if choices[0] != choices[1]:
@@ -269,7 +334,6 @@ def main():
     G.clr_console()
     if dialogue is True:
         narrator.say('describe-setting')
-        user_tipped = None
         while user_tipped is None:
             user_choice = input('Yes or No: ')
             if user_choice.lower() == 'yes':
@@ -307,19 +371,19 @@ def main():
         print(f"\n3. Chop Sticks\n-------------------\n'{chop_sticks.dscrpt}'")
         print('\nEnter a number to make your choice.')
         weapon_choice = input('\nChoice: ')
-
+        black_suit.entity_dict['used_buff'] = False
         if weapon_choice == '1':
-            user.equip(katana)
+            user.collection.equip(katana)
             katana_bat_man.battle(user, black_suit, bat_check)
         elif weapon_choice == '2':
             print('Special effects: Stamina will regenerate once per turn to allow for the use of special attacks.')
             let_read()
-            user.equip(black_belt)
+            user.collection.equip(black_belt)
             belt_bat_man.battle(user, black_suit, bat_check)
         elif weapon_choice == '3':
             print('Special effects: Stamina will regenerate and two random attacks will be generated twice every turn, and the player can choose from one each time.')
             let_read()
-            user.equip(chop_sticks)
+            user.collection.equip(chop_sticks)
             user.add_item(spray_can, 5)
             chop_bat_man.battle(user, black_suit, bat_check)
         else:
