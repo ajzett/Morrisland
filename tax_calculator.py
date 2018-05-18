@@ -2,6 +2,7 @@ from sys import path
 path.append('./Gilbo-API/')
 path.append('./Gilbo-API/deps/')
 import Gilbo as G
+from colorama import Fore, Back, Style
 
 #
 # Objects #
@@ -28,7 +29,7 @@ stim_pack = G.heal_item('Stim Pack', 'A stim pack issued by FBI agents that freq
 
 # Debuffs
 surprise_debuff = G.stat_item("Caught By Surprise", "Someone was caught by surprise and suffered the consequence.", 0, 1, -5, -5, -5, -7)
-defense_down = G.stat_item ('Defense Down', "The bearer's defense has been lowered.", 0, 3, -5, 0, -10)
+defense_down = G.stat_item('Defense Down', "The bearer's defense has been lowered.", 0, 3, -5, 0, -10)
 enrage_debuff = G.stat_item('Enraged', 'The bearer has been taunted, leaving them stronger, but also reckless.', 0, 2, 0, 10, -15, 5)
 irritated_eyes = G.stat_item('Irritated Eyes', "The bearer's eyes have been irritated by some chemical, causing them to miss attacks and present openings in their defense.", 0, 2, 0, -6, -10)
 
@@ -57,9 +58,10 @@ throw_table = G.attack('Throw Table', 'Throw a table at your opponent.', 30, 45)
 
 # Weapons #
 # User Weapons
-chop_sticks = G.weapon('Chop Sticks', 'A pair of chopsticks you had used to eat your meal. If you believe in yourself, who knows what might happen?', 1, [sword_dance, quick_draw, cross_slash, parry, charge, flying_kick, low_sweep, high_kick, punch, shin_kick, pepper_spray, throw_chair, bash, throw_table], 5, 5, 5, 5, 1) # generate random attack from ALL attacks defined
-katana = G.weapon('Katana', 'A weapon proven deadly when used in the right hands. Catch your enemies by surprise, or just impress them with your collection.', 100, [sword_dance, quick_draw, cross_slash, parry], 5, 8, 0, 12) # status weapon
-black_belt = G.weapon('Black Belt', 'A weapon worn around the waist. Grants user impeccable hand-to-hand combat ability. Or, supposedly, it could be used to towel-snap your opponent.', 5, [charge, flying_kick, low_sweep, high_kick], 10, 10, 5) # regular damage
+chop_sticks = G.weapon('Chop Sticks', 'A pair of chopsticks you had used to eat your meal. If you believe in yourself, who knows what might happen?', 1, [sword_dance, quick_draw, cross_slash, parry, charge, flying_kick, low_sweep, high_kick, punch, shin_kick, pepper_spray, throw_chair, bash, throw_table], 5, 5, 5, 5, 1)
+katana = G.weapon('Katana', 'A weapon proven deadly when used in the right hands. Catch your enemies by surprise, or just impress them with your collection.', 100, [sword_dance, quick_draw, cross_slash, parry], 5, 8, 0, 12)
+black_belt = G.weapon('Black Belt', 'A weapon worn around the waist. Grants user impeccable hand-to-hand combat ability. Or, supposedly, it could be used to towel-snap your opponent.', 5, [charge, flying_kick, low_sweep, high_kick], 10, 10, 5)
+
 # Boss Weapons
 black_suit_prebuff = G.weapon("Agent's Arsenal", 'An array of items and techniques known and used by the FBI.', 1000, [punch, shin_kick, pepper_spray, throw_chair])
 black_suit_buffed = G.weapon('Herculean Brawn', "After injection of a mysterious liquid, the FBI agent has turned into a terrifying bruiser.", 5000, [bash, punch, shin_kick, throw_table])
@@ -92,8 +94,8 @@ suit_narrator.add_dialogue('initial-encounter', '"Where do you think you\'re goi
 suit_narrator.add_dialogue('tax-confront', "\"Thought you'd just be able to get away with evading taxes?\"")
 suit_narrator.add_dialogue('avoid-this', ["\"Well, you might've been able to avoid taxes...\"", "\"but you won't be able to avoid this!\""])
 suit_narrator.add_dialogue('use-buff', '"I was hoping it would\'t come to this..."')
-suit_narrator.add_dialogue('the-plunge',  ["\n\n\"Command,\" he begins as a sly smile crosses his face,",  "\"this guy isn't cooperatinG.\"", "\"I'm going to use...", "the system.\"\n\n"])
-suit_narrator.add_dialogue('spare-the-cash', '"You just couldn\'t spare the 9%, could you?"')
+suit_narrator.add_dialogue('the-plunge',  ["\n\n\"Command,\" he begins as a sly smile crosses his face,",  "\"this guy isn't cooperating.\"", "\"I'm going to use...", f'{Fore.RED}the system{Style.RESET_ALL}."\n\n'])
+suit_narrator.add_dialogue('spare-the-cash', f'"{Fore.LIGHTRED_EX}You just couldn\'t spare the 9%, could you?{Style.RESET_ALL}"')
 
 narrator = G.NPC('Narrator', None, None, None)
 narrator.add_dialogue('get-user-name', 'What is your name?')
@@ -107,6 +109,7 @@ narrator.add_dialogue('enemy-attacks', [f'{suit_narrator.name} runs forward towa
 narrator.add_dialogue('use-item', [f'A breafcase comes crashing through the roof. {black_suit.name} reaches up to catch it with perfect timing, as if it had happened a million times before.', "Out of the breafcase, he takes a needle containing a strange, orange liquid.", f"{black_suit.name} raises his hand to his ear and speaks into a small microphone."])
 narrator.add_dialogue('the-plunge', ['You get a bad feeling as he flicks off his earpiece.', "You hear the buzzing of wild chatter from the man's earpiece, which now hangs from his shirt.", 'As he drains the liquid you stand transfixed as he swells into a grotesquely muscular creature.', "His suit tears with his newly increased size.", "\n\nThe very moment when you become grounded enough to run, he glares at you.", 'He grins.'])
 
+
 #
 # Functions #
 #
@@ -114,26 +117,29 @@ def let_read():
     input('(Press enter to continue.)')
     G.clr_console()
 
+
 class dialogue_index(G.IntEnum):
     black_suit = 0
     alton = 1
 
+
 dialogue = [0, None]
+
 
 def advance_dialogue():
     dialogue[dialogue_index.black_suit] += 1
     let_read()
 
-user_tipped = None
+
 def bat_check(manager):
     if (katana in user.collection.equipped) or (chop_sticks in user.collection.equipped):
         user.collection.add_item(stamina)
 
     if (manager.percent_health(black_suit) < 90) and (dialogue == 0):
         G.write(["You call out to your opponent.", '"C\'mon man, do we really have to do this?"'])
-        G.write(['"When did you get the impression that I was doing this because I', 'HAD', 'to?"', 'he chirps back.'])
+        G.write(['"When did you get the impression that I was doing this because I', f'{Fore.RED}HAD{Fore.RESET}', 'to?"', 'he chirps back.'])
         G.write(['"You do get paid to do this, right?', 'This has to be a paid job."'])
-        G.write([f'{black_suit.name}\'s face suddenly displays an intense tranquility.', '\n\n"This...', 'this is divine penance!', 'Punishment for the worst of criminals!', 'I would never ask for money.'])
+        G.write([f'{black_suit.name}\'s face suddenly displays an intense tranquility.', '\n\n"This...', f'this is {Fore.BLACK}{Back.WHITE}divine{Style.RESET_ALL} penance!', 'Punishment for the worst of criminals!', 'I would never ask for money.'])
         advance_dialogue()
     elif (manager.percent_health(black_suit) < 70) and (dialogue == 1):
         G.write(['Despite your progress in battle, you attempt to plead with the man.', '\n\n"How is this a solution?"'])
@@ -146,7 +152,7 @@ def bat_check(manager):
         G.write(["You're taken aback by that statement.", '\n\n"What?"'])
         G.write('"We use that money to fend off the terrorists," he continues.')
         G.write('"..and?"')
-        G.write('"Choosing to avoid helping the fight against the terrorists is"', '\b...', 'terrorism itself!"')
+        G.write(['"Choosing to avoid helping the fight against the terrorists is', '\b...', f'{Fore.RED}terrorism itself{Fore.RESET}!"'])
         advance_dialogue()
 
     if manager.percent_health(black_suit) <= 50:
@@ -169,7 +175,7 @@ def bat_check(manager):
 
     for effect in manager.effect_dict['reverse_effect_player']:
         if effect[2] == "General Tso's Chicken":
-            if effect[0] == manager.battle_dict['turn_counter'] + itm.duration - 1:
+            if effect[0] == manager.battle_dict['turn_counter'] + tso_chicken.duration - 1:
                 G.write('The ghost of General Tso\'s chicken rises from the deep.\n')
             G.write('General Tso\'s chicken helps you by doing 15 damage to the enemy.')
             manager.hit_animate()
@@ -177,13 +183,14 @@ def bat_check(manager):
 
     if (manager.percent_health(user) <= 50) and (user_tipped is True):
         if dialogue[dialogue_index.alton] is None:
-            G.write(['Alton brown leaps out from behind the counter', '"\n\nI will defend this tipping customer!"', 'he says as a chair grazes the top of his head.', '"...from behind the counter!"'])
+            G.write(['Alton brown leaps out from behind the counter', '"\n\nI will defend this tipping customer!"', 'he says as a chair grazes the top of his head.', f'"...from {Fore.RED}behind{Fore.RESET} the counter!"'])
             dialogue[dialogue_index.alton] = 0
 
         G.write('Alton brown tosses mugs at the Man in the Black Suit, dealing 15 damage.')
         let_read()
         manager.hit_animate()
         black_suit.stats.health -= 15
+
 
 def cli_color(win, fallback):
     import os
@@ -194,8 +201,10 @@ def cli_color(win, fallback):
         # change linux terminal color
         os.system(fallback)
 
+
 def win(manager):
     pass
+
 
 def lose(manager):
     # Player dies
@@ -204,7 +213,7 @@ def lose(manager):
         temp_effect_list.append(effect[2])
 
     G.clr_console()
-    cli_color('color F0', 'setterm -term linux -back <background_colour> -fore <text_color> -clear')
+    cli_color('color F0', 'setterm --inversescreen on')
 
     if 'Mysterious Orange Liquid' in temp_effect_list:
         G.write(['The giant Governmental beast rears back to deliver an enormous blow.', 'You try to jump out of the way, but your legs give out.', '\n\nYou fall to the ground in pain.', f'\n\n{black_suit.name} looks as if he pities you, even for but a moment.'])
@@ -213,13 +222,17 @@ def lose(manager):
         G.write(['He takes a step closer.', 'Unable to face your fate, you close my eyes.', '\n\nTime slows down as you become keenly aware of your own heartbeat.', "You notice that you hadn't ever thought about your heart -- the force that had kept your life in motion -- until it was about to stop beating."])
         let_read()
 
-        G.write(['You begin to hear the wind around his fist as it draws nearer.', 'Your will to live screams out like a cry during a moment of silence.', '\n\nYou think to yourself how few pennies it would have taken to save your life.', 'Was this worth the cost?'])
+        G.write(['You begin to hear the wind around his fist as it draws nearer.', 'Your will to live screams out like a cry during a moment of silence.', '\n\nYou think to yourself how few pennies it would have taken to save your life.', 'Was this worth it?'])
         let_read()
 
     else:
         pass
 
     G.write(["You realize that there's no use in questioning your choices now.", "Everything you've done has been set in stone.", "\n\nIn the end, everyone pays the same price.", 'The only difference is how you count the cost.'])
+    let_read()
+
+    print(f"{Fore.BLACK}{Back.WHITE}Ending:{Style.RESET_ALL} There [A]in't no such thing as a free lunch\n\n{Fore.BLACK}{Back.WHITE}Player Status:{Style.RESET_ALL} Deceased\n{Fore.BLACK}{Back.WHITE}Boss Status:{Style.RESET_ALL} Alive\n{Fore.BLACK}{Back.WHITE}Alton Brown Status:{Style.RESET_ALL} Alive")
+
 
 #
 # Battle Managers
@@ -229,9 +242,11 @@ class base_bat_man(G.battle_manager):
     def player_win(self, plyr, enemy):
         # The player wins
         win(self)
+
     def player_lose(self, plyr, enemy):
         # The player loses
         lose(self)
+
 
 class chop_bat_man(base_bat_man):
     def plyr_choose_attack(self, plyr):
@@ -265,7 +280,7 @@ class chop_bat_man(base_bat_man):
                 if "info" in user_choice:
                     self.attack_info(plyr.collection.items, plyr.attacks[replace_value(int(user_choice.split(' ')[1]) - 1)])
                 elif user_choice.lower() == 'q':
-                    raise ChooseAgain
+                    raise G.ChooseAgain
                 else:
                     # Convert user_choice to indexable integer
                     user_choice = int(user_choice) - 1
@@ -280,6 +295,8 @@ class chop_bat_man(base_bat_man):
 
             except (ValueError, IndexError, AttributeError):
                     print('Invalid input.')
+
+
 #
 # Main #
 #
@@ -300,6 +317,7 @@ def main():
     del user_choice
 
     G.clr_console()
+    user_tipped = None
     if dialogue is True:
         narrator.say('describe-setting')
         while user_tipped is None:
@@ -364,7 +382,6 @@ def main():
     spec_bat_check = bat_check(bat_man)
     bat_man.battle(user, black_suit, spec_bat_check)
 
+
 if __name__ == '__main__':
     main()
-    # bat_man = base_bat_man()
-    # lose(bat_man)
