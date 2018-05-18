@@ -3,7 +3,6 @@ path.append('./Gilbo-API/')
 path.append('./Gilbo-API/deps/')
 import Gilbo as G
 
-
 #
 # Objects #
 #
@@ -22,7 +21,7 @@ tso_chicken = G.stat_item("General Tso's Chicken", "Nothing incites a fighting s
 # Heals
 noodles = G.heal_item('Noodles', "A cup of Alton Brown's world-famous noodles.", 10, 10)
 msg_noodles = G.heal_item('MSG Noodles', "Alton Brown's noodles, now with 150% more MSG. It seems to good to be true, so you'll probably pay for it later...", 2, 20)
-lo_mein = G.heal_item('Lo Mein', "Alton Brown's signature Lo Mein. You'd slurp the noodles if he weren't watching.", 7, 15)
+lo_mein = G.heal_item('Lo Mein', "Alton Brown's signature Lo Mein. You'd slurp the noodles if he weren't watchinG.", 7, 15)
 sushi_roll = G.heal_item('California Roll', 'California Roll hand-crafted by Alton Brown. You can smell the seacost.', 5, 5)
 
 stim_pack = G.heal_item('Stim Pack', 'A stim pack issued by FBI agents that frequently see combat.', 500, 10)
@@ -43,7 +42,7 @@ sword_dance = G.attack('Sword Dance', 'Weave around the enemy slicing so thinly 
 # For black belt
 charge = G.attack('Charge', 'Charge towards the enemy with great force', 10)
 flying_kick = G.attack('Flying Scissor Kick', 'Leap at the enemy with a Scissor Kick.', 20, 65)
-high_kick = G.attack('High Kick', 'Lean back and kick high with your good leg.', 15, 85)
+high_kick = G.attack('High Kick', 'Lean back and kick high with your good leG.', 15, 85)
 low_sweep = G.ammo_attack('Low Sweep', 'Sweep your leg and temporarily disarm the apponent.', 8, stamina, 1, 100, surprise_debuff)
 
 # For pre-buff blacksuit
@@ -68,7 +67,7 @@ black_suit_buffed = G.weapon('Herculean Brawn', "After injection of a mysterious
 # Entity-related #
 
 # Collections
-user_collection = G.player_collection(50, [tso_chicken, lo_mein, msg_noodles], [])
+user_collection = G.player_collection(50, [tso_chicken, lo_mein, msg_noodles, katana, chop_sticks, black_belt], [])
 user_collection.add_item(noodles, 2)
 user_collection.add_item(sushi_roll, 3)
 user_collection.add_item(stamina, 2)
@@ -81,7 +80,7 @@ black_suit_stats = G.battler_stats(300, 12, 15, 10)
 
 # Battlers
 user = G.player('Ed', None, None, None, user_collection, user_stats)
-black_suit = G.battler('The Man in the Black Suit', None, None, None, black_suit_collection, black_suit_stats)
+black_suit = G.battler('The Man', None, None, None, black_suit_collection, black_suit_stats)
 
 # NPCs
 alton = G.NPC('Alton Brown', None, None, None)
@@ -93,7 +92,7 @@ suit_narrator.add_dialogue('initial-encounter', '"Where do you think you\'re goi
 suit_narrator.add_dialogue('tax-confront', "\"Thought you'd just be able to get away with evading taxes?\"")
 suit_narrator.add_dialogue('avoid-this', ["\"Well, you might've been able to avoid taxes...\"", "\"but you won't be able to avoid this!\""])
 suit_narrator.add_dialogue('use-buff', '"I was hoping it would\'t come to this..."')
-suit_narrator.add_dialogue('the-plunge',  ["\n\n\"Command,\" he begins as a sly smile crosses his face,",  "\"this guy isn't cooperating.\"", "\"I'm going to use...", "the system.\"\n\n"])
+suit_narrator.add_dialogue('the-plunge',  ["\n\n\"Command,\" he begins as a sly smile crosses his face,",  "\"this guy isn't cooperatinG.\"", "\"I'm going to use...", "the system.\"\n\n"])
 suit_narrator.add_dialogue('spare-the-cash', '"You just couldn\'t spare the 9%, could you?"')
 
 narrator = G.NPC('Narrator', None, None, None)
@@ -127,6 +126,9 @@ def advance_dialogue():
 
 user_tipped = None
 def bat_check(manager):
+    if (katana in user.collection.equipped) or (chop_sticks in user.collection.equipped):
+        user.collection.add_item(stamina)
+
     if (manager.percent_health(black_suit) < 90) and (dialogue == 0):
         write(["You call out to your opponent.", '"C\'mon man, do we really have to do this?"'])
         write(['"When did you get the impression that I was doing this because I', 'HAD', 'to?"', 'he chirps back.'])
@@ -194,108 +196,45 @@ def lose():
 # Battle Managers
 #
 # Black belt
-class belt_bat_man(G.battle_manager):
-    def player_win(self):
+class base_bat_man(G.battle_manager):
+    def player_win(self, plyr, enemy):
+        # The player wins
         win()
-
-    def player_lose(self):
+    def player_lose(self, plyr, enemy):
+        # The player loses
         lose()
 
-class katana_bat_man(belt_bat_man):
-    def battle(self, plyr, enemy, spec_effect=None):
-        self.determine_first_turn(plyr, enemy)
-
-        while (plyr.stats.health > 0) and (enemy.stats.health > 0):
-            # Allow player to read before clearing screen
-
-            # Check to make sure no effects are active that shouldn't be
-            self.refresh_active_effect(plyr, enemy)
-
-            # Run the spec_effect if there is one specified
-            if spec_effect is not None:
-                spec_effect()
-
-            # Increase turn counter
-            self.battle_dict['turn_counter'] += 1
-
-            # Check if player is attacking or defending
-            try:
-                temp_power = 1
-                # Determine whose turn it is
-                if self.battle_dict['turn'] == Turn.Attack:
-                    plyr.add_item(stamina, 1)
-                    def active_debuff_check():
-                        if (self.effect_dict['reverse_effect_player'] != []) or (self.effect_dict['reverse_effect_enemy'] != []):
-                            return True
-                        else:
-                            return False
-
-                    while True:
-                        try:
-                            # Clear console and then redraw HP
-                            self.draw_hp(plyr, enemy)
-
-                            print("\n1. Attack\n2. Use Item")
-
-                            if active_debuff_check() is True:
-                                print("3. Status Effects")
-
-                            print("Enter a number to select an option.")
-
-                            user_choice = input("\nChoice: ")
-
-                            if user_choice == '1':
-                                # Player chooses to attack #
-                                # Determine attack and use it
-                                self.draw_hp(plyr, enemy)
-
-                                self.switch_turn([temp_power, plyr.stats.power], self.use_attack(plyr, enemy, self.plyr_choose_attack(plyr)))
-                            elif user_choice == '2':
-                                # Player choose to use an item #
-                                self.draw_hp(plyr, enemy)
-                                self.switch_turn([temp_power, plyr.stats.power], self.use_item(plyr, self.plyr_choose_item(plyr)))
-                            elif (user_choice == '3') and (active_debuff_check() is True):
-                                self.draw_hp(plyr, enemy)
-                                self.stat_change_writeout()
-                            else:
-                                input('Invalid input.')
-                        except ChooseAgain:
-                            pass
-
-                if self.battle_dict['turn'] == Turn.Defend:
-                    while True:
-                        enemy_choice = self.randnum(100)
-                        # Test if enemy uses item
-                        if enemy_choice <= self.chance_item(enemy):
-                            self.switch_turn([temp_power, enemy.stats.power], self.enemy_use_item(enemy))
-                        else:
-                            # Attack
-                            self.switch_turn([temp_power, enemy.stats.power], self.use_attack(enemy, plyr, self.enemy_determine_attack(enemy)))
-
-            except TurnComplete:
-                input('\nPress enter to continue.')
-                pass
-
-        if plyr.stats.health > 0:
-            self.player_win(plyr, enemy)
-        else:
-            self.player_lose(plyr, enemy)
-
-class chop_bat_man(katana_bat_man):
+class chop_bat_man(base_bat_man):
     def plyr_choose_attack(self, plyr):
+        choices = []
         while True:
             choices = [self.randnum(len(plyr.attacks)), self.randnum(len(plyr.attacks))]
             if choices[0] != choices[1]:
-                break
+                try:
+                    plyr.attacks[choices[0]]
+                    plyr.attacks[choices[1]]
+                    break
+                except IndexError:
+                    pass
+
+        print(f'\n1. {plyr.attacks[choices[0]].name}\n2. {plyr.attacks[choices[1]].name}')
 
         # Prompt user
         print('\nEnter a number to attack. \nType "info [number]" for more info about the attack.\nType "q" to return to the previous menu.')
+
+        def replace_value(word):
+            if (word == '0') or (word == 0):
+                return choices[0]
+            elif (word == '1') or (word == 1):
+                return choices[1]
+
         while True:
-            user_choice = str(input('\nChoice: '))
+            user_choice = input('\nChoice: ')
+
             try:
                 # Determine action based on input
                 if "info" in user_choice:
-                    self.attack_info(plyr.collection.items, plyr.attacks[int(user_choice.split(' ')[1]) - 1])
+                    self.attack_info(plyr.collection.items, plyr.attacks[replace_value(int(user_choice.split(' ')[1]) - 1)])
                 elif user_choice.lower() == 'q':
                     raise ChooseAgain
                 else:
@@ -303,12 +242,12 @@ class chop_bat_man(katana_bat_man):
                     user_choice = int(user_choice) - 1
 
                     try:
-                        if plyr.attacks[user_choice].ammo_type in plyr.collection.items:
-                            return plyr.attacks[user_choice]
+                        if plyr.attacks[replace_value(int(user_choice))].ammo_type in plyr.collection.items:
+                            return plyr.attacks[replace_value(int(user_choice))]
                         else:
                             print("You don't have the correct item to use this attack.")
                     except AttributeError:
-                        return plyr.attacks[user_choice]
+                        return plyr.attacks[replace_value(user_choice)]
 
             except (ValueError, IndexError, AttributeError):
                     print('Invalid input.')
@@ -360,34 +299,41 @@ def main():
             suit_narrator.say('avoid-this')
             narrator.say('enemy-attacks')
 
-    weapon_choice = None
+    weapon_chosen = None
 
     if dialogue is False:
         print('Choose your weapon.')
 
-    while weapon_choice is None:
-        print(f"\n1. Katana\n-------------------\n'{katana.dscrpt}'")
-        print(f"\n2. Black Belt\n-------------------\n'{black_belt.dscrpt}'")
-        print(f"\n3. Chop Sticks\n-------------------\n'{chop_sticks.dscrpt}'")
-        print('\nEnter a number to make your choice.')
-        weapon_choice = input('\nChoice: ')
-        black_suit.entity_dict['used_buff'] = False
-        if weapon_choice == '1':
-            user.collection.equip(katana)
-            katana_bat_man.battle(user, black_suit, bat_check)
-        elif weapon_choice == '2':
-            print('Special effects: Stamina will regenerate once per turn to allow for the use of special attacks.')
+    print(f"\n1. Katana\n-------------------\n'{katana.dscrpt}'")
+    print(f"\n2. Black Belt\n-------------------\n'{black_belt.dscrpt}'")
+    print(f"\n3. Chop Sticks\n-------------------\n'{chop_sticks.dscrpt}'")
+    print('\nEnter a number to make your choice.')
+    black_suit.entity_dict['used_buff'] = False
+
+    while weapon_chosen is None:
+        user_choice = input('\nChoice: ')
+        if user_choice == '1':
+            weapon_chosen = True
+            print('\nSpecial effects: Stamina will regenerate once per turn to allow for the use of special attacks.')
             let_read()
+            user.collection.equip(katana)
+            bat_man = base_bat_man()
+        elif user_choice == '2':
+            weapon_chosen = True
             user.collection.equip(black_belt)
-            belt_bat_man.battle(user, black_suit, bat_check)
-        elif weapon_choice == '3':
-            print('Special effects: Stamina will regenerate and two random attacks will be generated twice every turn, and the player can choose from one each time.')
+            bat_man = base_bat_man()
+        elif user_choice == '3':
+            weapon_chosen = True
+            print('\nSpecial effects: Stamina will regenerate and two random attacks will be generated twice every turn, and the player can choose from one each time.\n')
             let_read()
             user.collection.equip(chop_sticks)
-            user.add_item(spray_can, 5)
-            chop_bat_man.battle(user, black_suit, bat_check)
+            user.collection.add_item(spray_can, 5)
+            bat_man = chop_bat_man()
         else:
             print('Invalid input')
+
+    spec_bat_check = bat_check(bat_man)
+    bat_man.battle(user, black_suit, spec_bat_check)
 
 if __name__ == '__main__':
     main()
