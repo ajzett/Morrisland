@@ -425,15 +425,6 @@ class katana_bat_man(base_bat_man):
                             self.switch_turn(enemy.stats.power, self.use_attack(enemy, plyr, self.enemy_determine_attack(enemy)))
 
             except G.TurnComplete:
-                if self.battle_dict['turn'] == G.Turn.Attack:
-                    for itm in plyr.collection.items:
-                        print(itm.name)
-                    input('\n\npre-stamina\n\n')
-                    plyr.collection.add_item(stamina, 1)
-                    for itm in plyr.collection.items:
-                        print(itm.name)
-                    input('\n\npost-stamina\n\n')
-
                 input('\nPress enter to continue.')
                 pass
 
