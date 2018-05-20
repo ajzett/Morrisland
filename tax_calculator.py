@@ -30,7 +30,7 @@ stim_pack = G.heal_item('Stim Pack', 'A stim pack issued by FBI agents that freq
 surprise_debuff = G.stat_item("Caught By Surprise", "Someone was caught by surprise and suffered the consequence.", 0, 1, -5, -5, -5, -7)
 defense_down = G.stat_item('Defense Down', "The bearer's defense has been lowered.", 0, 3, -5, 0, -10)
 enrage_debuff = G.stat_item('Enraged', 'The bearer has been taunted, leaving them stronger, but also reckless.', 0, 2, 0, 10, -15, 5)
-irritated_eyes = G.stat_item('Irritated Eyes', "The bearer's eyes have been irritated by some chemical, causing them to miss attacks and present openings in their defense.", 0, 2, 0, -6, -10)
+irritated_eyes = G.stat_item('Irritated Eyes', "The bearer's eyes have been irritated by some chemical, causing them to miss attacks and present openings in their defense.", 0, 2, 0, 0, -6, -10)
 
 # Attacks #
 # For katana
@@ -131,7 +131,7 @@ def advance_dialogue():
 
 
 def bat_check(manager):
-    if (katana in user.collection.equipped) or (chop_sticks in user.collection.equipped):
+    if ((katana in user.collection.equipped) or (chop_sticks in user.collection.equipped)) and (manager.battle_dict['turn'] == G.Turn.Attack):
         user.collection.add_item(stamina)
 
     if (manager.percent_health(black_suit) < 90) and (dialogue == 0):
@@ -400,7 +400,7 @@ class chop_bat_man(base_bat_man):
 
                     try:
                         if plyr.attacks[replace_value(int(user_choice))].ammo_type in plyr.collection.items:
-                            return plyr.attacks[replace_value(int(user_choice))]
+                            return plyr.attacks[replace_value(user_choice)]
                         else:
                             print("You don't have the correct item to use this attack.")
                     except AttributeError:
