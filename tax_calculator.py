@@ -77,7 +77,7 @@ black_suit_collection = G.battler_collection(1000, [black_suit_prebuff, black_su
 black_suit_collection.add_item(stim_pack, 6)
 # Stat Lists
 user_stats = G.battler_stats(100, 10, 10, 10)
-black_suit_stats = G.battler_stats(300, 12, 15, 10)
+black_suit_stats = G.battler_stats(150, 12, 15, 10)
 
 # Battlers
 user = G.player('Ed', None, None, None, user_collection, user_stats)
@@ -131,9 +131,6 @@ def advance_dialogue():
 
 
 def bat_check(manager):
-    if ((katana in user.collection.equipped) or (chop_sticks in user.collection.equipped)) and (manager.battle_dict['turn'] == G.Turn.Attack):
-        user.collection.add_item(stamina)
-
     if (manager.percent_health(black_suit) < 90) and (dialogue == 0):
         G.write(["You call out to your opponent.", '"C\'mon man, do we really have to do this?"'])
         G.write(['"When did you get the impression that I was doing this because I', f'{Fore.RED}HAD{Fore.RESET}', 'to?"', 'he chirps back.'])
@@ -361,7 +358,92 @@ class base_bat_man(G.battle_manager):
         lose(self)
 
 
-class chop_bat_man(base_bat_man):
+class katana_bat_man(base_bat_man):
+    def battle(self, plyr, enemy, spec_effect=None):
+        self.determine_first_turn(plyr, enemy)
+
+        while (plyr.stats.health > 0) and (enemy.stats.health > 0):
+            # Allow player to read before clearing screen
+
+            # Check to make sure no effects are active that shouldn't be
+            self.refresh_active_effect(plyr, enemy)
+
+            # Run the spec_effect if there is one specified
+            if spec_effect is not None:
+                spec_effect()
+
+            # Check if player is attacking or defending
+            try:
+                # Determine whose turn it is
+                if self.battle_dict['turn'] == G.Turn.Attack:
+                    def active_debuff_check():
+                        if (self.effect_dict['reverse_effect_player'] != []) or (self.effect_dict['reverse_effect_enemy'] != []):
+                            return True
+                        else:
+                            return False
+
+                    while True:
+                        try:
+                            # Clear console and then redraw HP
+                            self.draw_hp(plyr, enemy)
+
+                            print("\n1. Attack\n2. Use Item")
+
+                            if active_debuff_check() is True:
+                                print("3. Status Effects")
+
+                            print("Enter a number to select an option.")
+
+                            user_choice = input("\nChoice: ")
+
+                            if user_choice == '1':
+                                # Player chooses to attack #
+                                # Determine attack and use it
+                                self.draw_hp(plyr, enemy)
+
+                                self.switch_turn(plyr.stats.power, self.use_attack(plyr, enemy, self.plyr_choose_attack(plyr)))
+                            elif user_choice == '2':
+                                # Player choose to use an item #
+                                self.draw_hp(plyr, enemy)
+                                self.switch_turn(plyr.stats.power, self.use_item(plyr, self.plyr_choose_item(plyr)))
+                            elif (user_choice == '3') and (active_debuff_check() is True):
+                                self.draw_hp(plyr, enemy)
+                                self.stat_change_writeout()
+                            else:
+                                input('Invalid input.')
+                        except G.ChooseAgain:
+                            pass
+
+                if self.battle_dict['turn'] == G.Turn.Defend:
+                    while True:
+                        enemy_choice = self.randnum(100)
+                        # Test if enemy uses item
+                        if enemy_choice <= self.chance_item(enemy):
+                            self.switch_turn(enemy.stats.power, self.enemy_use_item(enemy))
+                        else:
+                            # Attack
+                            self.switch_turn(enemy.stats.power, self.use_attack(enemy, plyr, self.enemy_determine_attack(enemy)))
+
+            except G.TurnComplete:
+                if self.battle_dict['turn'] == G.Turn.Attack:
+                    for itm in plyr.collection.items:
+                        print(itm.name)
+                    input('\n\npre-stamina\n\n')
+                    plyr.collection.add_item(stamina, 1)
+                    for itm in plyr.collection.items:
+                        print(itm.name)
+                    input('\n\npost-stamina\n\n')
+
+                input('\nPress enter to continue.')
+                pass
+
+        if plyr.stats.health > 0:
+            self.player_win(plyr, enemy)
+        else:
+            self.player_lose(plyr, enemy)
+
+
+class chop_bat_man(katana_bat_man):
     def plyr_choose_attack(self, plyr):
         choices = []
         while True:
@@ -399,7 +481,8 @@ class chop_bat_man(base_bat_man):
                     user_choice = int(user_choice) - 1
 
                     try:
-                        if plyr.attacks[replace_value(int(user_choice))].ammo_type in plyr.collection.items:
+                        req_ammo = plyr.collection.items.count(plyr.attacks[replace_value(user_choice)].ammo_type)
+                        if (plyr.attacks[replace_value(user_choice)].ammo_type in plyr.collection.items) and (req_ammo >= plyr.attacks[replace_value(user_choice)].ammo_cost):
                             return plyr.attacks[replace_value(user_choice)]
                         else:
                             print("You don't have the correct item to use this attack.")
@@ -478,7 +561,7 @@ def main():
             print('\nSpecial effects: Stamina will regenerate once per turn to allow for the use of special attacks.')
             let_read()
             user.collection.equip(katana)
-            bat_man = base_bat_man()
+            bat_man = katana_bat_man()
         elif user_choice == '2':
             weapon_chosen = True
             user.collection.equip(black_belt)
