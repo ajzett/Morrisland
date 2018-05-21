@@ -130,8 +130,29 @@ def advance_dialogue():
     let_read()
 
 
+def cli_color(fallback, win='color 0F'):
+    import os
+    if os.name == 'nt':
+        # change windows terminal color
+        os.system(win)
+    else:
+        # change linux terminal color
+        os.system(fallback)
+
+
+def build_temp_effects(manager):
+    temp_effect_list = []
+    for effect in manager.effect_dict['reverse_effect_player']:
+        temp_effect_list.append(effect[2])
+    for effect in manager.effect_dict['reverse_effect_enemy']:
+        temp_effect_list.append(effect[2])
+
+    return temp_effect_list
+
+
 def bat_check(manager):
     if (manager.percent_health(black_suit) < 90) and (dialogue == 0):
+        input('it works')
         G.write(["You call out to your opponent.", '"C\'mon man, do we really have to do this?"'])
         G.write(['"When did you get the impression that I was doing this because I', f'{Fore.RED}HAD{Fore.RESET}', 'to?"', 'he chirps back.'])
         G.write(['"You do get paid to do this, right?', 'This has to be a paid job."'])
@@ -187,26 +208,6 @@ def bat_check(manager):
         let_read()
         manager.hit_animate()
         black_suit.stats.health -= 15
-
-
-def cli_color(fallback, win='color 0F'):
-    import os
-    if os.name == 'nt':
-        # change windows terminal color
-        os.system(win)
-    else:
-        # change linux terminal color
-        os.system(fallback)
-
-
-def build_temp_effects(manager):
-    temp_effect_list = []
-    for effect in manager.effect_dict['reverse_effect_player']:
-        temp_effect_list.append(effect[2])
-    for effect in manager.effect_dict['reverse_effect_enemy']:
-        temp_effect_list.append(effect[2])
-
-    return temp_effect_list
 
 
 def win(manager):
@@ -573,9 +574,9 @@ def main():
     del user_choice
 
     G.clr_console()
+    global user_tipped
     if dialogue is True:
         narrator.say('describe-setting')
-        global user_tipped
         user_tipped = None
         while user_tipped is None:
             user_choice = input('Yes or No: ')
@@ -602,6 +603,8 @@ def main():
         narrator.say('back-to-reality')
         suit_narrator.say('avoid-this')
         narrator.say('enemy-attacks')
+    else:
+        user_tipped = False
 
     weapon_chosen = None
 
