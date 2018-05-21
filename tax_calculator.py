@@ -122,11 +122,11 @@ class dialogue_index(G.IntEnum):
     alton = 1
 
 
-dialogue = [0, None]
+monologue = [0, None]
 
 
 def advance_dialogue():
-    dialogue[dialogue_index.black_suit] += 1
+    monologue[dialogue_index.black_suit] += 1
     let_read()
 
 
@@ -151,20 +151,19 @@ def build_temp_effects(manager):
 
 
 def bat_check(manager):
-    if (manager.percent_health(black_suit) < 90) and (dialogue == 0):
-        input('it works')
+    if (manager.percent_health(black_suit) < 90) and (monologue[dialogue_index.black_suit] == 0):
         G.write(["You call out to your opponent.", '"C\'mon man, do we really have to do this?"'])
         G.write(['"When did you get the impression that I was doing this because I', f'{Fore.RED}HAD{Fore.RESET}', 'to?"', 'he chirps back.'])
         G.write(['"You do get paid to do this, right?', 'This has to be a paid job."'])
         G.write([f'{black_suit.name}\'s face suddenly displays an intense tranquility.', '\n\n"This...', f'this is {Fore.BLACK}{Back.WHITE}divine{Style.RESET_ALL} penance!', 'Punishment for the worst of criminals!', 'I would never ask for money.'])
         advance_dialogue()
-    elif (manager.percent_health(black_suit) < 70) and (dialogue == 1):
+    elif (manager.percent_health(black_suit) < 70) and (monologue[dialogue_index.black_suit]):
         G.write(['Despite your progress in battle, you attempt to plead with the man.', '\n\n"How is this a solution?"'])
         G.write(['"What is the alternative?', 'Getting away with tax avoidance?"'])
         G.write("You didn't even give me a chance to pay for it!")
         G.write('"Yeah, I\'ve heard that one before. \'I was just about to pay my taxes, IRS!\' It\'s a steaming load."')
         advance_dialogue()
-    elif (manager.percent_health(black_suit) < 30) and (dialogue == 3):
+    elif (manager.percent_health(black_suit) < 30) and (monologue[dialogue_index.black_suit] == 3):
         G.write('"It\'s about the terrorists."')
         G.write(["You're taken aback by that statement.", '\n\n"What?"'])
         G.write('"We use that money to fend off the terrorists," he continues.')
@@ -183,23 +182,20 @@ def bat_check(manager):
             black_suit.use_item(black_suit_buff)
             black_suit.equip(black_suit_buffed)
             black_suit.entity_dict['used_buff'] = True
-        elif (black_suit.entity_dict['used_buff'] is True) and (dialogue == 2):
+        elif (black_suit.entity_dict['used_buff'] is True) and (monologue[dialogue_index.black_suit] == 2):
             G.write(["Let's say that I DID forget to pay tax.", 'What would forgetting one time matter?'])
             G.write(["It isn't just you, you see?", "It's everyone.", 'If everyone forgot to pay their taxes one time all together...', "it's unthinkable."])
             G.write(['"The Government can handle about $0.05 less one time from everyone in their lives,', 'can\'t they?"'])
             G.write(['"You\'re terminally shortsighted."'])
             advance_dialogue()
 
-    for effect in manager.effect_dict['reverse_effect_player']:
-        if effect[2] == "General Tso's Chicken":
-            if effect[0] == manager.battle_dict['turn_counter'] + tso_chicken.duration - 1:
-                G.write('The ghost of General Tso\'s chicken rises from the deep.\n')
-            G.write('General Tso\'s chicken helps you by doing 15 damage to the enemy.')
-            manager.hit_animate()
-            black_suit.stats.health -= 15
+    if tso_chicken.name in build_temp_effects(manager):
+        G.write([f"The Ghost of {tso_chicken.name} rises from the deep.", f"\n\n{tso_chicken.name} helps you by doing 15 damage to the enemy."])
+        manager.hit_animate()
+        black_suit.stats.health -= 15
 
     if (manager.percent_health(user) <= 50) and (user_tipped is True):
-        if dialogue[dialogue_index.alton] is None:
+        if monologue[dialogue_index.alton] is None:
             manager.battle_dict['alton_help'] = True
             G.write(['Alton brown leaps out from behind the counter', '"\n\nI will defend this tipping customer!"', 'he says as a chair grazes the top of his head.', f'"...from {Fore.RED}behind{Fore.RESET} the counter!"'])
             dialogue[dialogue_index.alton] = 0
