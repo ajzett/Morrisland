@@ -621,6 +621,7 @@ def main():
             print('\nSpecial effects: Stamina will regenerate once per turn to allow for the use of special attacks.')
             let_read()
             user.collection.equip(katana)
+            user.collection.add_item(stamina)
             bat_man = katana_bat_man()
         elif user_choice == '2':
             weapon_chosen = True
