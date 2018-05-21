@@ -268,7 +268,7 @@ def win(manager):
         exit()
 
     except KeyError:
-        if (tso_chicken.name in build_temp_effects(manager)) and (user_tipped is True):
+        if (tso_chicken.name in build_temp_effects(manager)):
             G.write(['Sweat drips down your brow as you are knocked back by another attack.'])
 
             if black_suit_buff.name in build_temp_effects(manager):
@@ -290,12 +290,22 @@ def win(manager):
             G.write(['As the hole closes and the world returns to normal, you feel a change within you.', 'After all,', 'when you stare into the abyss,', 'the abyss stares back.'])
             let_read()
 
-            print(f"{Fore.BLACK}{Back.WHITE}Ending:{Style.RESET_ALL} general tso's [C]hicken\n\n{Fore.BLACK}{Back.WHITE}Player Status:{Style.RESET_ALL} Alive\n{Fore.BLACK}{Back.WHITE}Boss Status:{Style.RESET_ALL} In Limbo\n{Fore.BLACK}{Back.WHITE}Alton Brown Status:{Style.RESET_ALL} Alive\n\n")
+            if user_tipped is False:
+                G.write([f'Just as you have a moment to take a breath, {alton.name} leaps out from behind the counter.', '\n\n"Well, now that that is dealt with..." he begins.', f'"Who do you think you are to come into {Fore.RED}MY{Fore.RESET} restaurant and never leave a tip?"', '\n\nYou\'re stunned. "Since it\'s your business, don\'t you make all the profit? Why do I need to tip?"', '\n\n"You fool..."'])
+                let_read()
+
+                G.write(['Alton takes one step foreward.', "You aren't prepared to deal with another contender, after giving your all to defeat the Man in the Black Suit.", 'Nevertheless, you prepare to defend yourself yet again.', 'Just as he is about to reach you, he is yanked to the ground.', '\n\n"No..." he stammers.', '"...NO!"', f'\n\n{alton.name} tries to pull himself up, but fails repeatedly to do so.', 'He begins to sink into the floor, panicking as he goes.', f'Just as he disappears, you see the silhouette of {tso_chicken.name}.'])
+                let_read()
+
+                print(f"{Fore.BLACK}{Back.WHITE}Ending:{Style.RESET_ALL} the watchful eye of g[E]neral tso\n\n{Fore.BLACK}{Back.WHITE}Player Status:{Style.RESET_ALL} Alive\n{Fore.BLACK}{Back.WHITE}Boss Status:{Style.RESET_ALL} In Limbo\n{Fore.BLACK}{Back.WHITE}Alton Brown Status:{Style.RESET_ALL} Alive\n\n")
+
+            else:
+                print(f"{Fore.BLACK}{Back.WHITE}Ending:{Style.RESET_ALL} general tso's [C]hicken\n\n{Fore.BLACK}{Back.WHITE}Player Status:{Style.RESET_ALL} Alive\n{Fore.BLACK}{Back.WHITE}Boss Status:{Style.RESET_ALL} In Limbo\n{Fore.BLACK}{Back.WHITE}Alton Brown Status:{Style.RESET_ALL} Alive\n\n")
 
         elif user_tipped is True:
             if black_suit_buff.name in build_temp_effects(manager):
                 G.write(["You've been jumping on and around my mysterious foe for what feels like an eternity.", "Your eyes keep darting around for some kind of way out of this.", "Suddenly, you spot it."])
-                G.write(["\n\nA packet of Ramen flavoring sits not 20 feet away from you.", "If you could manage to reach it, there would be enough sodium in it to form a circle around the demon.", "\n\nIt'd be trapped with no way out.", 'You have to move now.'])
+                G.write(["\nA packet of Ramen flavoring sits not 20 feet away from you.", "If you could manage to reach it, there would be enough sodium in it to form a circle around the demon.", "\n\nIt'd be trapped with no way out.", 'You have to move now.'])
                 let_read()
 
                 G.write(["You think back to dodgeball in grade school.", "Just as you did then, you fake out the throbbing mass of hideousness that spans the area before you.", "Without pause, you lunge for the packet of Ramen. Making quick work of the package, you are able to get at the contents", "\n\nQuickly, you make the salt circle as intended."])
@@ -305,11 +315,67 @@ def win(manager):
                 let_read()
 
                 G.write("Time has passed.", .029, 1)
-                G.write(["Some say that the beast is still there.", "Others say it's just an urban legend-- nothing more.", "It's difficult to convince myself of anything anymore.", "\n\nI don't know when he will erupt out of the darkest pits of my psyche and raze the Earth again."])
-                G.write(["I only know one thing for sure:", "he'll be someone else's problem then."])
+                G.write(["Some say that the beast is still there.", "Others say it's just an urban legend-- nothing more.", "It's difficult to convince yourself of anything anymore.", "\n\nYou don't know when he will erupt out of the darkest pits of your psyche and raze the Earth again."])
+                G.write(["You only know one thing for sure:", "he'll be someone else's problem then."])
                 let_read()
 
                 print(f"{Fore.BLACK}{Back.WHITE}Ending:{Style.RESET_ALL} the [D]iscount hero\n\n{Fore.BLACK}{Back.WHITE}Player Status:{Style.RESET_ALL} Alive\n{Fore.BLACK}{Back.WHITE}Boss Status:{Style.RESET_ALL} Unknown\n{Fore.BLACK}{Back.WHITE}Alton Brown Status:{Style.RESET_ALL} Unknown\n\n")
+
+        elif user_tipped is False:
+            if black_suit_buff.name in build_temp_effects(manager):
+                G.write(["You ready my final stand against the beast.", "With a fatal blow, you knock the monster to the ground-- an explosive cloud of smoke rising in its wake.", "\n\nAs it clears, the remains of the foul beast disintegrate before me. You have done well."])
+            else:
+                G.write(['The Man in the Black Suit\'s energy wears thin.', 'During a brief opening, you sieze the oppurtunity and deliver a knockout blow.', '\n\nSlowly, you relax from the form taken during my final strike, and watch as your opponent falls down.'])
+
+            G.write(["\nYou motion toward the door.", "No sooner do you pass the counter than do you feel something at your back.", "You look down to see a chopstick sticking out of your chest."])
+
+            if manager.percent_health(user) >= 50:
+                G.write(["If you'd had less strength, this would be it.", "Instead, you roll away behind a table."])
+                let_read()
+
+                G.write(["Your assailant reveals himself, foolishly thinking that he would have time to attack once again in your stupor.", "It appears Alton was unimpressed with your tip.", "\n\nYou're unimpressed with his hospitality.])
+                let_read()
+
+                G.write(["You lunge towards the counter and pull the chopstick out of me in one easy motion.", "Taking some food from the counter, you use the lone chopstick to feed him some of his own medicine.", "His body violently resists the cooking.", '\n\nAfter a moment that expands into a painful eternity, he falls limp.'])
+                let_read()
+                G.write(['"I\'m no lawyer," you begin.', '"...but if that\'s how a cook reacted to his own work..."', '"I\'d sous the chef.'])
+                let_read()
+
+                print(f"{Fore.BLACK}{Back.WHITE}Ending:{Style.RESET_ALL} some of his own m[E]dicine\n\n{Fore.BLACK}{Back.WHITE}Player Status:{Style.RESET_ALL} Alive\n{Fore.BLACK}{Back.WHITE}Boss Status:{Style.RESET_ALL} Dead\n{Fore.BLACK}{Back.WHITE}Alton Brown Status:{Style.RESET_ALL} Dead\n\n")
+            else:
+                G.write(["If you'd had more strength, maybe you'd be able to fight back."])
+                let_read()
+
+                G.write(['Barely enough time passes to fall to your hands before a dozen carefully-aimed chopsticks lampoon you.', f'\n\n"Thanks for getting the Government off of my back," says {alton.name} in a chipper tone. "They were really beginning to get on my nerves."'])
+                let_read()
+
+                G.write(['You barely manage to summon the might to speak.', '\n\n"H...he...lp..."', 'Speaking is more difficult than you thought.', '\n\n"Damned chopsticks!" you think to yourself. "If they weren\'t so cheap, they\'d\'ve put me out of my misery already."'])
+                G.write(['\n"Well, if you don\'t mind...', 'I have a flight to Panama to catch."'])
+                let_read()
+
+                cli_color('setterm --inversescreen on', 'color F0')
+                G.write(['Alton walks out of the room, and I am left to face my final moments in peace.'])
+                let_read()
+                cli_color('setterm --inversescreen off')
+
+                print(f"{Fore.BLACK}{Back.WHITE}Ending:{Style.RESET_ALL} alton's a[F]fluent adventures in panama\n\n{Fore.BLACK}{Back.WHITE}Player Status:{Style.RESET_ALL} Alive\n{Fore.BLACK}{Back.WHITE}Boss Status:{Style.RESET_ALL} Dead\n{Fore.BLACK}{Back.WHITE}Alton Brown Status:{Style.RESET_ALL} Dead\n\n")
+
+        else:
+            G.write(["You're tired, but you can tell that your opponent is too.", "You both look each other in the eyes."])
+
+            if black_suit_buff.name in build_temp_effects(manager):
+                G.write("\nAt least, you think that's his eye.")
+
+            G.write(["\nYou think you're beginning to understand each other a little more."])
+            let_read()
+
+            G.write(["I go to put down my fists, and it looks as if he is about to do the same.", "Suddenly,", "something crashes through the roof.", "It appears to be some kind of robotic creature.", "It would seem neither of you have seen anything like it.\n\n"])
+            let_read()
+
+            G.write(["It speaks with a voice unlike anything I've ever heard.", '"Sorry to barge in," it begins.', '"Something else is supposed to happen here. The code monkeys screwed everything up, and I do mean *everything*.', '\n\nEmpty the bitbucket.', "Check the logs.", '"Something broke."', "\n\nAnd just like that, everything stopped."])
+            let_read()
+
+            print(f"{Fore.BLACK}{Back.WHITE}Ending:{Style.RESET_ALL} good code [G]one wild\n\n{Fore.BLACK}{Back.WHITE}P#%PLAJC@@:{Style.RESET_ALL} ???\n{Fore.BLACK}{Back.WHITE}B%%OISMCC:{Style.RESET_ALL} ???\n{Fore.BLACK}{Back.WHITE}B%%OISMCC:{Style.RESET_ALL} ???\n\n")
 
         let_read()
         exit()
@@ -426,7 +492,7 @@ class katana_bat_man(base_bat_man):
 
             except G.TurnComplete:
                 if self.battle_dict['turn'] == G.Turn.Attack:
-                    plyr.collection.add_item(stamina, 1)
+                    plyr.collection.add_item(stamina)
 
                 input('\nPress enter to continue.')
                 pass
