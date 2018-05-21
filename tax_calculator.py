@@ -122,10 +122,6 @@ class dialogue_index(G.IntEnum):
     alton = 1
 
 
-global monologue
-monologue = [0, None]
-
-
 def advance_dialogue():
     monologue[dialogue_index.black_suit] += 1
     let_read()
@@ -151,20 +147,20 @@ def build_temp_effects(manager):
     return temp_effect_list
 
 
-def bat_check(manager):
-    if (manager.percent_health(black_suit) < 90) and (monologue[dialogue_index.black_suit] == 0):
+def bat_check():
+    if (bat_man.percent_health(black_suit) < 90) and (monologue[dialogue_index.black_suit] == 0):
         G.write(["You call out to your opponent.", '"C\'mon man, do we really have to do this?"'])
         G.write(['"When did you get the impression that I was doing this because I', f'{Fore.RED}HAD{Fore.RESET}', 'to?"', 'he chirps back.'])
         G.write(['"You do get paid to do this, right?', 'This has to be a paid job."'])
         G.write([f'{black_suit.name}\'s face suddenly displays an intense tranquility.', '\n\n"This...', f'this is {Fore.BLACK}{Back.WHITE}divine{Style.RESET_ALL} penance!', 'Punishment for the worst of criminals!', 'I would never ask for money.'])
         advance_dialogue()
-    elif (manager.percent_health(black_suit) < 70) and (monologue[dialogue_index.black_suit]):
+    elif (bat_man.percent_health(black_suit) < 70) and (monologue[dialogue_index.black_suit]):
         G.write(['Despite your progress in battle, you attempt to plead with the man.', '\n\n"How is this a solution?"'])
         G.write(['"What is the alternative?', 'Getting away with tax avoidance?"'])
         G.write("You didn't even give me a chance to pay for it!")
         G.write('"Yeah, I\'ve heard that one before. \'I was just about to pay my taxes, IRS!\' It\'s a steaming load."')
         advance_dialogue()
-    elif (manager.percent_health(black_suit) < 30) and (monologue[dialogue_index.black_suit] == 3):
+    elif (bat_man.percent_health(black_suit) < 30) and (monologue[dialogue_index.black_suit] == 3):
         G.write('"It\'s about the terrorists."')
         G.write(["You're taken aback by that statement.", '\n\n"What?"'])
         G.write('"We use that money to fend off the terrorists," he continues.')
@@ -172,7 +168,7 @@ def bat_check(manager):
         G.write(['"Choosing to avoid helping the fight against the terrorists is', '\b...', f'{Fore.RED}terrorism itself{Fore.RESET}!"'])
         advance_dialogue()
 
-    if manager.percent_health(black_suit) <= 50:
+    if bat_man.percent_health(black_suit) <= 50:
         if black_suit.entity_dict['used_buff'] is False:
             suit_narrator.say('use-item')
             narrator.say('use-item')
@@ -190,20 +186,20 @@ def bat_check(manager):
             G.write(['"You\'re terminally shortsighted."'])
             advance_dialogue()
 
-    if tso_chicken.name in build_temp_effects(manager):
+    if tso_chicken.name in build_temp_effects(bat_man):
         G.write([f"The Ghost of {tso_chicken.name} rises from the deep.", f"\n\n{tso_chicken.name} helps you by doing 15 damage to the enemy."])
-        manager.hit_animate()
+        bat_man.hit_animate()
         black_suit.stats.health -= 15
 
-    if (manager.percent_health(user) <= 50) and (user_tipped is True):
+    if (bat_man.percent_health(user) <= 50) and (user_tipped is True):
         if monologue[dialogue_index.alton] is None:
-            manager.battle_dict['alton_help'] = True
+            bat_man.battle_dict['alton_help'] = True
             G.write(['Alton brown leaps out from behind the counter', '"\n\nI will defend this tipping customer!"', 'he says as a chair grazes the top of his head.', f'"...from {Fore.RED}behind{Fore.RESET} the counter!"'])
-            dialogue[dialogue_index.alton] = 0
+            monologue[dialogue_index.alton] = 0
 
         G.write('Alton brown tosses mugs at the Man in the Black Suit, dealing 15 damage.')
         let_read()
-        manager.hit_animate()
+        bat_man.hit_animate()
         black_suit.stats.health -= 15
 
 
@@ -616,6 +612,7 @@ def main():
 
     while weapon_chosen is None:
         user_choice = input('\nChoice: ')
+        global bat_man
         if user_choice == '1':
             weapon_chosen = True
             print('\nSpecial effects: Stamina will regenerate once per turn to allow for the use of special attacks.')
@@ -637,8 +634,10 @@ def main():
         else:
             print('Invalid input')
 
-    spec_bat_check = bat_check(bat_man)
-    bat_man.battle(user, black_suit, spec_bat_check)
+    global monologue
+    monologue = [0, None]
+
+    bat_man.battle(user, black_suit, bat_check)
 
 
 if __name__ == '__main__':
