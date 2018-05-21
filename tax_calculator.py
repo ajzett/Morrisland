@@ -122,6 +122,7 @@ class dialogue_index(G.IntEnum):
     alton = 1
 
 
+global monologue
 monologue = [0, None]
 
 
