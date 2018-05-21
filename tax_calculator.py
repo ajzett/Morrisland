@@ -333,7 +333,7 @@ def win(manager):
                 G.write(["If you'd had less strength, this would be it.", "Instead, you roll away behind a table."])
                 let_read()
 
-                G.write(["Your assailant reveals himself, foolishly thinking that he would have time to attack once again in your stupor.", "It appears Alton was unimpressed with your tip.", "\n\nYou're unimpressed with his hospitality.])
+                G.write(["Your assailant reveals himself, foolishly thinking that he would have time to attack once again in your stupor.", "It appears Alton was unimpressed with your tip.", "\n\nYou're unimpressed with his hospitality."])
                 let_read()
 
                 G.write(["You lunge towards the counter and pull the chopstick out of me in one easy motion.", "Taking some food from the counter, you use the lone chopstick to feed him some of his own medicine.", "His body violently resists the cooking.", '\n\nAfter a moment that expands into a painful eternity, he falls limp.'])
