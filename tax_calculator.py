@@ -149,18 +149,21 @@ def build_temp_effects(manager):
 
 def bat_check():
     if (bat_man.percent_health(black_suit) < 90) and (monologue[dialogue_index.black_suit] == 0):
+        G.clr_console()
         G.write(["You call out to your opponent.", '"C\'mon man, do we really have to do this?"'])
         G.write(['"When did you get the impression that I was doing this because I', f'{Fore.RED}HAD{Fore.RESET}', 'to?"', 'he chirps back.'])
         G.write(['"You do get paid to do this, right?', 'This has to be a paid job."'])
         G.write([f'{black_suit.name}\'s face suddenly displays an intense tranquility.', '\n\n"This...', f'this is {Fore.BLACK}{Back.WHITE}divine{Style.RESET_ALL} penance!', 'Punishment for the worst of criminals!', 'I would never ask for money.'])
         advance_dialogue()
     elif (bat_man.percent_health(black_suit) < 70) and (monologue[dialogue_index.black_suit]):
+        G.clr_console()
         G.write(['Despite your progress in battle, you attempt to plead with the man.', '\n\n"How is this a solution?"'])
         G.write(['"What is the alternative?', 'Getting away with tax avoidance?"'])
         G.write("You didn't even give me a chance to pay for it!")
         G.write('"Yeah, I\'ve heard that one before. \'I was just about to pay my taxes, IRS!\' It\'s a steaming load."')
         advance_dialogue()
     elif (bat_man.percent_health(black_suit) < 30) and (monologue[dialogue_index.black_suit] == 3):
+        G.clr_console()
         G.write('"It\'s about the terrorists."')
         G.write(["You're taken aback by that statement.", '\n\n"What?"'])
         G.write('"We use that money to fend off the terrorists," he continues.')
@@ -170,6 +173,7 @@ def bat_check():
 
     if bat_man.percent_health(black_suit) <= 50:
         if black_suit.entity_dict['used_buff'] is False:
+            G.clr_console()
             suit_narrator.say('use-item')
             narrator.say('use-item')
             suit_narrator.say('the-plunge')
@@ -180,18 +184,19 @@ def bat_check():
             black_suit.equip(black_suit_buffed)
             black_suit.entity_dict['used_buff'] = True
         elif (black_suit.entity_dict['used_buff'] is True) and (monologue[dialogue_index.black_suit] == 2):
+            G.clr_console()
             G.write(["Let's say that I DID forget to pay tax.", 'What would forgetting one time matter?'])
             G.write(["It isn't just you, you see?", "It's everyone.", 'If everyone forgot to pay their taxes one time all together...', "it's unthinkable."])
             G.write(['"The Government can handle about $0.05 less one time from everyone in their lives,', 'can\'t they?"'])
             G.write(['"You\'re terminally shortsighted."'])
             advance_dialogue()
 
-    if tso_chicken.name in build_temp_effects(bat_man):
+    if (tso_chicken.name in build_temp_effects(bat_man)) and (bat_man.battle_dict['turn'] == G.Turn.Attack):
         G.write([f"The Ghost of {tso_chicken.name} rises from the deep.", f"\n\n{tso_chicken.name} helps you by doing 15 damage to the enemy."])
         bat_man.hit_animate()
         black_suit.stats.health -= 15
 
-    if (bat_man.percent_health(user) <= 50) and (user_tipped is True):
+    if (bat_man.percent_health(user) <= 50) and (user_tipped is True) and (bat_man.battle_dict['turn'] == G.Turn.Attack):
         if monologue[dialogue_index.alton] is None:
             bat_man.battle_dict['alton_help'] = True
             G.write(['Alton brown leaps out from behind the counter', '"\n\nI will defend this tipping customer!"', 'he says as a chair grazes the top of his head.', f'"...from {Fore.RED}behind{Fore.RESET} the counter!"'])
