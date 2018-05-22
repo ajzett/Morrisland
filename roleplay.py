@@ -44,7 +44,7 @@ dart = G.item("", "", 1)
 # Legendary Items
 nathiks_soul_box = G.item("Green glowing box", "A box that Nathik can store souls in.", 1000)
 philosophers_stone = G.item("A stone that can give you eternal life", "", 2000)
-shanams_ring = G.item("A ring that lets your summon a massive creature to fight for you", "", 2000f)
+shanams_ring = G.item("A ring that lets your summon a massive creature to fight for you", "", 2000)
 bruldrins_stone = G.item("Makes the owner a God of Death", "", 3000)
 
 
@@ -185,6 +185,8 @@ arms_master_npc.add_dialogue("lieno2", "Greg: I don't believe we should spar tod
 arms_master_npc.add_dialogue("gowhere", "Greg: Would you like me to take you anywhere?")
 arms_master_npc.add_dialogue("treasure", "Greg: Somewhere very interesting.")
 arms_master_npc.add_dialogue("coolstuff", "Greg: Welcome to the Treasury. This room holds some of the most amazing things in Alnues and beyond.")
+arms_master_npc.add_dialogue("coolstuff2", "Greg: this is all stuff one of the six has at some point aquiered. You're one of them so you can take anything with your name on it.")
+
 head_wizard.add_dialogue("studyhello", "Tenaxx: Why hello Barnabas. How was your sparing session?")
 head_wizard.add_dialogue("plan1", "Tenaxx: Same as always, but you don't remember.")
 head_wizard.add_dialogue("plan2", "Tenaxx: We go to the Huninst Chain, where the world dragon always appears.")
@@ -205,6 +207,22 @@ head_alchemist.add_dialogue("thought", "Droxone: Hmm... It is possible. I don't 
 head_alchemist.add_dialogue("body", "Droxone: You haven't looked in a mirror have you? You have a different body than you did when you were alive.")
 head_alchemist.add_dialogue("body2", "Droxone: Nathik and I have to make a body before the other three get your spirit.")
 head_alchemist.add_dialogue("body3", "Droxone: Some of your parts are mechanical, others were reanimated. I then tie it all together with a Phylosophers Stone.")
+head_alchemist.add_dialogue("concern", "Droxone: Are you alright? You're looking paler than you should.")
+head_necromancer.add_dialogue("what", "Nathik: Who is it?")
+head_necromancer.add_dialogue("mad", "Nathik: What would cause you to be so stupid as to come here? You aren't welcome!")
+head_necromancer.add_dialogue("apol", "Nathik: It's about three hundred years too late for that, Barnabas.")
+head_necromancer.add_dialogue("ask", "Nathik: You killed me! You stabbed me from behind after tricking me and left me to die of blood loss! Do you know how long that takes?!")
+head_necromancer.add_dialogue("ask2", "Nathik: Hours! It took hours for me too die! When my enchantments kicked in it took even longer because of how bad the death was! You tourchered me for days!")
+head_witch.add_dialogue("training", "Morena: I'm glad you came. I was wondering whether or not you would.")
+head_witch.add_dialogue("training2", "Morena: Well, we don't have time for real training, but I have a few things you may want.")
+head_witch.add_dialogue("training3", "Morena: I've been trying to convince you that my way will kill the world dragon forever for so many centuries. Finally we'll end this!")
+head_witch.add_dialogue("training4", "Morena: Take up these items and end this once and for all!")
+head_witch.add_dialogue("takeitems", "Morena: For the first time in centuries we can kill this thing for good! I won't have to put up with Tenaxx or Dredall ever again!")
+head_witch.add_dialogue("regect", "Morena: Very well. We will put the beast down for a time, but in two hundred years you will come back and do it all again, and again, and, again.")
+head_witch.add_dialogue("curio", "Morena: There are many places you could be right now. Here isn't likely. Why have you come?")
+head_witch.add_dialogue("curio2", "Morena: We're going to continue the endless cycle of killing the world dragon only to have it come back in two hundred years.")
+head_witch.add_dialogue("curio3", "Morena: All because our leadership is in the hands of Tenaxx and Dredall. Two of the biggest idiots to come out of the Cypus Sea shores in eons.")
+head_witch.add_dialogue("endtalk", "Morena: You should go and prepare for the trip. Off with you.")
 
 
 
@@ -215,32 +233,36 @@ head_alchemist.add_dialogue("body3", "Droxone: Some of your parts are mechanical
 #
 # Attacks
 #
-daggar_stab = G.attack(1, 3, "You stab something with a small knife", 1)
-sword_slash = G.attack(2, 5, "You slash at your opponent", 1)
-sword_thrust = G.attack(2, 10, "You run your opponent through", 1)
-rapier_slash = G.attack(3, 4, "You slash", 2)
-rapier_thrust = G.attack(3, 8, "You stab", 1)
-wood_bludgeon = G.attack(2, 3, "You hit them really hard", 2)
-brass_punch = G.attack(1, 3, "You punch them in the face", 2)
-far_shot = G.ammo_attack(40, 6, "You shoot something really far away", 1, 40, arrow)
-near_shot = G.ammo_attack(10, 4, "You shoot something near you", 1, 85, arrow)
-face_shot = G.ammo_attack(3, 8, "You shoot someone right in front of you", 1, 70, arrow)
-bolt_shot = G.ammo_attack(20, 10, "You shoot a crossbow", 1, 90, bolt)
-axe_cleave = G.attack(2, 5, "You hit with an axe", 1)
-pike_stab = G.attack(4, 3, "You stab something with a pike", 1)
-mace_hit = G.attack(2, 5, "You hit them with your mace", 1)
-throw_spear = G.ammo_attack(6, 4, "You through your spear", 1, 60, arrow)
-spear_stab = G.attack(3, 2, "You stab with the spear", 1)
-flail_hit = G.attack(3, 5, "You hit with your flail", 1)
-war_hammer_hit = G.attack(1, 4, "You hit with a hammer", 1)
-blowgun_shot = G.ammo_attack(10, 1, "You hit with a dart", 1, 80, dart)
-push = G.attack(1, 3, "You push with your shield", 1)
+daggar_stab = G.attack("Daggar", "You stab something with a small knife", 3)
+sword_slash = G.attack("", "You slash at your opponent", 5)
+sword_thrust = G.attack("", "You run your opponent through", 10)
+rapier_slash = G.attack("", "You slash", 4)
+rapier_thrust = G.attack("", "You stab", 8)
+wood_bludgeon = G.attack("", "You hit them really hard", 4)
+brass_punch = G.attack("", "You punch them in the face", 6)
+far_shot = G.ammo_attack("", "You shoot something really far away", 6, arrow, 1, acc=80)
+near_shot = G.ammo_attack("", "You shoot something near you", 4, arrow, 1, acc=90)
+face_shot = G.ammo_attack("", "You shoot someone right in front of you", 8, arrow, 1)
+bolt_shot = G.ammo_attack("", "You shoot a crossbow", 10, bolt, 1, acc=90)
+axe_cleave = G.attack("", "You hit with an axe", 5)
+pike_stab = G.attack("", "You stab something with a pike", 3)
+mace_hit = G.attack("", "You hit them with your mace", 5)
+throw_spear = G.ammo_attack("", "You through your spear", 6, arrow, 1, acc=60)
+spear_stab = G.attack("", "You stab with the spear", 2)
+flail_hit = G.attack("", "You hit with your flail", 5)
+war_hammer_hit = G.attack("", "You hit with a hammer", 4)
+blowgun_shot = G.ammo_attack("", "You hit with a dart", 1, dart, 1)
+push = G.attack("", "You push with your shield", 3)
+poison = G.attack("", "", 10)
 
 #Magic Attacks
-fire_needle = G.ammo_attack(5, 4, "You send a needle of fire at your opponent", 1, 70, mana)
-icicle = G.ammo_attack(5, 6, "You send a spike of ice at your opponent", 1, 60, mana)
-eletricute = G.ammo_attack(2, 7, "", 1, 100, mana)
-blind = G.ammo_attack(3, 2, "", 1, 50, mana)
+fire_needle = G.ammo_attack("", "You send a needle of fire at your opponent", 4, mana, 1)
+icicle = G.ammo_attack("", "You send a spike of ice at your opponent", 6, mana, 2)
+eletricute = G.ammo_attack("", "", 7, mana, 2, acc=85)
+blind = G.ammo_attack("", "", 2, mana, 1, acc=70)
+fire_ball = G.ammo_attack("", "", 15, mana, 4)
+possession = G.ammo_attack("", "", 30, mana, 3, acc=)
+sophocate = G.ammo_attack(6, 20, "", 2, 60, mana)
 
 # Big attacks
 rot_attack = G.attack(2, 50, "You rot the flesh around the wound", 1)
@@ -291,7 +313,8 @@ s_and_s_linked = [push, sword_slash, sword_thrust, wood_bludgeon]
 shield_sword = G.weapon("Sword and Shield", "", 12, 3, s_and_s_linked, armr=3)
 oak_wand_linked = [fire_needle, icicle, eletricute, blind]
 oak_wand = G.weapon("Wand", "", 20, 4, oak_wand_linked)
-
+morenas_wand_linked = [fire_ball, possession, sophocate]
+morenas_wand = G.weapon("Morena's Wand", "", 50, 4, morenas_wand_linked)
 
 
 #
@@ -302,7 +325,7 @@ steel_armor = G.armor("Steel Armor", "", 15, armr=6)
 ench_basic_armor = G.armor("Enchanted Leather Armor", "", 10, armr=5, agil=2)
 ench_steel_armor = G.armor("Enchanted Steel Armor", "", 25, armr=10, stren=4)
 mythril_armor = G.armor("Mythril Armor", "", 75, armr=25, pwr=1, agil=3, stren=5)
-
+sheild_charm = G.armor("Shield Bracelet", "", 60, armr=26)
 
 #
 # Potions
@@ -313,7 +336,7 @@ major_health = G.stat_item("Major Health Potion", "", 20, 1, hp=20)
 iron_skin_potion = G.stat_item("Iron Skin Potion", "", 10, 5, armr=5)
 strength_potion = G.stat_item("Stength Potion", "", 10, 5, stren=5)
 grace_potion = G.stat_item("Grace Potion", "", 20, 5, agil=3, pwr=1, armr=1)
-giant_potion = G.stat_item("Giant Potion", "", 10, 5, stren=5, hp=10, pwr=-1, agil=-2, armr=2)
+giant_potion = G.stat_item("Giant Potion", "", 20, 5, stren=5, hp=20, pwr=1, agil=-2, armr=4)
 durable_potion = G.stat_item("Durable Potion", "", 10, 5, hp=20, armr=6)
 
 
@@ -636,7 +659,37 @@ if going is 1:
     G.write("The Arms Master takes you to you chambers. A small but nice stone room. There's a bed in the corner.")
     G.write("As you lay down of the bed you think maybe you'll wake up from this dream soon.")
 elif going is 2:
-    pass
+    G.write("Greg takes you to a section of the fortresses massive library. Morena is sitting in a well hidden side room.")
+    G.write("Plants are hanging from the cieling. There are tanks with salamanders and frogs. Anything that you would think a witch would have is somehow crammed into this tiny room.")
+    if help is 1:
+        head_witch.say("training")
+        G.write("Steve: What did you want to show me?")
+        head_witch.say("training2")
+        G.write("Out of somewhere Morena pulls out three items. A bottle full of blue liquid, a braclet covered in charms, and an engraved wand.")
+        head_witch.say("training3")
+        head_witch.say("training4")
+        G.write("Do you take the items?")
+        witch_items = int(input("1: yes, 2: no"))
+        if witch_items is 1:
+            G.write("Steve: Okay. I'll take them")
+            steve.collection.add_item(sheild_charm, 1)
+            steve.collection.add_item(giant_potion, 1)
+            steve.collection.add_item(morenas_wand, 1)
+            head_witch.say("takeitems")
+            Morena_s = Morena_s + 1
+        else:
+            G.write("Steve: I don't even know how to use these things. I can't take them.")
+            head_witch.say("regect")
+            Morena_s = Morena_s - 1
+        honesty = honesty + 1
+    else:
+        head_witch.say("curio")
+        G.write("Steve: I just want to know what's going on.")
+        head_witch.say("curio2")
+        head_witch.say("curio3")
+    head_witch.say("endtalk")
+    Morena_s = Morena_s + 1
+
 elif going is 3:
     G.write("While taking you to Tenaxx, Greg tells you that he is so old because he's a wizard. This place is so weird you don't even question it.")
     G.write("The Arms Master leaves you at the door to Tenaxx's study. You knock, and here a muffled invitation to enter.")
@@ -660,6 +713,7 @@ elif going is 3:
         G.write("You pocket the box.")
         steve.collection.add_item(nathiks_soul_box)
     G.write("You leave the room. Tenaxx doesn't notice. You can hear him still talking as you close the door.")
+    Tenaxx_s = Tenaxx_s + 1
 elif going is 4:
     G.write("Centaur! That's what he's called! Greg seems to take it for granted that Centaurs are real.")
     G.write("The door to his study is really tall, but you suppose it has to be.")
@@ -677,6 +731,7 @@ elif going is 4:
     head_summoner.say("defen")
     head_summoner.say("goaway")
     G.write("With that you're shoed out the door. You hear it lock behind you.")
+    Dredall_s = Dredall_s + 1
 elif going is 5:
     G.write("Droxone seemed like the nicest one there. He's also your age. Greg admits that he's a little wierd, but you don't care anymore.")
     G.write("As soon as you stop in front of the door Greg indicated, you can hear ticking from inside.")
@@ -699,9 +754,30 @@ elif going is 5:
     head_alchemist.say("body")
     head_alchemist.say("body2")
     head_alchemist.say("body3")
+    head_alchemist.say("concern")
+    G.write("Everything is going black. Your ears are ringing.")
+    G.write("You pass out.")
+    Droxone_s = Droxone_s + 1
 elif going is 6:
     G.write("For some reason you want to talk to Nathik. The Arms Master looks vissably nervious.")
-
+    G.write("He leads you to a place in the dungeon. You suppose that Nathik doesn't want to be around other people.")
+    G.write("You nerviously knock on the door.")
+    head_necromancer.say("what")
+    G.write("Steve: It's me, the person you all brought here.")
+    G.write("The door flies open and nearly hits you in the face.")
+    head_necromancer.say("mad")
+    G.write("Apologize, or Ask?")
+    AorA = int(input("1: Apologize, 2: Ask"))
+    if AorA is 1:
+        G.write("Steve: I'm sorry for what I did. Whatever it was I probably thought it was best at the time. It might have been, or might not have been.")
+        head_necromancer.say("apol")
+        Nathik_s = Nathik_s + 1
+    else:
+        G.write("Steve: What did I ever do too you?")
+        head_necromancer.say("ask")
+        head_necromancer.say("ask2")
+        G.write("Nathik slams the door in your face.")
+        Nathik_s = Nathik_s - 1
 elif going is 7:
     G.write("After a moment of thought, Greg grins and leads you deep into the fortress.")
     G.write("You go down to many staircases to count. Your legs are burning by the time you reach your destination.")
@@ -709,4 +785,8 @@ elif going is 7:
     arms_master_npc.say("treasure")
     G.write("He takes out a key and opens a small steel door. The sound of metal on stone makes both of you wince.")
     arms_master_npc.say("coolstuff")
-
+    G.write("Pedestals line the room. Each one has an artifact on it. Giant gems, flashy flasks, astoinding armor, bounties abound.")
+    G.write("Steve: Where did all this stuff come from?")
+    arms_master_npc.say("coolstuff2")
+    G.write("There are three things with your name on them, or Banabas's at least.")
+    G.write("A blue-silver armor, a red sword, and a ring that seems to be made of pure emerald.")
