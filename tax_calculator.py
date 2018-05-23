@@ -427,13 +427,11 @@ class katana_bat_man(base_bat_man):
     def battle(self, plyr, enemy, spec_effect=None, music=None):
         self.determine_first_turn(plyr, enemy)
 
-        try:
+        if isinstance(music, str):
             from Gilbo_Media import music_manager
             mus_man = music_manager()
             mus_man.init_track(music)
             mus_man.play_loop()
-        except AttributeError:
-            pass
 
         while (plyr.stats.health > 0) and (enemy.stats.health > 0):
             # Allow player to read before clearing screen
@@ -650,7 +648,7 @@ def main():
     global monologue
     monologue = [0, None]
 
-    bat_man.battle(user, black_suit, bat_check)
+    bat_man.battle(user, black_suit, bat_check, "./Media/boss.wav")
 
 
 if __name__ == '__main__':
