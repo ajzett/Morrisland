@@ -153,7 +153,7 @@ def bat_check():
         G.write(["You call out to your opponent.", '"C\'mon man, do we really have to do this?"'])
         G.write(['"When did you get the impression that I was doing this because I', f'{Fore.RED}HAD{Fore.RESET}', 'to?"', 'he chirps back.'])
         G.write(['"You do get paid to do this, right?', 'This has to be a paid job."'])
-        G.write([f'{black_suit.name}\'s face suddenly displays an intense tranquility.', '\n\n"This...', f'this is {Fore.BLACK}{Back.WHITE}divine{Style.RESET_ALL} penance!', 'Punishment for the worst of criminals!', 'I would never ask for money.'])
+        G.write([f'{black_suit.name}\'s face suddenly displays an intense tranquility.', '\n\n"This...', f'this is {Fore.BLACK}{Back.WHITE}divine{Style.RESET_ALL} penance!', 'Punishment for the worst of criminals!', 'I would never ask for money."'])
         advance_dialogue()
     elif (bat_man.percent_health(black_suit) < 70) and (monologue[dialogue_index.black_suit]):
         G.clr_console()
@@ -510,16 +510,20 @@ class katana_bat_man(base_bat_man):
 
 class chop_bat_man(katana_bat_man):
     def plyr_choose_attack(self, plyr):
-        choices = []
-        while True:
-            choices = [self.randnum(len(plyr.attacks)), self.randnum(len(plyr.attacks))]
-            if choices[0] != choices[1]:
-                try:
-                    plyr.attacks[choices[0]]
-                    plyr.attacks[choices[1]]
-                    break
-                except IndexError:
-                    pass
+        if 'rand_attacks' in self.battle_dict:
+            choices = self.battle_dict['rand_attacks']
+        else:
+            choices = []
+            while True:
+                choices = [self.randnum(len(plyr.attacks)), self.randnum(len(plyr.attacks))]
+                if choices[0] != choices[1]:
+                    try:
+                        plyr.attacks[choices[0]]
+                        plyr.attacks[choices[1]]
+                        self.battle_dict['rand_attacks'] = choices
+                        break
+                    except IndexError:
+                        pass
 
         print(f'\n1. {plyr.attacks[choices[0]].name}\n2. {plyr.attacks[choices[1]].name}')
 
@@ -548,10 +552,11 @@ class chop_bat_man(katana_bat_man):
                     try:
                         req_ammo = plyr.collection.items.count(plyr.attacks[replace_value(user_choice)].ammo_type)
                         if (plyr.attacks[replace_value(user_choice)].ammo_type in plyr.collection.items) and (req_ammo >= plyr.attacks[replace_value(user_choice)].ammo_cost):
-                            return plyr.attacks[replace_value(user_choice)]
+                            raise AttributeError
                         else:
                             print("You don't have the correct item to use this attack.")
                     except AttributeError:
+                        del self.battle_dict['rand_attacks']
                         return plyr.attacks[replace_value(user_choice)]
 
             except (ValueError, IndexError, AttributeError):
