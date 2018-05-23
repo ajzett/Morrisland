@@ -14,6 +14,8 @@ from sys import stdout
 class_type = 0
 honesty = 0
 curiosity = False
+box = False
+TvsN = False
 #Standing with characters
 Droxone_s = 0
 Nathik_s = 0
@@ -43,8 +45,8 @@ dart = G.item("", "", 1)
 
 # Legendary Items
 nathiks_soul_box = G.item("Green glowing box", "A box that Nathik can store souls in.", 1000)
-philosophers_stone = G.item("A stone that can give you eternal life", "", 2000)
-shanams_ring = G.item("A ring that lets your summon a massive creature to fight for you", "", 2000)
+philosophers_stone = G.equippable("A stone that can give you eternal life", "", 2000, hp=100)
+shanams_ring = G.equippable("A ring that lets your summon a massive creature to fight for you", "", 2000, hp=100, stren=10)
 bruldrins_stone = G.item("Makes the owner a God of Death", "", 3000)
 
 
@@ -186,7 +188,7 @@ arms_master_npc.add_dialogue("gowhere", "Greg: Would you like me to take you any
 arms_master_npc.add_dialogue("treasure", "Greg: Somewhere very interesting.")
 arms_master_npc.add_dialogue("coolstuff", "Greg: Welcome to the Treasury. This room holds some of the most amazing things in Alnues and beyond.")
 arms_master_npc.add_dialogue("coolstuff2", "Greg: this is all stuff one of the six has at some point aquiered. You're one of them so you can take anything with your name on it.")
-
+arms_master_npc.add_dialogue("goback", "Greg: I should probably take you back now. If you will, sir.")
 head_wizard.add_dialogue("studyhello", "Tenaxx: Why hello Barnabas. How was your sparing session?")
 head_wizard.add_dialogue("plan1", "Tenaxx: Same as always, but you don't remember.")
 head_wizard.add_dialogue("plan2", "Tenaxx: We go to the Huninst Chain, where the world dragon always appears.")
@@ -223,7 +225,19 @@ head_witch.add_dialogue("curio", "Morena: There are many places you could be rig
 head_witch.add_dialogue("curio2", "Morena: We're going to continue the endless cycle of killing the world dragon only to have it come back in two hundred years.")
 head_witch.add_dialogue("curio3", "Morena: All because our leadership is in the hands of Tenaxx and Dredall. Two of the biggest idiots to come out of the Cypus Sea shores in eons.")
 head_witch.add_dialogue("endtalk", "Morena: You should go and prepare for the trip. Off with you.")
-
+head_wizard.add_dialogue("leave", "Tenaxx: Hello, Barnabas. We will be leaving for the Hunirst Chain in just over an hour.")
+head_wizard.add_dialogue("leave2", "Tenaxx: You will be taken to the ship as soon as you've finished your meal/")
+head_necromancer.add_dialogue("box", "Nathik: Yes, where did you find this?")
+head_necromancer.add_dialogue("boxt", "Nathik: That thief! Of course he took it! He can't do anything for himself.")
+head_necromancer.add_dialogue("boxl", "Nathik: That is quite odd. You wouldn't have stollen it, for you have no consept of what it does.")
+head_necromancer.add_dialogue("boxl2", "Nathik: I guess I should thank you for giving it back. Thank you.")
+head_alchemist.add_dialogue("island", "Droxone: It's my first time going to this island. I've never faced the World Dragon before. Can you still remember nothing?")
+head_alchemist.add_dialogue("islandh", "Droxone: Well at least I'm not the only one who's never done this before, or at least can't remember doing it.")
+head_alchemist.add_dialogue("islandl", "Droxone: That's good. Then only one person is new.")
+head_alchemist.add_dialogue("island2", "Droxone: This is like reflex for everyone else. No matter how much you can remember, we'll all be fine. You're turning green again.")
+head_summoner.add_dialogue("fire", "Dredall: No. That is the Dragon.")
+head_summoner.add_dialogue("fire2", "Dredall: Yes. What you're seeing is light from molten rock reflecting off smoke.")
+head_summoner.add_dialogue("fire3", "Dredall: They aren't.")
 
 
 #
@@ -260,9 +274,9 @@ fire_needle = G.ammo_attack("", "You send a needle of fire at your opponent", 4,
 icicle = G.ammo_attack("", "You send a spike of ice at your opponent", 6, mana, 2)
 eletricute = G.ammo_attack("", "", 7, mana, 2, acc=85)
 blind = G.ammo_attack("", "", 2, mana, 1, acc=70)
-fire_ball = G.ammo_attack("", "", 15, mana, 4)
-possession = G.ammo_attack("", "", 30, mana, 3, acc=)
-sophocate = G.ammo_attack(6, 20, "", 2, 60, mana)
+fire_ball = G.ammo_attack("", "", 15, mana, 3)
+possession = G.ammo_attack("", "", 30, mana, 6, acc=70)
+sophocate = G.ammo_attack("", "", 20, mana, 4, acc=60)
 
 # Big attacks
 rot_attack = G.attack(2, 50, "You rot the flesh around the wound", 1)
@@ -315,7 +329,8 @@ oak_wand_linked = [fire_needle, icicle, eletricute, blind]
 oak_wand = G.weapon("Wand", "", 20, 4, oak_wand_linked)
 morenas_wand_linked = [fire_ball, possession, sophocate]
 morenas_wand = G.weapon("Morena's Wand", "", 50, 4, morenas_wand_linked)
-
+dragons_blood_linked = [sword_slash, sword_thrust, dragon_fire]
+dragons_blood = G.weapon("Dragon's Blood", "", 100, 8, dragons_blood_linked)
 
 #
 # Armor
@@ -712,6 +727,7 @@ elif going is 3:
         G.write("Particles start swirling inside and glowing green. There is a little ingraved N on the metal.")
         G.write("You pocket the box.")
         steve.collection.add_item(nathiks_soul_box)
+        box = True
     G.write("You leave the room. Tenaxx doesn't notice. You can hear him still talking as you close the door.")
     Tenaxx_s = Tenaxx_s + 1
 elif going is 4:
@@ -790,3 +806,71 @@ elif going is 7:
     arms_master_npc.say("coolstuff2")
     G.write("There are three things with your name on them, or Banabas's at least.")
     G.write("A blue-silver armor, a red sword, and a ring that seems to be made of pure emerald.")
+    G.write("Greg insists that you take the items. Maybe they'll help you.")
+    steve.collection.add_item(shanams_ring, 1)
+    steve.collection.add_item(dragons_blood, 1)
+    steve.collection.add_item(mythirl_armor, 1)
+    arms_master_npc.say("goback")
+    G.write("He leads you back up to your chambers.")
+
+G.write("The next morning someone comes and leads you too a dining hall.")
+G.write("Tenaxx comes over and greets you.")
+head_wizard.say("leave")
+head_wizard.say("leave2")
+G.write("With that Tenaxx leaves.")
+G.write("Someone has packed all your stuff in a chest and left it by the door to the dining hall.")
+G.write("Everone else is somewhere in the room.")
+if box is True:
+    G.write("You find that the box you took from Tenaxx is in the chest.")
+    G.write("It has a N engraved on the side, it must be Nathik's. It looks like his style.")
+    G.write("You walk over to Nathik.")
+    G.write("Steve: Hey, Nathik. I found this and was wondering if it was yours.")
+    G.write("You offer the box.")
+    G.write("For a moment he stares at it.")
+    head_necromancer.say("box")
+    Dredall_s = Dredall_s - 1
+    Nathik_s = Nathik_s + 2
+    box_truth = int(input("1: Tell the truth? 2: Lie?"))
+    if box_truth is 1:
+        G.write("Steve: I was in Tenaxx's study and it was there. I was looking over it and thought it might be yours.")
+        head_necromancer.say("box")
+        head_necromancer.say("boxt")
+        G.write("Nathik takes the box, and with a slight nod, storms off to find Tenaxx.")
+        honesty = honesty + 1
+        TvsN = True
+    else:
+        G.write("Steve: It was in the chambers I was given. I don't know how it got in there.")
+        head_necromancer.say("boxl")
+        head_necromancer.say("boxl2")
+        G.write("He turns on his heels and leaves.")
+        honesty = honesty - 1
+G.write("You have breakfast, and then are quickly shoed out into a carage.")
+G.write("2 Weeks Later")
+G.write("The Northern Clyps Ocean")
+G.write("East of the Island Ashor")
+G.write("3 Days Out From the Hunirst Chain")
+G.write("You've been sea sick for the past 2 weeks. You've also been sick with nerves for the past two weeks.")
+G.write("Droxone has been trying to make you feel better.")
+head_alchemist.say("island")
+if honesty > 0:
+    G.write("You're an honest person. You tell the truth.")
+    G.write("Steve: I still have no idea what I'm doing. I don't remember any of this.")
+    head_alchemist.say("islandh")
+else:
+    G.write("You're not that honest, so you lie.")
+    G.write("Steve: I think I remember some of this. It's all still a blur.")
+    head_alchemist.say("islandl")
+head_alchemist.say("island2")
+G.write("You wake up from your sea sickness induced coma. It's dark out and there are lanterns on deck.")
+G.write("Coming up on the deck you can see a glow of the horizon.")
+G.write("Steve: The sun must be rising.")
+head_summoner.say("fire")
+G.write("You almost jump into the sea. How did a Centaur sneak up on you?")
+G.write("Steve: But aren't we still two days sailing from the Islands?")
+head_summoner.say("fire2")
+G.write("Steve: No one told me the islands where volcanic.")
+head_summoner.say("fire3")
+G.write("Steve: Oh... That's bad.")
+G.write("Dredall doesn't answer and just walks away.")
+if TvsN is True:
+    G.write("You hear shouting from ")
