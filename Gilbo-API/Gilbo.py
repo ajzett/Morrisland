@@ -1,4 +1,4 @@
-# Gilbo RPG API -- Version 1.2.1 #
+# Gilbo RPG API -- Version 1.2.2 #
 
 from abc import ABC, abstractmethod
 from enum import IntEnum, auto
@@ -1300,7 +1300,7 @@ class battle_manager(ABC):
     def battle(self, plyr, enemy, spec_effect=None, music=None):
         self.determine_first_turn(plyr, enemy)
 
-        if music is not None:
+        if isinstance(music, str):
             from Gilbo_Media import music_manager
             mus_man = music_manager()
             mus_man.init_track(music)
