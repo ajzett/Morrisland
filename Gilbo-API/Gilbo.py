@@ -1,4 +1,4 @@
-# Gilbo RPG API -- Version 1.2.0 #
+# Gilbo RPG API -- Version 1.2.1 #
 
 from abc import ABC, abstractmethod
 from enum import IntEnum, auto
@@ -1300,13 +1300,11 @@ class battle_manager(ABC):
     def battle(self, plyr, enemy, spec_effect=None, music=None):
         self.determine_first_turn(plyr, enemy)
 
-        try:
+        if music is not None:
             from Gilbo_Media import music_manager
-            mus_man = music_manager(5)
+            mus_man = music_manager()
             mus_man.init_track(music)
             mus_man.play_loop()
-        except AttributeError:
-            pass
 
         while (plyr.stats.health > 0) and (enemy.stats.health > 0):
             # Allow player to read before clearing screen
