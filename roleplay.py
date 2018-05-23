@@ -2,8 +2,6 @@ from sys import path
 path.append('./Gilbo/')
 path.append('./Gilbo/deps/')
 import Gilbo as G
-import os
-from sys import stdout
 
 
 
@@ -569,9 +567,7 @@ os.system('cls')
 G.write("After a moment you walk into a large room with a clear floor. The walls are lined with weapons.")
 head_summoner.say("weapon")
 for i in range(len(weapon_choice)):
-    stdout.write(str(i))
-    stdout.write(": ")
-    print(weapon_choice[i].name)
+    print(f"{i}. {weapon_choice[i].name}")
 
 wc = int(input("What will you choice?"))
 os.system('clr')
