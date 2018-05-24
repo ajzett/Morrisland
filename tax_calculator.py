@@ -191,8 +191,7 @@ def bat_check():
             G.write(['"You\'re terminally shortsighted."'])
             advance_dialogue()
 
-    print(build_temp_effects(bat_man))
-    if (tso_chicken.name in build_temp_effects(bat_man)) and (bat_man.battle_dict['turn'] == G.Turn.Attack):
+    if (tso_chicken in build_temp_effects(bat_man)) and (bat_man.battle_dict['turn'] == G.Turn.Attack):
         G.write([f"The Ghost of {tso_chicken.name} rises from the deep.", f"\n\n{tso_chicken.name} helps you by doing 15 damage to the enemy."])
         bat_man.hit_animate()
         black_suit.stats.health -= 15
@@ -212,7 +211,7 @@ def bat_check():
 def win(manager):
     try:
         if (manager.battle_dict['alton_help'] is True) and ("General Tso's Chicken" in build_temp_effects(manager)):
-            if black_suit_buff.name in build_temp_effects(manager):
+            if black_suit_buff in build_temp_effects(manager):
                 G.write([f"You glance over at {alton.name}. He's sweating-- barely holding on.", "You know how he feels. It takes everything you have to not give up and accept your fate.", "\n\nBut--", "suddenly, a phantomish form bursts out from behind the monster."])
                 let_read()
 
@@ -238,7 +237,7 @@ def win(manager):
                 let_read()
 
         elif manager.battle_dict['alton_help'] is True:
-            if black_suit_buff.name in build_temp_effects(manager):
+            if black_suit_buff in build_temp_effects(manager):
                 G.write([f"You glance over at {alton.name}. He's sweating-- barely holding on.", "You know how he feels. It takes everything you have to not give up and accept your fate.", "\n\nBut--", "you're in this together. You won't let him down, only because he won't let YOU down."])
                 let_read()
 
@@ -268,10 +267,10 @@ def win(manager):
         exit()
 
     except KeyError:
-        if (tso_chicken.name in build_temp_effects(manager)):
+        if (tso_chicken in build_temp_effects(manager)):
             G.write(['Sweat drips down your brow as you are knocked back by another attack.'])
 
-            if black_suit_buff.name in build_temp_effects(manager):
+            if black_suit_buff in build_temp_effects(manager):
                 G.write(['The hideous beast seems no closer to being defeated, yet you have been fighting for what seems like an eternity.', 'Just as you feel ready to submit, a small, headless, umbrageous form runs out from behind you.', f'\n\nThe Ghost of {tso_chicken.name} rose from the abyss to aid you in your fight.'])
                 let_read()
 
@@ -303,7 +302,7 @@ def win(manager):
                 print(f"{Fore.BLACK}{Back.WHITE}Ending:{Style.RESET_ALL} general tso's [C]hicken\n\n{Fore.BLACK}{Back.WHITE}Player Status:{Style.RESET_ALL} Alive\n{Fore.BLACK}{Back.WHITE}Boss Status:{Style.RESET_ALL} In Limbo\n{Fore.BLACK}{Back.WHITE}Alton Brown Status:{Style.RESET_ALL} Alive\n\n")
 
         elif user_tipped is True:
-            if black_suit_buff.name in build_temp_effects(manager):
+            if black_suit_buff in build_temp_effects(manager):
                 G.write(["You've been jumping on and around my mysterious foe for what feels like an eternity.", "Your eyes keep darting around for some kind of way out of this.", "Suddenly, you spot it."])
                 G.write(["\nA packet of Ramen flavoring sits not 20 feet away from you.", "If you could manage to reach it, there would be enough sodium in it to form a circle around the demon.", "\n\nIt'd be trapped with no way out.", 'You have to move now.'])
                 let_read()
@@ -322,7 +321,7 @@ def win(manager):
                 print(f"{Fore.BLACK}{Back.WHITE}Ending:{Style.RESET_ALL} the [D]iscount hero\n\n{Fore.BLACK}{Back.WHITE}Player Status:{Style.RESET_ALL} Alive\n{Fore.BLACK}{Back.WHITE}Boss Status:{Style.RESET_ALL} Unknown\n{Fore.BLACK}{Back.WHITE}Alton Brown Status:{Style.RESET_ALL} Unknown\n\n")
 
         elif user_tipped is False:
-            if black_suit_buff.name in build_temp_effects(manager):
+            if black_suit_buff in build_temp_effects(manager):
                 G.write(["You ready my final stand against the beast.", "With a fatal blow, you knock the monster to the ground-- an explosive cloud of smoke rising in its wake.", "\n\nAs it clears, the remains of the foul beast disintegrate before me. You have done well."])
             else:
                 G.write(['The Man in the Black Suit\'s energy wears thin.', 'During a brief opening, you sieze the oppurtunity and deliver a knockout blow.', '\n\nSlowly, you relax from the form taken during my final strike, and watch as your opponent falls down.'])
@@ -363,7 +362,7 @@ def win(manager):
         else:
             G.write(["You're tired, but you can tell that your opponent is too.", "You both look each other in the eyes."])
 
-            if black_suit_buff.name in build_temp_effects(manager):
+            if black_suit_buff in build_temp_effects(manager):
                 G.write("\nAt least, you think that's his eye.")
 
             G.write(["\nYou think you're beginning to understand each other a little more."])
