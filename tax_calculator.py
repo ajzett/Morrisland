@@ -183,7 +183,7 @@ def bat_check():
             suit_narrator.say('spare-the-cash')
             let_read()
             bat_man.use_item(black_suit, black_suit_buff)
-            black_suit.equip(black_suit_buffed)
+            black_suit.collection.equip(black_suit_buffed)
             black_suit.entity_dict['used_buff'] = True
         elif (black_suit.entity_dict['used_buff'] is True) and (monologue[dialogue_index.black_suit] == 2):
             G.clr_console()
