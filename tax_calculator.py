@@ -123,7 +123,9 @@ class dialogue_index(G.IntEnum):
 
 
 def advance_dialogue():
+    print(monologue[dialogue_index.black_suit])
     monologue[dialogue_index.black_suit] += 1
+    print(monologue[dialogue_index.black_suit])
     let_read()
 
 
@@ -155,11 +157,11 @@ def bat_check():
         G.write(['"You do get paid to do this, right?', 'This has to be a paid job."'])
         G.write([f'{black_suit.name}\'s face suddenly displays an intense tranquility.', '\n\n"This...', f'this is {Fore.BLACK}{Back.WHITE}divine{Style.RESET_ALL} penance!', 'Punishment for the worst of criminals!', 'I would never ask for money."'])
         advance_dialogue()
-    elif (bat_man.percent_health(black_suit) < 70) and (monologue[dialogue_index.black_suit]):
+    elif (bat_man.percent_health(black_suit) < 70) and (monologue[dialogue_index.black_suit] == 1):
         G.clr_console()
         G.write(['Despite your progress in battle, you attempt to plead with the man.', '\n\n"How is this a solution?"'])
         G.write(['"What is the alternative?', 'Getting away with tax avoidance?"'])
-        G.write("You didn't even give me a chance to pay for it!")
+        G.write('"You didn\'t even give me a chance to pay for it!" you spit back.')
         G.write('"Yeah, I\'ve heard that one before. \'I was just about to pay my taxes, IRS!\' It\'s a steaming load."')
         advance_dialogue()
     elif (bat_man.percent_health(black_suit) < 30) and (monologue[dialogue_index.black_suit] == 3):
