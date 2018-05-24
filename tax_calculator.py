@@ -174,7 +174,7 @@ def bat_check():
     if bat_man.percent_health(black_suit) <= 50:
         if black_suit.entity_dict['used_buff'] is False:
             G.clr_console()
-            suit_narrator.say('use-item')
+            suit_narrator.say('use-buff')
             narrator.say('use-item')
             suit_narrator.say('the-plunge')
             narrator.say('the-plunge')
