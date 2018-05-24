@@ -182,7 +182,7 @@ def bat_check():
             narrator.say('the-plunge')
             suit_narrator.say('spare-the-cash')
             let_read()
-            black_suit.use_item(black_suit_buff)
+            black_suit.collection.use_item(black_suit_buff)
             black_suit.equip(black_suit_buffed)
             black_suit.entity_dict['used_buff'] = True
         elif (black_suit.entity_dict['used_buff'] is True) and (monologue[dialogue_index.black_suit] == 2):
