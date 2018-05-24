@@ -1,12 +1,12 @@
 from sys import path
-path.append('./Gilbo/')
-path.append('./Gilbo/deps/')
+path.append('./Gilbo-API/')
+path.append('./Gilbo-API/deps/')
 import Gilbo as G
 import os
 from sys import stdout
 
-
-
+#Battle Manager, you only need one.
+bat_man = G.battle_manager()
 
 #
 # Story Variables #
@@ -22,6 +22,38 @@ Nathik_s = 0
 Tenaxx_s = 0
 Morena_s = 0
 Dredall_s = 0
+
+
+#Maps!
+fortess_room.layout = G.np.array([[G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall]
+                            [G.Tiles.Wall, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Wall]
+                            [G.Tiles.Wall, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Wall]
+                            [G.Tiles.Wall, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt]
+                            [G.Tiles.Wall, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Wall]
+                            [G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall]])
+class fortress_chamber(G.array_map):
+    def __init__(self, name):
+        super().__init__(name)
+
+    def send_data(self, til, plyr=False):
+        if til is [0,0] or [1,0] or [2,0] or [3,0] or [4,0] or [5,0] or \
+                [5,1] or [5,2] or [5,4] or [5,5] or [0,1] or \
+                [0,2] or [0,3] or [0,4] or [0,5] or [1,5] or [2,5] or \
+                [3,5] or [4,5] or [5,5]:
+            if plyr is True:
+                G.write("That is a wall. You just walked into a wall.")
+            return True
+
+        elif til is [5, 3]:
+            if plyr is True:
+                G.write("You walk to the door leading out of the room.")
+            return True
+
+        if til is []
+
+
+
+
 
 
 
@@ -267,7 +299,10 @@ flail_hit = G.attack("", "You hit with your flail", 5)
 war_hammer_hit = G.attack("", "You hit with a hammer", 4)
 blowgun_shot = G.ammo_attack("", "You hit with a dart", 1, dart, 1)
 push = G.attack("", "You push with your shield", 3)
-poison = G.attack("", "", 10)
+#Dragon Attacks
+poison = G.attack("poison", "", 10)
+fire = G.attack("fire", "", 15)
+claws = G.attack("claws", "", 15)
 
 #Magic Attacks
 fire_needle = G.ammo_attack("", "You send a needle of fire at your opponent", 4, mana, 1)
@@ -331,6 +366,8 @@ morenas_wand_linked = [fire_ball, possession, sophocate]
 morenas_wand = G.weapon("Morena's Wand", "", 50, 4, morenas_wand_linked)
 dragons_blood_linked = [sword_slash, sword_thrust, dragon_fire]
 dragons_blood = G.weapon("Dragon's Blood", "", 100, 8, dragons_blood_linked)
+dragon_linked = [poison, fire, claws]
+dragon_weapon = G.weapon("The Dragon", "", 1000, 10, dragon_linked)
 
 #
 # Armor
@@ -357,7 +394,9 @@ durable_potion = G.stat_item("Durable Potion", "", 10, 5, hp=20, armr=6)
 
 
 
-weapon_choice = [daggar, sword, rapier, quarterstaff, brass_knuckles, long_bow, short_bow, cross_bow, axe, pike, mace, spear, warhammer, blowgun, club, shield_sword, oak_wand]
+weapon_choice = [daggar, sword, rapier, quarterstaff, brass_knuckles, \
+    long_bow, short_bow, cross_bow, axe, pike, mace, spear, warhammer, blowgun, \
+    club, shield_sword, oak_wand]
 
 steve_stats = G.battler_stats(100, 5, 0, 5, 1)
 arms_master_stats = G.battler_stats(100, 4, 0, 4, 1)
@@ -395,6 +434,7 @@ cat.say("meowl")
 os.system('cls')
 G.write("The cat jumps down onto the floor and goes into the other room. You hear the TV turn on.")
 G.write("Do you follow the cat?")
+
 morning = int(input("1: yes, 2: no"))
 if morning is 1:
     os.system('cls')
@@ -414,15 +454,15 @@ if morning is 1:
     G.write("*Gulp*")
     G.write("You quickly get down to work.")
     co_worker.say("greating")
-    G.write("I don't know.")
+    G.write("Steve: I don't know.")
     co_worker.say("fired")
-    G.write("I'm sure you could find someone. I won't be able to make rent if I'm fired.")
+    G.write("Steve: I'm sure you could find someone. I won't be able to make rent if I'm fired.")
     co_worker.say("weekend")
-    G.write("I don't know.")
+    G.write("Steve: I don't know.")
     os.system('cls')
     G.write("You go to get coffee")
     cat.say("meowq")
-    G.write("Why are you still here!?")
+    G.write("Steve: Why are you still here!?")
     os.system('cls')
     G.write("At the end of the day you go to the Boss's office")
     steves_boss.say("fired")
@@ -434,14 +474,13 @@ if morning is 1:
     G.write("You look back up at your old office building.")
     G.write("The cat is sitting on a ledge, staring at you.")
     pes_emily.say("move")
-    G.write("Sorry")
+    G.write("Steve: Sorry")
     G.write("What is with that cat? We does it keep following you?")
     cat.say("meowl")
     G.write("While staring at the cat, you hear brakes scretching")
     pes_emily.say("look_out")
     G.write("You hear a crunch and everything goes black.")
     curiosity = True
-
 
 else:
     os.system('cls')
@@ -466,11 +505,12 @@ else:
     G.write("The last thing you see is the cat.")
     cat.say("purr")
     os.system('cls')
+
 head_witch.say("first")
 head_necromancer.say("first")
 head_summoner.say('first')
-G.write("Whaaa?")
-G.write("Who are y...")
+G.write("Steve: Whaaa?")
+G.write("Steve: Who are y...")
 G.write("You voice trails off as you look up at five old 'people'.")
 os.system('cls')
 G.write("A super old and croutched woman started crowing.")
@@ -486,7 +526,7 @@ G.write("You look down from his face to his body.")
 G.write("He has a horses body.")
 os.system('cls')
 head_wizard.say("hello")
-G.write("B-b-b-barn who?")
+G.write("Steve: B-b-b-barn who?")
 head_wizard.say("confustion")
 head_wizard.say("blame")
 head_alchemist.say("sigh")
@@ -495,12 +535,13 @@ head_alchemist.say("backtrack")
 G.write("Now the other two start squablling")
 os.system('cls')
 G.write("Who do you want to talk to?")
+
 one_of_five = int(input("1:Droxone, 2:Nathik, 3:Tenaxx, 4:Morena, 5:Dredall"))
 os.system('cls')
 if one_of_five is 1:
     G.write("You get up off the table.")
     G.write("You walk over to Droxone, who is by far the youngest of all the five.")
-    G.write("Hello?")
+    G.write("Steve: Hello?")
     head_alchemist.say("get1")
     G.write("Steve: I'll start with a simple question, where am I?")
     G.write("The men, who can't be much older than you, looks very confused.")
@@ -508,10 +549,11 @@ if one_of_five is 1:
     G.write("Steve: My name isn't Barnabas, it's Steve.")
     G.write("Before he can say anything else someone calls everyone to attention.")
     Droxone_s = Droxone_s + 1
+
 elif one_of_five is 2:
     G.write("For some reason, you walk over to the courpse, Nathik.")
     G.write("Maybe it's because you liked his joke.")
-    G.write("Hello, sir?")
+    G.write("Steve: Hello, sir?")
     head_necromancer.say("get1")
     G.write("Steve: Umm... Where am I and who do you think I am?")
     G.write("This brings an actual expression of shock to Nathik's face.")
@@ -520,30 +562,33 @@ elif one_of_five is 2:
     head_necromancer.say("get4")
     G.write("You keep you mouth shut. Nathik seems to be brooding now. You slowly walk away.")
     Nathik_s = Nathik_s + 1
+
 elif one_of_five is 3:
     G.write("The older guy seems like the most aprotchable of the five.")
     G.write("The think his name is Tenaxx?")
-    G.write("Hello... sir.")
+    G.write("Steve: Hello... sir.")
     head_wizard.say("get1")
     G.write("Steve: I'm sorry sir, but I don't think I am who you think I am.")
     head_wizard.say("get2")
     head_wizard.say("get3")
     G.write("Tenaxx calls everyone over.")
     Tenaxx_s = Tenaxx_s + 1
+
 elif one_of_five is 4:
     G.write("You walk over to the old lady. You can just run if she starts screaming again.")
-    G.write("Hello Ma'am")
+    G.write("Steve: Hello Ma'am")
     head_witch.say("get1")
     G.write("Steve: I'm sorry, but I don't know who you think I am.")
     G.write("The woman looks at you through squinted eyes.")
     head_witch.say("get2")
     head_witch.say("get3")
     head_witch.say("get4")
-    G.write("A witch? Those are real?")
+    G.write("Steve: A witch? Those are real?")
     G.write("At this the Morena laughs.")
     head_witch.say("get5")
     G.write("Before you can say anything the oldest men of the five calls everyone over.")
     Morena_s = Morena_s + 1
+
 elif one_of_five is 5:
     G.write("You get off the table and cautiously aproutch the horse person. What are they called again?")
     G.write("Really what are they called?")
@@ -555,6 +600,7 @@ elif one_of_five is 5:
     head_summoner.say("get4")
     G.write("Before you can say anything else, the old man calls everyone over.")
     Dredall_s = Dredall_s + 1
+
 os.system('cls')
 head_wizard.say("expo1")
 head_wizard.say("expo2")
@@ -568,6 +614,7 @@ G.write("Dredall grabs you and you find your self on his back. You all walk out 
 os.system('cls')
 G.write("After a moment you walk into a large room with a clear floor. The walls are lined with weapons.")
 head_summoner.say("weapon")
+
 for i in range(len(weapon_choice)):
     stdout.write(str(i))
     stdout.write(": ")
@@ -582,8 +629,10 @@ G.write(weapon_choice[wc].dscrpt)
 if weapon_choice[wc].name is "War Hammer":
     head_summoner.say("warhammer")
     Dredall_s = Dredall_s + 1
+
 elif weapon_choice[wc].name is "Wand":
     head_witch.say("wand")
+
     help = int(input("1: yes, 2: no"))
     if help is 1:
         G.write("You don't know how this works. Some help sounds like a great idea.")
@@ -593,8 +642,10 @@ elif weapon_choice[wc].name is "Wand":
     else:
         G.write("You aren't sure you trust her just yet.")
         head_witch.say("wait")
+
 else:
     head_summoner.say("wrong_weapon")
+
 os.system('clr')
 head_summoner.say("train")
 G.write("Steve: Does it have to be a master? Why not a beginner?")
@@ -611,8 +662,10 @@ G.write("Steve: Oh, yes... O-of course you have everything.")
 head_alchemist.say("yahn")
 G.write("Droxone just walks off and leaves everyone else.")
 if help is 1:
+
     G.write("Before leaving, Morena walks over and says in a lowered voice,")
     head_witch.say("come")
+
 G.write("The other four walk away in different dirrections with little more than a word.")
 os.system('clr')
 G.write("You hear the Arms Master cough.")
@@ -641,14 +694,15 @@ os.system('clr')
 arms_master_npc.say("ask")
 G.write("You could just lie? You could tell him it rings a bell.")
 G.write("Will you lie?")
+
 lie = int(input("1: yes, 2:no"))
 if lie is 1:
     G.write("Steve: All of that sounds very familiar. I still can't remember specifics though.")
     arms_master_npc.say("lieyes")
     honesty = honesty - 1
     arms_master_npc.say("lieyes2")
-    first_battle = G.battle_manager()
-    first_battle.battle(steve, arms_master)
+    bat_man.battle(steve, arms_master)
+
 else:
     G.write("Steve: I still don't know what you're talking about.")
     arms_master_npc.say("lieno")
@@ -658,24 +712,30 @@ else:
 arms_master_npc.say("gowhere")
 G.write("")
 G.write("1: Your Chambers")
+
 if help is 1:
     G.write("2: The Library")
+
 else:
     G.write("2: To talk to Morena")
+
 G.write("3: To talk to Tenaxx")
 G.write("4: To talk to Dredall")
 G.write("5: To talk to Droxone")
 G.write("6: To talk to Nathik")
+
 if curiosity is True:
     G.write("7: Somewhere interesting")
-going = int(input("Where would you like to go?"))
 
+going = int(input("Where would you like to go?"))
 if going is 1:
     G.write("The Arms Master takes you to you chambers. A small but nice stone room. There's a bed in the corner.")
     G.write("As you lay down of the bed you think maybe you'll wake up from this dream soon.")
+
 elif going is 2:
     G.write("Greg takes you to a section of the fortresses massive library. Morena is sitting in a well hidden side room.")
     G.write("Plants are hanging from the cieling. There are tanks with salamanders and frogs. Anything that you would think a witch would have is somehow crammed into this tiny room.")
+
     if help is 1:
         head_witch.say("training")
         G.write("Steve: What did you want to show me?")
@@ -684,6 +744,7 @@ elif going is 2:
         head_witch.say("training3")
         head_witch.say("training4")
         G.write("Do you take the items?")
+
         witch_items = int(input("1: yes, 2: no"))
         if witch_items is 1:
             G.write("Steve: Okay. I'll take them")
@@ -692,16 +753,20 @@ elif going is 2:
             steve.collection.add_item(morenas_wand, 1)
             head_witch.say("takeitems")
             Morena_s = Morena_s + 1
+
         else:
             G.write("Steve: I don't even know how to use these things. I can't take them.")
             head_witch.say("regect")
             Morena_s = Morena_s - 1
+
         honesty = honesty + 1
+
     else:
         head_witch.say("curio")
         G.write("Steve: I just want to know what's going on.")
         head_witch.say("curio2")
         head_witch.say("curio3")
+
     head_witch.say("endtalk")
     Morena_s = Morena_s + 1
 
@@ -721,6 +786,7 @@ elif going is 3:
     G.write("He doesn't seem to notice and is now rambling on using words you don't understand.")
     G.write("You think he's talking about his powers, but you can't be sure.")
     G.write("You look around. The study is full of interesting stuff that probably shouldn't be touched.")
+
     if curiosity is True:
         G.write("While the old wizard keeps rambling, you walk over to a shelf covered in odd things.")
         G.write("You pick up an odd contraption that looks like a box made of filigree.")
@@ -728,8 +794,10 @@ elif going is 3:
         G.write("You pocket the box.")
         steve.collection.add_item(nathiks_soul_box)
         box = True
+
     G.write("You leave the room. Tenaxx doesn't notice. You can hear him still talking as you close the door.")
     Tenaxx_s = Tenaxx_s + 1
+
 elif going is 4:
     G.write("Centaur! That's what he's called! Greg seems to take it for granted that Centaurs are real.")
     G.write("The door to his study is really tall, but you suppose it has to be.")
@@ -748,6 +816,7 @@ elif going is 4:
     head_summoner.say("goaway")
     G.write("With that you're shoed out the door. You hear it lock behind you.")
     Dredall_s = Dredall_s + 1
+
 elif going is 5:
     G.write("Droxone seemed like the nicest one there. He's also your age. Greg admits that he's a little wierd, but you don't care anymore.")
     G.write("As soon as you stop in front of the door Greg indicated, you can hear ticking from inside.")
@@ -774,6 +843,7 @@ elif going is 5:
     G.write("Everything is going black. Your ears are ringing.")
     G.write("You pass out.")
     Droxone_s = Droxone_s + 1
+
 elif going is 6:
     G.write("For some reason you want to talk to Nathik. The Arms Master looks vissably nervious.")
     G.write("He leads you to a place in the dungeon. You suppose that Nathik doesn't want to be around other people.")
@@ -783,17 +853,20 @@ elif going is 6:
     G.write("The door flies open and nearly hits you in the face.")
     head_necromancer.say("mad")
     G.write("Apologize, or Ask?")
+
     AorA = int(input("1: Apologize, 2: Ask"))
     if AorA is 1:
         G.write("Steve: I'm sorry for what I did. Whatever it was I probably thought it was best at the time. It might have been, or might not have been.")
         head_necromancer.say("apol")
         Nathik_s = Nathik_s + 1
+
     else:
         G.write("Steve: What did I ever do too you?")
         head_necromancer.say("ask")
         head_necromancer.say("ask2")
         G.write("Nathik slams the door in your face.")
         Nathik_s = Nathik_s - 1
+
 elif going is 7:
     G.write("After a moment of thought, Greg grins and leads you deep into the fortress.")
     G.write("You go down to many staircases to count. Your legs are burning by the time you reach your destination.")
@@ -820,6 +893,7 @@ head_wizard.say("leave2")
 G.write("With that Tenaxx leaves.")
 G.write("Someone has packed all your stuff in a chest and left it by the door to the dining hall.")
 G.write("Everone else is somewhere in the room.")
+
 if box is True:
     G.write("You find that the box you took from Tenaxx is in the chest.")
     G.write("It has a N engraved on the side, it must be Nathik's. It looks like his style.")
@@ -830,6 +904,7 @@ if box is True:
     head_necromancer.say("box")
     Dredall_s = Dredall_s - 1
     Nathik_s = Nathik_s + 2
+
     box_truth = int(input("1: Tell the truth? 2: Lie?"))
     if box_truth is 1:
         G.write("Steve: I was in Tenaxx's study and it was there. I was looking over it and thought it might be yours.")
@@ -838,12 +913,14 @@ if box is True:
         G.write("Nathik takes the box, and with a slight nod, storms off to find Tenaxx.")
         honesty = honesty + 1
         TvsN = True
+
     else:
         G.write("Steve: It was in the chambers I was given. I don't know how it got in there.")
         head_necromancer.say("boxl")
         head_necromancer.say("boxl2")
         G.write("He turns on his heels and leaves.")
         honesty = honesty - 1
+
 G.write("You have breakfast, and then are quickly shoed out into a carage.")
 G.write("2 Weeks Later")
 G.write("The Northern Clyps Ocean")
@@ -852,14 +929,17 @@ G.write("3 Days Out From the Hunirst Chain")
 G.write("You've been sea sick for the past 2 weeks. You've also been sick with nerves for the past two weeks.")
 G.write("Droxone has been trying to make you feel better.")
 head_alchemist.say("island")
+
 if honesty > 0:
     G.write("You're an honest person. You tell the truth.")
     G.write("Steve: I still have no idea what I'm doing. I don't remember any of this.")
     head_alchemist.say("islandh")
+
 else:
     G.write("You're not that honest, so you lie.")
     G.write("Steve: I think I remember some of this. It's all still a blur.")
     head_alchemist.say("islandl")
+
 head_alchemist.say("island2")
 G.write("You wake up from your sea sickness induced coma. It's dark out and there are lanterns on deck.")
 G.write("Coming up on the deck you can see a glow of the horizon.")
@@ -872,5 +952,14 @@ G.write("Steve: No one told me the islands where volcanic.")
 head_summoner.say("fire3")
 G.write("Steve: Oh... That's bad.")
 G.write("Dredall doesn't answer and just walks away.")
+
 if TvsN is True:
     G.write("You hear shouting from ")
+
+G.write("Landing on the Shores of the Hunirst Chain.")
+G.write("The entire island is covered in cooled molten rock. It looks like it's been paved over.")
+G.write("You can hear the rowing of the dragon from here. Fire, lava, and ash can be seen shooting up into the sky.")
+G.write("You're dragged along up the slope until you have a line of sight on the dragon.")
+G.write("It's the size of an apartment building. Brown scales cover it from head to toe.")
+G.write("The ground is covered in pools of molten rock.")
+bat_man.battle(steve, world_dragon)
