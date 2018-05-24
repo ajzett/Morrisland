@@ -93,7 +93,7 @@ suit_narrator.add_dialogue('initial-encounter', '"Where do you think you\'re goi
 suit_narrator.add_dialogue('tax-confront', "\"Thought you'd just be able to get away with evading taxes?\"")
 suit_narrator.add_dialogue('avoid-this', ["\"Well, you might've been able to avoid taxes...", "but you won't be able to avoid this!\""])
 suit_narrator.add_dialogue('use-buff', '"I was hoping it would\'t come to this..."')
-suit_narrator.add_dialogue('the-plunge',  ["\n\n\"Command,\" he begins as a sly smile crosses his face,",  "\"this guy isn't cooperating.\"", "\"I'm going to use...", f'{Fore.RED}the system{Style.RESET_ALL}."\n\n'])
+suit_narrator.add_dialogue('the-plunge',  ["\n\"Command,\" he begins as a sly smile crosses his face,",  "\"this guy isn't cooperating.\"", "\"I'm going to use...", f'{Fore.RED}the system{Style.RESET_ALL}."'])
 suit_narrator.add_dialogue('spare-the-cash', f'"{Fore.LIGHTRED_EX}You just couldn\'t spare the 9%, could you?{Style.RESET_ALL}"')
 
 narrator = G.NPC('Narrator', None, None, None)
@@ -182,7 +182,7 @@ def bat_check():
             narrator.say('the-plunge')
             suit_narrator.say('spare-the-cash')
             let_read()
-            black_suit.collection.use_item(black_suit_buff)
+            bat_man.use_item(black_suit, black_suit_buff)
             black_suit.equip(black_suit_buffed)
             black_suit.entity_dict['used_buff'] = True
         elif (black_suit.entity_dict['used_buff'] is True) and (monologue[dialogue_index.black_suit] == 2):
