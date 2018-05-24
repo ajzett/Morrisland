@@ -123,9 +123,7 @@ class dialogue_index(G.IntEnum):
 
 
 def advance_dialogue():
-    print(monologue[dialogue_index.black_suit])
     monologue[dialogue_index.black_suit] += 1
-    print(monologue[dialogue_index.black_suit])
     let_read()
 
 
