@@ -57,8 +57,8 @@ throw_table = G.attack('Throw Table', 'Throw a table at your opponent.', 30, 45)
 
 # Weapons #
 # User Weapons
-chop_sticks = G.weapon('Chop Sticks', 'A pair of chopsticks you had used to eat your meal. If you believe in yourself, who knows what might happen?', 1, [sword_dance, quick_draw, cross_slash, parry, charge, flying_kick, low_sweep, high_kick, punch, shin_kick, pepper_spray, throw_chair, bash, throw_table], 5, 5, 5, 5, 1)
-katana = G.weapon('Katana', 'A weapon proven deadly when used in the right hands. Catch your enemies by surprise, or just impress them with your collection.', 100, [sword_dance, quick_draw, cross_slash, parry], 5, 8, 0, 12)
+chop_sticks = G.weapon('Chop Sticks', 'A pair of chopsticks you had used to eat your meal. If you believe in yourself, who knows what might happen?', 1, [sword_dance, quick_draw, cross_slash, parry, charge, flying_kick, low_sweep, high_kick, punch, shin_kick, pepper_spray, throw_chair, bash, throw_table], 5, 5, 5, 5)
+katana = G.weapon('Katana', 'A weapon proven deadly when used in the right hands. Catch your enemies by surprise, or just impress them with your collection.', 100, [sword_dance, quick_draw, cross_slash, parry], 5, 8, 0, 12, 1)
 black_belt = G.weapon('Black Belt', 'A weapon worn around the waist. Grants user impeccable hand-to-hand combat ability. Or, supposedly, it could be used to towel-snap your opponent.', 5, [charge, flying_kick, low_sweep, high_kick], 10, 10, 5)
 
 # Boss Weapons
@@ -191,6 +191,7 @@ def bat_check():
             G.write(['"You\'re terminally shortsighted."'])
             advance_dialogue()
 
+    print(build_temp_effects(bat_man))
     if (tso_chicken.name in build_temp_effects(bat_man)) and (bat_man.battle_dict['turn'] == G.Turn.Attack):
         G.write([f"The Ghost of {tso_chicken.name} rises from the deep.", f"\n\n{tso_chicken.name} helps you by doing 15 damage to the enemy."])
         bat_man.hit_animate()
@@ -631,7 +632,7 @@ def main():
         global bat_man
         if user_choice == '1':
             weapon_chosen = True
-            print('\nSpecial effects: Stamina will regenerate once per turn to allow for the use of special attacks.')
+            print('\nSpecial effects: Stamina will regenerate once per turn to allow for the use of special attacks. Attack twice per turn.')
             let_read()
             user.collection.equip(katana)
             user.collection.add_item(stamina)
@@ -642,7 +643,7 @@ def main():
             bat_man = base_bat_man()
         elif user_choice == '3':
             weapon_chosen = True
-            print('\nSpecial effects: Stamina will regenerate and two random attacks will be generated twice every turn, and the player can choose from one each time.\n')
+            print('\nSpecial effects: Stamina will regenerate and two random attacks will be generated once every turn.\n')
             let_read()
             user.collection.equip(chop_sticks)
             user.collection.add_item(spray_can, 5)
