@@ -14,7 +14,7 @@ spray_can = G.item('Pepper Spray', 'A can of pepper spray.', 10)
 
 # Buffs/Heals #
 # Buffs
-black_suit_buff = G.stat_item('Mysterious Orange Liquid', 'A mysterious orange liquid that was used by the Man in the Black Suit.', 1000, 10, 0, 25, 20, -10)
+black_suit_buff = G.stat_item('Mysterious Orange Liquid', 'A mysterious orange liquid that was used by the Man in the Black Suit.', 1000, 10, 0, 20, 15, -10)
 msg = G.stat_item('MSG', 'Super Salt. Seriously bad for you, but a seriously wild ride.', 5, 2, 0, 10, 0, 10)
 tso_chicken = G.stat_item("General Tso's Chicken", "Nothing incites a fighting spirit like the effigy of General Tso's Chicken. Why did the General only have one?", 20, 3, 30)
 
@@ -77,7 +77,7 @@ black_suit_collection = G.battler_collection(1000, [black_suit_prebuff, black_su
 black_suit_collection.add_item(stim_pack, 3)
 # Stat Lists
 user_stats = G.battler_stats(100, 7, 8, 10)
-black_suit_stats = G.battler_stats(150, 15, 20, 10)
+black_suit_stats = G.battler_stats(150, 15, 15, 10)
 
 # Battlers
 user = G.player('Ed', None, None, None, user_collection, user_stats)
