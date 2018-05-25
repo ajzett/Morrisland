@@ -182,17 +182,23 @@ def bat_check():
             narrator.say('the-plunge')
             suit_narrator.say('spare-the-cash')
             let_read()
+            black_suit.collection.add_item(black_suit_buff)
             bat_man.use_item(black_suit, black_suit_buff)
-            input(bat_man.effect_dict['reverse_effect_enemy'])
             black_suit.collection.equip(black_suit_buffed)
             black_suit.entity_dict['used_buff'] = True
-        elif (black_suit.entity_dict['used_buff'] is True) and (monologue[dialogue_index.black_suit] == 2):
-            G.clr_console()
-            G.write(["Let's say that I DID forget to pay tax.", 'What would forgetting one time matter?'])
-            G.write(["It isn't just you, you see?", "It's everyone.", 'If everyone forgot to pay their taxes one time all together...', "it's unthinkable."])
-            G.write(['"The Government can handle about $0.05 less one time from everyone in their lives,', 'can\'t they?"'])
-            G.write(['"You\'re terminally shortsighted."'])
-            advance_dialogue()
+        elif black_suit.entity_dict['used_buff'] is True:
+            if black_suit_buff not in build_temp_effects(bat_man):
+                G.clr_console()
+                G.write(['The man shrinks back down to his previous size.'])
+                black_suit.equip(black_suit_prebuff)
+                let_read()
+            if monologue[dialogue_index.black_suit] == 2:
+                G.clr_console()
+                G.write(["Let's say that I DID forget to pay tax.", 'What would forgetting one time matter?'])
+                G.write(["It isn't just you, you see?", "It's everyone.", 'If everyone forgot to pay their taxes one time all together...', "it's unthinkable."])
+                G.write(['"The Government can handle about $0.05 less one time from everyone in their lives,', 'can\'t they?"'])
+                G.write(['"You\'re terminally shortsighted."'])
+                advance_dialogue()
 
     if (tso_chicken in build_temp_effects(bat_man)) and (bat_man.battle_dict['turn'] == G.Turn.Attack):
         G.write([f"The Ghost of {tso_chicken.name} rises from the deep.", f"\n\n{tso_chicken.name} helps you by doing 15 damage to the enemy."])
