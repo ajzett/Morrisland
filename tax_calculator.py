@@ -74,7 +74,7 @@ user_collection.add_item(sushi_roll, 3)
 user_collection.add_item(stamina, 2)
 
 black_suit_collection = G.battler_collection(1000, [black_suit_prebuff, black_suit_buffed, spray_can, spray_can, spray_can, spray_can], [black_suit_prebuff])
-black_suit_collection.add_item(stim_pack, 6)
+black_suit_collection.add_item(stim_pack, 3)
 # Stat Lists
 user_stats = G.battler_stats(100, 10, 10, 10)
 black_suit_stats = G.battler_stats(150, 12, 15, 10)
