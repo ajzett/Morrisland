@@ -92,7 +92,7 @@ suit_narrator = G.NPC('The man in a black suit', None, None, None)
 suit_narrator.add_dialogue('initial-encounter', '"Where do you think you\'re going?"')
 suit_narrator.add_dialogue('tax-confront', "\"Thought you'd just be able to get away with evading taxes?\"")
 suit_narrator.add_dialogue('avoid-this', ["\"Well, you might've been able to avoid taxes...", "but you won't be able to avoid this!\""])
-suit_narrator.add_dialogue('use-buff', '"I was hoping it would\'t come to this..."')
+suit_narrator.add_dialogue('use-buff', '"I was hoping it wouldn\'t come to this..."')
 suit_narrator.add_dialogue('the-plunge',  ["\n\"Command,\" he begins as a sly smile crosses his face,",  "\"this guy isn't cooperating.\"", "\"I'm going to use...", f'{Fore.LIGHTRED_EX}the system{Style.RESET_ALL}."'])
 suit_narrator.add_dialogue('spare-the-cash', f'"{Fore.LIGHTRED_EX}You just couldn\'t spare the 9%, could you?{Style.RESET_ALL}"')
 
