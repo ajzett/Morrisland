@@ -319,7 +319,17 @@ def win(manager):
                 let_read()
 
                 print(f"{Fore.BLACK}{Back.WHITE}Ending:{Style.RESET_ALL} the [D]iscount hero\n\n{Fore.BLACK}{Back.WHITE}Player Status:{Style.RESET_ALL} Alive\n{Fore.BLACK}{Back.WHITE}Boss Status:{Style.RESET_ALL} Unknown\n{Fore.BLACK}{Back.WHITE}Alton Brown Status:{Style.RESET_ALL} Unknown\n\n")
+            else:
+                G.write(['Locked in endless combat, violence suddenly seems like an unecessary effort.', 'You call out to your opponent.', '\n\n"I\'m done." you say as you lower your arms.', 'He takes a step towards you.'])
+                let_read()
 
+                G.write(['"Wait!"', '\n\nSuddenly, there is a cry from behind the counter.', f'\n\n"Stop this nonsense. This is all my fault. I never included tax prices in my meal cost. He\'s innocent." says {alton.name}', '\n\n"Is this true?" says the man, turning back towards you.'])
+                let_read()
+
+                G.write(['"...yes." you relucantly reply.', '\n\n"In that case, consider this your first warning. Don\'t do that again."', '\n\nAnd then, as quickly as he had come, he was gone.'])
+                let_read()
+
+                print(f"{Fore.BLACK}{Back.WHITE}Ending:{Style.RESET_ALL} hig[H]way robbery\n\n{Fore.BLACK}{Back.WHITE}Player Status:{Style.RESET_ALL} Alive\n{Fore.BLACK}{Back.WHITE}Boss Status:{Style.RESET_ALL} Unknown\n{Fore.BLACK}{Back.WHITE}Alton Brown Status:{Style.RESET_ALL} Unknown\n\n")
         elif user_tipped is False:
             if black_suit_buff in build_temp_effects(manager):
                 G.write(["You ready my final stand against the beast.", "With a fatal blow, you knock the monster to the ground-- an explosive cloud of smoke rising in its wake.", "\n\nAs it clears, the remains of the foul beast disintegrate before me. You have done well."])
@@ -653,7 +663,7 @@ def main():
     global monologue
     monologue = [0, None]
 
-    bat_man.battle(user, black_suit, bat_check, "./Media/boss.wav")
+    bat_man.battle(user, black_suit, bat_check)
 
 
 if __name__ == '__main__':
