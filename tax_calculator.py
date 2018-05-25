@@ -76,7 +76,7 @@ user_collection.add_item(stamina, 2)
 black_suit_collection = G.battler_collection(1000, [black_suit_prebuff, black_suit_buffed, spray_can, spray_can, spray_can, spray_can], [black_suit_prebuff])
 black_suit_collection.add_item(stim_pack, 3)
 # Stat Lists
-user_stats = G.battler_stats(100, 10, 10, 10)
+user_stats = G.battler_stats(100, 7, 8, 10)
 black_suit_stats = G.battler_stats(150, 12, 15, 10)
 
 # Battlers
@@ -670,7 +670,7 @@ def main():
     global monologue
     monologue = [0, None]
 
-    bat_man.battle(user, black_suit, bat_check './Media/boss.wav')
+    bat_man.battle(user, black_suit, bat_check, './Media/boss.wav')
 
 
 if __name__ == '__main__':
