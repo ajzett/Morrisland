@@ -14,7 +14,7 @@ spray_can = G.item('Pepper Spray', 'A can of pepper spray.', 10)
 
 # Buffs/Heals #
 # Buffs
-black_suit_buff = G.stat_item('Mysterious Orange Liquid', 'A mysterious orange liquid that was used by the Man in the Black Suit.', 1000, 10, 0, 20, 15, -10)
+black_suit_buff = G.stat_item('Mysterious Orange Liquid', 'A mysterious orange liquid that was used by the Man in the Black Suit.', 1000, 10, 0, 20, 15, -7)
 msg = G.stat_item('MSG', 'Super Salt. Seriously bad for you, but a seriously wild ride.', 5, 2, 0, 10, 0, 10)
 tso_chicken = G.stat_item("General Tso's Chicken", "Nothing incites a fighting spirit like the effigy of General Tso's Chicken. Why did the General only have one?", 20, 3, 30)
 
@@ -58,7 +58,7 @@ throw_table = G.attack('Throw Table', 'Throw a table at your opponent.', 30, 45)
 # Weapons #
 # User Weapons
 chop_sticks = G.weapon('Chop Sticks', 'A pair of chopsticks you had used to eat your meal. If you believe in yourself, who knows what might happen?', 1, [sword_dance, quick_draw, cross_slash, parry, charge, flying_kick, low_sweep, high_kick, punch, shin_kick, pepper_spray, throw_chair, bash, throw_table], 5, 5, 5, 5)
-katana = G.weapon('Katana', 'A weapon proven deadly when used in the right hands. Catch your enemies by surprise, or just impress them with your collection.', 100, [sword_dance, quick_draw, cross_slash, parry], -10, 0, 0, 15, 1)
+katana = G.weapon('Katana', 'A weapon proven deadly when used in the right hands. Catch your enemies by surprise, or just impress them with your collection.', 100, [sword_dance, quick_draw, cross_slash, parry], -10, 0, 0, 13, 1)
 black_belt = G.weapon('Black Belt', 'A weapon worn around the waist. Grants user impeccable hand-to-hand combat ability. Or, supposedly, it could be used to towel-snap your opponent.', 5, [charge, flying_kick, low_sweep, high_kick], 10, 8, 5)
 
 # Boss Weapons
@@ -77,7 +77,7 @@ black_suit_collection = G.battler_collection(1000, [black_suit_prebuff, black_su
 black_suit_collection.add_item(stim_pack, 3)
 # Stat Lists
 user_stats = G.battler_stats(100, 7, 8, 10)
-black_suit_stats = G.battler_stats(150, 15, 15, 10)
+black_suit_stats = G.battler_stats(150, 15, 15, 7)
 
 # Battlers
 user = G.player('Ed', None, None, None, user_collection, user_stats)
