@@ -42,7 +42,7 @@ sword_dance = G.attack('Sword Dance', 'Weave around the enemy slicing so thinly 
 # For black belt
 charge = G.attack('Charge', 'Charge towards the enemy with great force', 10)
 flying_kick = G.attack('Flying Scissor Kick', 'Leap at the enemy with a Scissor Kick.', 20, 65)
-high_kick = G.attack('High Kick', 'Lean back and kick high with your good leG.', 15, 85)
+high_kick = G.attack('High Kick', 'Lean back and kick high with your good leg.', 15, 85)
 low_sweep = G.ammo_attack('Low Sweep', 'Sweep your leg and temporarily disarm the apponent.', 8, stamina, 1, 100, surprise_debuff)
 
 # For pre-buff blacksuit
@@ -93,7 +93,7 @@ suit_narrator.add_dialogue('initial-encounter', '"Where do you think you\'re goi
 suit_narrator.add_dialogue('tax-confront', "\"Thought you'd just be able to get away with evading taxes?\"")
 suit_narrator.add_dialogue('avoid-this', ["\"Well, you might've been able to avoid taxes...", "but you won't be able to avoid this!\""])
 suit_narrator.add_dialogue('use-buff', '"I was hoping it would\'t come to this..."')
-suit_narrator.add_dialogue('the-plunge',  ["\n\"Command,\" he begins as a sly smile crosses his face,",  "\"this guy isn't cooperating.\"", "\"I'm going to use...", f'{Fore.RED}the system{Style.RESET_ALL}."'])
+suit_narrator.add_dialogue('the-plunge',  ["\n\"Command,\" he begins as a sly smile crosses his face,",  "\"this guy isn't cooperating.\"", "\"I'm going to use...", f'{Fore.LIGHTRED_EX}the system{Style.RESET_ALL}."'])
 suit_narrator.add_dialogue('spare-the-cash', f'"{Fore.LIGHTRED_EX}You just couldn\'t spare the 9%, could you?{Style.RESET_ALL}"')
 
 narrator = G.NPC('Narrator', None, None, None)
@@ -148,10 +148,12 @@ def build_temp_effects(manager):
 
 
 def bat_check():
+    black_suit.stats.health = 15
+
     if (bat_man.percent_health(black_suit) < 90) and (monologue[dialogue_index.black_suit] == 0):
         G.clr_console()
         G.write(["You call out to your opponent.", '"C\'mon man, do we really have to do this?"'])
-        G.write(['"When did you get the impression that I was doing this because I', f'{Fore.RED}HAD{Fore.RESET}', 'to?"', 'he chirps back.'])
+        G.write(['"When did you get the impression that I was doing this because I', f'{Fore.LIGHTRED_EX}HAD{Fore.RESET}', 'to?"', 'he chirps back.'])
         G.write(['"You do get paid to do this, right?', 'This has to be a paid job."'])
         G.write([f'{black_suit.name}\'s face suddenly displays an intense tranquility.', '\n\n"This...', f'this is {Fore.BLACK}{Back.WHITE}divine{Style.RESET_ALL} penance!', 'Punishment for the worst of criminals!', 'I would never ask for money."'])
         advance_dialogue()
@@ -168,7 +170,7 @@ def bat_check():
         G.write(["You're taken aback by that statement.", '\n\n"What?"'])
         G.write('"We use that money to fend off the terrorists," he continues.')
         G.write('"..and?"')
-        G.write(['"Choosing to avoid helping the fight against the terrorists is', '\b...', f'{Fore.RED}terrorism itself{Fore.RESET}!"'])
+        G.write(['"Choosing to avoid helping the fight against the terrorists is', '\b...', f'{Fore.LIGHTRED_EX}terrorism itself{Fore.RESET}!"'])
         advance_dialogue()
 
     if bat_man.percent_health(black_suit) <= 50:
@@ -181,6 +183,7 @@ def bat_check():
             suit_narrator.say('spare-the-cash')
             let_read()
             bat_man.use_item(black_suit, black_suit_buff)
+            input(bat_man.effect_dict['reverse_effect_enemy'])
             black_suit.collection.equip(black_suit_buffed)
             black_suit.entity_dict['used_buff'] = True
         elif (black_suit.entity_dict['used_buff'] is True) and (monologue[dialogue_index.black_suit] == 2):
@@ -199,7 +202,7 @@ def bat_check():
     if (bat_man.percent_health(user) <= 50) and (user_tipped is True) and (bat_man.battle_dict['turn'] == G.Turn.Attack):
         if monologue[dialogue_index.alton] is None:
             bat_man.battle_dict['alton_help'] = True
-            G.write(['Alton brown leaps out from behind the counter', '"\n\nI will defend this tipping customer!"', 'he says as a chair grazes the top of his head.', f'"...from {Fore.RED}behind{Fore.RESET} the counter!"'])
+            G.write(['Alton brown leaps out from behind the counter', '"\n\nI will defend this tipping customer!"', 'he says as a chair grazes the top of his head.', f'"...from {Fore.LIGHTRED_EX}behind{Fore.RESET} the counter!"'])
             monologue[dialogue_index.alton] = 0
 
         G.write('Alton brown tosses mugs at the Man in the Black Suit, dealing 15 damage.')
@@ -215,7 +218,7 @@ def win(manager):
                 G.write([f"You glance over at {alton.name}. He's sweating-- barely holding on.", "You know how he feels. It takes everything you have to not give up and accept your fate.", "\n\nBut--", "suddenly, a phantomish form bursts out from behind the monster."])
                 let_read()
 
-                G.write([f'{alton.name} gives you a strange look.', f"Apparently, he hadn't seen the Ghost of {tso_chicken.name} emerge from the abyss.", f'\n\n"What in the {Fore.RED}world{Fore.RESET} is that?" you hear {alton.name} spout in disbelief as the chicken kites the enormous beast.', '\n\n"Just wait," you mutter back.'])
+                G.write([f'{alton.name} gives you a strange look.', f"Apparently, he hadn't seen the Ghost of {tso_chicken.name} emerge from the abyss.", f'\n\n"What in the {Fore.LIGHTRED_EX}world{Fore.RESET} is that?" you hear {alton.name} spout in disbelief as the chicken kites the enormous beast.', '\n\n"Just wait," you mutter back.'])
                 let_read()
 
                 G.write([f'The two of you watch as the Ghost of {tso_chicken.name} leaps high into the air, and delivers a kick with the strength of 1000 ancient Chinese imperial commissioners.'])
@@ -227,7 +230,7 @@ def win(manager):
                 G.write([f"You glance over at {alton.name}. He's sweating-- barely holding on.", "You know how he feels. It takes everything you have to not give up and accept your fate.", "\n\nBut--", "suddenly, a phantomish form bursts out from behind the monster."])
                 let_read()
 
-                G.write([f'{alton.name} gives you a strange look.', f"Apparently, he hadn't seen the Ghost of {tso_chicken.name} emerge from the abyss.", f'\n\n"What in the {Fore.RED}world{Fore.RESET} is that?" you hear {alton.name} spout in disbelief as the chicken kites the enormous beast.', '\n\n"Just wait," you mutter back.'])
+                G.write([f'{alton.name} gives you a strange look.', f"Apparently, he hadn't seen the Ghost of {tso_chicken.name} emerge from the abyss.", f'\n\n"What in the {Fore.LIGHTRED_EX}world{Fore.RESET} is that?" you hear {alton.name} spout in disbelief as the chicken kites the enormous beast.', '\n\n"Just wait," you mutter back.'])
                 let_read()
 
                 G.write([f'The two of you watch as the Ghost of {tso_chicken.name} sucker punches the man in the black suit, leaving him wide open for a follow-up attack.'])
@@ -290,7 +293,7 @@ def win(manager):
             let_read()
 
             if user_tipped is False:
-                G.write([f'Just as you have a moment to take a breath, {alton.name} leaps out from behind the counter.', '\n\n"Well, now that that is dealt with..." he begins.', f'"Who do you think you are to come into {Fore.RED}MY{Fore.RESET} restaurant and never leave a tip?"', '\n\nYou\'re stunned. "Since it\'s your business, don\'t you make all the profit? Why do I need to tip?"', '\n\n"You fool..."'])
+                G.write([f'Just as you have a moment to take a breath, {alton.name} leaps out from behind the counter.', '\n\n"Well, now that that is dealt with..." he begins.', f'"Who do you think you are to come into {Fore.LIGHTRED_EX}MY{Fore.RESET} restaurant and never leave a tip?"', '\n\nYou\'re stunned. "Since it\'s your business, don\'t you make all the profit? Why do I need to tip?"', '\n\n"You fool..."'])
                 let_read()
 
                 G.write(['Alton takes one step foreward.', "You aren't prepared to deal with another contender, after giving your all to defeat the Man in the Black Suit.", 'Nevertheless, you prepare to defend yourself yet again.', 'Just as he is about to reach you, he is yanked to the ground.', '\n\n"No..." he stammers.', '"...NO!"', f'\n\n{alton.name} tries to pull himself up, but fails repeatedly to do so.', 'He begins to sink into the floor, panicking as he goes.', f'Just as he disappears, you see the silhouette of {tso_chicken.name}.'])
