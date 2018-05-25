@@ -105,7 +105,7 @@ narrator.add_dialogue('try-to-leave', ["You take your things and turn to leave. 
 narrator.add_dialogue('enemy-spotted', ['The figure steps forward, and the sun retreats behind it like water, revealing a man in a black suit.', 'You stare at each other as a deep silence falls upon the earth, like something seen in a classic Western movie.', 'You turn around, but Alton is nowhere to be seen.', 'Calling out, he responds from under the counter.'])
 narrator.add_dialogue('back-to-reality', ['Your head snaps back from where Alton lay beneath the counter.', f'{suit_narrator.name} now faces you fists raised, ready to pounce.'])
 narrator.add_dialogue('enemy-attacks', [f'{suit_narrator.name} runs forward towards you and takes a swing.', 'You drop to the ground in an effort to dodge.', 'He tries to kick you, but you roll away.', 'Adrenaline begins to pump through your veins as you desparately attempt being hit. You have nothing to defend yourself with.', '\n\nOn the ground, you notice three weapons that Alton stores under tables.', 'The oppurtunity to grab one arises.', 'Which do you choose?'])
-narrator.add_dialogue('use-item', [f'A breafcase comes crashing through the roof. {black_suit.name} reaches up to catch it with perfect timing, as if it had happened a million times before.', "Out of the breafcase, he takes a needle containing a strange, orange liquid.", f"{black_suit.name} raises his hand to his ear and speaks into a small microphone."])
+narrator.add_dialogue('use-item', [f'A briefcase comes crashing through the roof. {black_suit.name} reaches up to catch it with perfect timing, as if it had happened a million times before.', "Out of the breafcase, he takes a needle containing a strange, orange liquid.", f"{black_suit.name} raises his hand to his ear and speaks into a small microphone."])
 narrator.add_dialogue('the-plunge', ['You get a bad feeling as he flicks off his earpiece.', "You hear the buzzing of wild chatter from the man's earpiece, which now hangs from his shirt.", 'As he drains the liquid you stand transfixed as he swells into a grotesquely muscular creature.', "His suit tears with his newly increased size.", "\n\nThe very moment when you become grounded enough to run, he glares at you.", 'He grins.'])
 
 
@@ -193,7 +193,7 @@ def bat_check():
             if monologue[dialogue_index.black_suit] == 2:
                 G.clr_console()
                 G.write(["Let's say that I DID forget to pay tax.", 'What would forgetting one time matter?'])
-                G.write(["It isn't just you, you see?", "It's everyone.", 'If everyone forgot to pay their taxes one time all together...', "it's unthinkable."])
+                G.write(['"It isn\'t just you, you see?', "It's everyone.", 'If everyone forgot to pay their taxes one time all together...', 'it\'s unthinkable."'])
                 G.write(['"The Government can handle about $0.05 less one time from everyone in their lives,', 'can\'t they?"'])
                 G.write(['"You\'re terminally shortsighted."'])
                 advance_dialogue()
@@ -352,9 +352,9 @@ def win(manager):
                 G.write(["Your assailant reveals himself, foolishly thinking that he would have time to attack once again in your stupor.", "It appears Alton was unimpressed with your tip.", "\n\nYou're unimpressed with his hospitality."])
                 let_read()
 
-                G.write(["You lunge towards the counter and pull the chopstick out of me in one easy motion.", "Taking some food from the counter, you use the lone chopstick to feed him some of his own medicine.", "His body violently resists the cooking.", '\n\nAfter a moment that expands into a painful eternity, he falls limp.'])
+                G.write(["You lunge towards the counter and pull the chopstick out of you in one easy motion.", "Taking some food from the counter, you use the lone chopstick to feed him some of his own medicine.", "His body violently resists the cooking.", '\n\nAfter a moment that expands into a painful eternity, he falls limp.'])
                 let_read()
-                G.write(['"I\'m no lawyer," you begin.', '"...but if that\'s how a cook reacted to his own work..."', '"I\'d sous the chef.'])
+                G.write(['"I\'m no lawyer," you begin.', '"...but if that\'s how a cook reacted to his own work...', 'I\'d sous the chef.'])
                 let_read()
 
                 print(f"{Fore.BLACK}{Back.WHITE}Ending:{Style.RESET_ALL} some of his own m[E]dicine\n\n{Fore.BLACK}{Back.WHITE}Player Status:{Style.RESET_ALL} Alive\n{Fore.BLACK}{Back.WHITE}Boss Status:{Style.RESET_ALL} Dead\n{Fore.BLACK}{Back.WHITE}Alton Brown Status:{Style.RESET_ALL} Dead\n\n")
@@ -670,7 +670,7 @@ def main():
     global monologue
     monologue = [0, None]
 
-    bat_man.battle(user, black_suit, bat_check, '../Media/boss.wav')
+    bat_man.battle(user, black_suit, bat_check)  #, '../Media/boss.wav')
 
 
 if __name__ == '__main__':
