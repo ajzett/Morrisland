@@ -148,8 +148,6 @@ def build_temp_effects(manager):
 
 
 def bat_check():
-    black_suit.stats.health = 15
-
     if (bat_man.percent_health(black_suit) < 90) and (monologue[dialogue_index.black_suit] == 0):
         G.clr_console()
         G.write(["You call out to your opponent.", '"C\'mon man, do we really have to do this?"'])
