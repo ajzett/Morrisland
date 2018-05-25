@@ -293,7 +293,7 @@ def win(manager):
                 G.write(['Alton takes one step foreward.', "You aren't prepared to deal with another contender, after giving your all to defeat the Man in the Black Suit.", 'Nevertheless, you prepare to defend yourself yet again.', 'Just as he is about to reach you, he is yanked to the ground.', '\n\n"No..." he stammers.', '"...NO!"', f'\n\n{alton.name} tries to pull himself up, but fails repeatedly to do so.', 'He begins to sink into the floor, panicking as he goes.', f'Just as he disappears, you see the silhouette of {tso_chicken.name}.'])
                 let_read()
 
-                print(f"{Fore.BLACK}{Back.WHITE}Ending:{Style.RESET_ALL} the watchful eye of g[E]neral tso\n\n{Fore.BLACK}{Back.WHITE}Player Status:{Style.RESET_ALL} Alive\n{Fore.BLACK}{Back.WHITE}Boss Status:{Style.RESET_ALL} In Limbo\n{Fore.BLACK}{Back.WHITE}Alton Brown Status:{Style.RESET_ALL} Alive\n\n")
+                print(f"{Fore.BLACK}{Back.WHITE}Ending:{Style.RESET_ALL} tso\'s ch[I]cken of the abyss\n\n{Fore.BLACK}{Back.WHITE}Player Status:{Style.RESET_ALL} Alive\n{Fore.BLACK}{Back.WHITE}Boss Status:{Style.RESET_ALL} In Limbo\n{Fore.BLACK}{Back.WHITE}Alton Brown Status:{Style.RESET_ALL} Alive\n\n")
 
             else:
                 print(f"{Fore.BLACK}{Back.WHITE}Ending:{Style.RESET_ALL} general tso's [C]hicken\n\n{Fore.BLACK}{Back.WHITE}Player Status:{Style.RESET_ALL} Alive\n{Fore.BLACK}{Back.WHITE}Boss Status:{Style.RESET_ALL} In Limbo\n{Fore.BLACK}{Back.WHITE}Alton Brown Status:{Style.RESET_ALL} Alive\n\n")
