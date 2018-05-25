@@ -77,7 +77,7 @@ black_suit_collection = G.battler_collection(1000, [black_suit_prebuff, black_su
 black_suit_collection.add_item(stim_pack, 3)
 # Stat Lists
 user_stats = G.battler_stats(100, 7, 8, 10)
-black_suit_stats = G.battler_stats(150, 12, 15, 10)
+black_suit_stats = G.battler_stats(150, 15, 20, 10)
 
 # Battlers
 user = G.player('Ed', None, None, None, user_collection, user_stats)
@@ -188,7 +188,7 @@ def bat_check():
             if black_suit_buff not in build_temp_effects(bat_man):
                 G.clr_console()
                 G.write(['The man shrinks back down to his previous size.'])
-                black_suit.equip(black_suit_prebuff)
+                black_suit.collection.equip(black_suit_prebuff)
                 let_read()
             if monologue[dialogue_index.black_suit] == 2:
                 G.clr_console()
