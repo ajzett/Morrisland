@@ -43,7 +43,7 @@ sword_dance = G.attack('Sword Dance', 'Weave around the enemy slicing so thinly 
 charge = G.attack('Charge', 'Charge towards the enemy with great force', 10)
 flying_kick = G.attack('Flying Scissor Kick', 'Leap at the enemy with a Scissor Kick.', 20, 65)
 high_kick = G.attack('High Kick', 'Lean back and kick high with your good leg.', 15, 85)
-low_sweep = G.ammo_attack('Low Sweep', 'Sweep your leg and temporarily disarm the apponent.', 8, stamina, 1, 100, surprise_debuff)
+low_sweep = G.ammo_attack('Low Sweep', 'Sweep your leg and temporarily disarm the apponent.', 8, stamina, 2, 100, surprise_debuff)
 
 # For pre-buff blacksuit
 shin_kick = G.attack('Shin Kick', "Kick your opponent's shin.", 8)
@@ -429,8 +429,6 @@ class base_bat_man(G.battle_manager):
         # The player loses
         lose(self)
 
-
-class katana_bat_man(base_bat_man):
     def battle(self, plyr, enemy, spec_effect=None, music=None):
         self.determine_first_turn(plyr, enemy)
 
@@ -515,7 +513,7 @@ class katana_bat_man(base_bat_man):
             self.player_lose(plyr, enemy)
 
 
-class chop_bat_man(katana_bat_man):
+class chop_bat_man(base_bat_man):
     def plyr_choose_attack(self, plyr):
         if 'rand_attacks' in self.battle_dict:
             choices = self.battle_dict['rand_attacks']
@@ -642,8 +640,9 @@ def main():
             let_read()
             user.collection.equip(katana)
             user.collection.add_item(stamina)
-            bat_man = katana_bat_man()
+            bat_man = base_bat_man()
         elif user_choice == '2':
+            print('\nSpecial effects: Stamina will regenerate once per turn to allow for the use of special attacks.')
             weapon_chosen = True
             user.collection.equip(black_belt)
             bat_man = base_bat_man()
