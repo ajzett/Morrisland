@@ -580,9 +580,9 @@ def main():
     dialogue = None
     while dialogue is None:
         user_choice = input('Yes or No: ')
-        if user_choice.lower() == 'yes':
+        if (user_choice.lower() == 'yes') or (user_choice.lower() == 'y'):
             dialogue = False
-        elif user_choice.lower() == 'no':
+        elif (user_choice.lower() == 'no') or (user_choice.lower() == 'n'):
             dialogue = True
         else:
             print('Invalid selection.')
@@ -596,11 +596,11 @@ def main():
         user_tipped = None
         while user_tipped is None:
             user_choice = input('Yes or No: ')
-            if user_choice.lower() == 'yes':
+            if (user_choice.lower() == 'yes') or (user_choice.lower() == 'y'):
                 user_tipped = True
                 narrator.say('user-tipped')
                 alton.say('thanks-for-tipping')
-            elif user_choice.lower() == 'no':
+            elif (user_choice.lower() == 'no') or (user_choice.lower() == 'n'):
                 user_tipped = False
                 narrator.say('user-no-tip')
             else:
