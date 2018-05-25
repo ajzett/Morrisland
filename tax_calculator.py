@@ -127,16 +127,6 @@ def advance_dialogue():
     let_read()
 
 
-def cli_color(fallback, win='color 0F'):
-    import os
-    if os.name == 'nt':
-        # change windows terminal color
-        os.system(win)
-    else:
-        # change linux terminal color
-        os.system(fallback)
-
-
 def build_temp_effects(manager):
     temp_effect_list = []
     for effect in manager.effect_dict['reverse_effect_player']:
@@ -148,6 +138,7 @@ def build_temp_effects(manager):
 
 
 def bat_check():
+    black_suit.stats.health = 15
     if (bat_man.percent_health(black_suit) < 90) and (monologue[dialogue_index.black_suit] == 0):
         G.clr_console()
         G.write(["You call out to your opponent.", '"C\'mon man, do we really have to do this?"'])
@@ -369,10 +360,10 @@ def win(manager):
                 G.write(['\n"Well, if you don\'t mind...', 'I have a flight to Panama to catch."'])
                 let_read()
 
-                cli_color('setterm --inversescreen on', 'color F0')
+                G.cli_color('setterm --inversescreen on', 'color F0')
                 G.write(['Alton walks out of the room, and I am left to face my final moments in peace.'])
                 let_read()
-                cli_color('setterm --inversescreen off')
+                G.cli_color('setterm --inversescreen off')
 
                 print(f"{Fore.BLACK}{Back.WHITE}Ending:{Style.RESET_ALL} alton's a[F]fluent adventures in panama\n\n{Fore.BLACK}{Back.WHITE}Player Status:{Style.RESET_ALL} Alive\n{Fore.BLACK}{Back.WHITE}Boss Status:{Style.RESET_ALL} Dead\n{Fore.BLACK}{Back.WHITE}Alton Brown Status:{Style.RESET_ALL} Dead\n\n")
 
@@ -406,7 +397,7 @@ def lose(manager):
         G.write(['He takes a step closer.', 'Unable to face your fate, you close my eyes.'])
         let_read()
 
-        cli_color('setterm --inversescreen on', 'color F0')
+        G.cli_color('setterm --inversescreen on', 'color F0')
         G.write(['\nTime slows down as you become keenly aware of your own heartbeat.', "You notice that you hadn't ever thought about your heart -- the force that had kept your life in motion -- until it was about to stop beating."])
         let_read()
 
@@ -419,7 +410,7 @@ def lose(manager):
     G.write(["You realize that there's no use in questioning your choices now.", "Everything you've done has been set in stone.", "\n\nIn the end, everyone pays the same price.", 'The only difference is how you count the cost.'])
     let_read()
 
-    cli_color('setterm --inversescreen off')
+    G.cli_color('setterm --inversescreen off')
     print(f"{Fore.BLACK}{Back.WHITE}Ending:{Style.RESET_ALL} there [A]in't no such thing as a free lunch\n\n{Fore.BLACK}{Back.WHITE}Player Status:{Style.RESET_ALL} Deceased\n{Fore.BLACK}{Back.WHITE}Boss Status:{Style.RESET_ALL} Alive\n{Fore.BLACK}{Back.WHITE}Alton Brown Status:{Style.RESET_ALL} Alive")
     let_read()
 
@@ -670,7 +661,7 @@ def main():
     global monologue
     monologue = [0, None]
 
-    bat_man.battle(user, black_suit, bat_check, './Media/boss.wav')
+    bat_man.battle(user, black_suit, bat_check)  # , './Media/boss.wav')
 
 
 if __name__ == '__main__':
