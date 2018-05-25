@@ -670,7 +670,7 @@ def main():
     global monologue
     monologue = [0, None]
 
-    bat_man.battle(user, black_suit, bat_check)  #, '../Media/boss.wav')
+    bat_man.battle(user, black_suit, bat_check './Media/boss.wav')
 
 
 if __name__ == '__main__':
