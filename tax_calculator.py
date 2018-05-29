@@ -77,7 +77,7 @@ black_suit_collection = G.battler_collection(1000, [black_suit_prebuff, black_su
 black_suit_collection.add_item(stim_pack, 3)
 # Stat Lists
 user_stats = G.battler_stats(100, 7, 8, 10)
-black_suit_stats = G.battler_stats(150, 15, 15, 7)
+black_suit_stats = G.battler_stats(150, 12, 10, 7)
 
 # Battlers
 user = G.player('Ed', None, None, None, user_collection, user_stats)
