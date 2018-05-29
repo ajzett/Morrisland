@@ -12,9 +12,9 @@ from colorama import Fore, Back, Style
 stamina = G.item('Stamina', "Your body's natural energy.", 0)
 spray_can = G.item('Pepper Spray', 'A can of pepper spray.', 10)
 
-# Buffs/Heals #
+# Stat Changing Items #
 # Buffs
-black_suit_buff = G.stat_item('Mysterious Orange Liquid', 'A mysterious orange liquid that was used by the Man in the Black Suit.', 1000, 10, 0, 20, 15, -7)
+black_suit_buff = G.stat_item('Mysterious Orange Liquid', 'A mysterious orange liquid that was used by the Man in the Black Suit.', 1000, 10, 0, 20, 20, -7)
 msg = G.stat_item('MSG', 'Super Salt. Seriously bad for you, but a seriously wild ride.', 5, 2, 0, 10, 0, 10)
 tso_chicken = G.stat_item("General Tso's Chicken", "Nothing incites a fighting spirit like the effigy of General Tso's Chicken. Why did the General only have one?", 20, 3, 30)
 
