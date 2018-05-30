@@ -207,7 +207,7 @@ def bat_check():
 
 def win(manager):
     try:
-        if (manager.battle_dict['alton_help'] is True) and ("General Tso's Chicken" in build_temp_effects(manager)):
+        if (manager.battle_dict['alton_help'] is True) and (tso_chicken in build_temp_effects(manager)):
             if black_suit_buff in build_temp_effects(manager):
                 G.write([f"You glance over at {alton.name}. He's sweating-- barely holding on.", "You know how he feels. It takes everything you have to not give up and accept your fate.", "\n\nBut--", "suddenly, a phantomish form bursts out from behind the monster."])
                 let_read()
