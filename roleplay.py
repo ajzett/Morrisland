@@ -6,7 +6,6 @@ import os
 from sys import stdout
 
 #Battle Manager, you only need one.
-bat_man = G.battle_manager()
 
 #
 # Story Variables #
@@ -24,10 +23,30 @@ Morena_s = 0
 Dredall_s = 0
 
 
+
+#Battle Manager
+def win(manager):
+    G.write("You won!")
+    exit()
+
+def lose(manager):
+    G.write("You have lost!")
+    exit()
+
+class basic_bat_man(G.battle_manager):
+
+    def player_win(self, plyr, enemy):
+        win(self)
+
+    def player_lose(self, plyr, enemy):
+        lose(self)
+
+bat_man = basic_bat_man()
+
+
+
+
 #Maps!
-appartment.layout = G.np.array([[G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building,]
-                                [G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Ice, G.Tiles.Building,]
-                                [G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building,]])
 class appartment(G.array_map):
     def __init__(self, name):
         super().__init__(name)
@@ -47,87 +66,83 @@ class appartment(G.array_map):
             G.write("The cat jumps down onto the floor and goes into the other room. You hear the TV turn on.")
             G.write("Do you follow the cat?")
             morning = int(input("1: yes, 2: no"))
-                if morning is 1:
-                    os.system('cls')
-                    G.write("You follow the cat into the other room. The news is on the TV.")
-                    news_reader.say("news3")
-                    G.write("A picture of your street shows up on the news.")
-                    G.write("You might not want to go to work early.")
-                    G.write("How did the cat turn on the TV?")
-                    G.write("It's staring at you.")
-                    cat.say("meow")
-                    os.system('cls')
-                    G.write("As you walk out of your door you see a lot of cops on the other side of the street.")
-                    G.write("The knifeman you saw on TV is in the back of one of the patrol cars.")
-                    os.system('cls')
-                    G.write("You get to work without a problem")
-                    steves_boss.say("greating")
-                    G.write("*Gulp*")
-                    G.write("You quickly get down to work.")
-                    co_worker.say("greating")
-                    G.write("Steve: I don't know.")
-                    co_worker.say("fired")
-                    G.write("Steve: I'm sure you could find someone. I won't be able to make rent if I'm fired.")
-                    co_worker.say("weekend")
-                    G.write("Steve: I don't know.")
-                    os.system('cls')
-                    G.write("You go to get coffee")
-                    cat.say("meowq")
-                    G.write("Steve: Why are you still here!?")
-                    os.system('cls')
-                    G.write("At the end of the day you go to the Boss's office")
-                    steves_boss.say("fired")
-                    G.write("You leave the room and start packing up.")
-                    G.write("The cat is sitting on your desk.")
-                    cat.say("purr")
-                    os.system('cls')
-                    G.write("You leave the office building with a medium box of stuff.")
-                    G.write("You look back up at your old office building.")
-                    G.write("The cat is sitting on a ledge, staring at you.")
-                    pes_emily.say("move")
-                    G.write("Steve: Sorry")
-                    G.write("What is with that cat? We does it keep following you?")
-                    cat.say("meowl")
-                    G.write("While staring at the cat, you hear brakes scretching")
-                    pes_emily.say("look_out")
-                    G.write("You hear a crunch and everything goes black.")
-                    curiosity = True
+            if morning is 1:
+                os.system('cls')
+                G.write("You follow the cat into the other room. The news is on the TV.")
+                news_reader.say("news3")
+                G.write("A picture of your street shows up on the news.")
+                G.write("You might not want to go to work early.")
+                G.write("How did the cat turn on the TV?")
+                G.write("It's staring at you.")
+                cat.say("meow")
+                os.system('cls')
+                G.write("As you walk out of your door you see a lot of cops on the other side of the street.")
+                G.write("The knifeman you saw on TV is in the back of one of the patrol cars.")
+                os.system('cls')
+                G.write("You get to work without a problem")
+                steves_boss.say("greating")
+                G.write("*Gulp*")
+                G.write("You quickly get down to work.")
+                co_worker.say("greating")
+                G.write("Steve: I don't know.")
+                co_worker.say("fired")
+                G.write("Steve: I'm sure you could find someone. I won't be able to make rent if I'm fired.")
+                co_worker.say("weekend")
+                G.write("Steve: I don't know.")
+                os.system('cls')
+                G.write("You go to get coffee")
+                cat.say("meowq")
+                G.write("Steve: Why are you still here!?")
+                os.system('cls')
+                G.write("At the end of the day you go to the Boss's office")
+                steves_boss.say("fired")
+                G.write("You leave the room and start packing up.")
+                G.write("The cat is sitting on your desk.")
+                cat.say("purr")
+                os.system('cls')
+                G.write("You leave the office building with a medium box of stuff.")
+                G.write("You look back up at your old office building.")
+                G.write("The cat is sitting on a ledge, staring at you.")
+                pes_emily.say("move")
+                G.write("Steve: Sorry")
+                G.write("What is with that cat? We does it keep following you?")
+                cat.say("meowl")
+                G.write("While staring at the cat, you hear brakes scretching")
+                pes_emily.say("look_out")
+                G.write("You hear a crunch and everything goes black.")
+                curiosity = True
 
-                else:
-                    os.system('cls')
-                    G.write("You ignore the cat and get ready to go to work.")
-                    news_reader.say("news1")
-                    news_reader.say("news2")
-                    G.write("You hope you don't get laid off. This world is horrible.")
-                    cat.say("meowl")
-                    G.write("You should get to work early.")
-                    os.system('cls')
-                    G.write("You walk out onto the street.")
-                    G.write("You hear sirens.")
-                    G.write("That's not important. You take your usual route to work.")
-                    G.write("If you cut through this ally it will be faster.")
-                    G.write("You here someone walking behind you.")
-                    os.system('cls')
-                    knifeman.say("cops")
-                    G.write("Before you can respond to the man he thrusts his hand toward your stomach.")
-                    G.write("Did he punch you?")
-                    G.write("You look down.")
-                    G.write("There's a knife sticking out of your gut.")
-                    G.write("The last thing you see is the cat.")
-                    cat.say("purr")
-                    os.system('cls')
+            else:
+                os.system('cls')
+                G.write("You ignore the cat and get ready to go to work.")
+                news_reader.say("news1")
+                news_reader.say("news2")
+                G.write("You hope you don't get laid off. This world is horrible.")
+                cat.say("meowl")
+                G.write("You should get to work early.")
+                os.system('cls')
+                G.write("You walk out onto the street.")
+                G.write("You hear sirens.")
+                G.write("That's not important. You take your usual route to work.")
+                G.write("If you cut through this ally it will be faster.")
+                G.write("You here someone walking behind you.")
+                os.system('cls')
+                knifeman.say("cops")
+                G.write("Before you can respond to the man he thrusts his hand toward your stomach.")
+                G.write("Did he punch you?")
+                G.write("You look down.")
+                G.write("There's a knife sticking out of your gut.")
+                G.write("The last thing you see is the cat.")
+                cat.say("purr")
+                os.system('cls')
+
+appartment.layout = G.np.array([[G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building], \
+                                [G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Ice, G.Tiles.Building], \
+                                [G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building]])
 
 
 
 
-
-fortess_room.layout = G.np.array([[G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall]
-                            [G.Tiles.Wall, G.Tiles.Ice, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Wall]
-                            [G.Tiles.Wall, G.Tiles.Dirt, G.Tiles.Ice, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Wall]
-                            [G.Tiles.Wall, G.Tiles.Ice, G.Tiles.Cave, G.Tiles.Ice, G.Tiles.Dirt, G.Tiles.Dirt]
-                            [G.Tiles.Wall, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Wall]
-                            [G.Tiles.Wall, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Ice, G.Tiles.Wall]
-                            [G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall]])
 class fortress_chamber(G.array_map):
     def __init__(self, name):
         super().__init__(name)
@@ -294,18 +309,24 @@ class fortress_chamber(G.array_map):
             G.write("Dredall grabs you and you find your self on his back. You all walk out a side door and down a coridor.")
             os.system('cls')
 
+fortress_room = fortress_chamber('fortress')
 
-arena.layout = G.np.array([[G.Tiles.Building, G.Tiles.Ice, G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Building]
-                            [G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Grass]
-                            [G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Ice, G.Tiles.Grass, G.Tiles.Grass]
-                            [G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Grass]
-                            [G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Grass]
-                            [G.Tiles.Building, G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Building]])
+fortess_room.layout = G.np.array([[G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall], \
+                            [G.Tiles.Wall, G.Tiles.Ice, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Wall], \
+                            [G.Tiles.Wall, G.Tiles.Dirt, G.Tiles.Ice, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Wall], \
+                            [G.Tiles.Wall, G.Tiles.Ice, G.Tiles.Cave, G.Tiles.Ice, G.Tiles.Dirt, G.Tiles.Dirt], \
+                            [G.Tiles.Wall, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Wall], \
+                            [G.Tiles.Wall, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Ice, G.Tiles.Wall], \
+                            [G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall]])
+
+
+
+
 class arena(G.array_map):
     def __init__(self, name):
         super().__init__(name)
     def send_data(self, til, plyr=False):
-        if til is [0,0] or [5,0] or [0,5], or [5,5]:
+        if til is [0,0] or [5,0] or [0,5] or [5,5]:
             if plyr is True:
                 G.write("Those are pillars. You just walked into a pillar.")
             return False
@@ -407,19 +428,25 @@ class arena(G.array_map):
                     arms_master_npc.say("lieno")
                     arms_master_npc.say("lieno2")
                     honesty = honesty + 1
+            return False
 
 
-hallway.layout = G.np.array([[G.Tiles.Ice, G.Tiles.Dirt, G.Tiles.Ice, G.Tiles.Dirt, G.Tiles.Ice, G.Tiles.Dirt, G.Tiles.Ice, G.Tiles.Dirt]
-                                [G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt]
-                                [G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt]
-                                [G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Ice, G.Tiles.Dirt, G.Tiles.Ice, G.Tiles.Dirt, G.Tiles.Ice, G.Tiles.Dirt]])
+arena.layout = G.np.array([[G.Tiles.Building, G.Tiles.Ice, G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Building], \
+                            [G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Grass], \
+                            [G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Ice, G.Tiles.Grass, G.Tiles.Grass], \
+                            [G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Grass], \
+                            [G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Grass], \
+                            [G.Tiles.Building, G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Building]])
+
+
+
 class hallway(G.array_map):
     def __init__(self, name):
         super().__init__(name)
 
     def send_data(self, til, plyr=False):
         go = 0
-        if til is [0,1]:
+        if til is [0,1] or [0,2]:
             if plyr is True:
                 arms_master_npc.say("gowhere")
             return True
@@ -433,7 +460,7 @@ class hallway(G.array_map):
                     G.write("As you lay down of the bed you think maybe you'll wake up from this dream soon.")
                 else:
                     G.write("Maybe later.")
-            return False
+            return True
 
         if til is [2,0]:
             if plyr is True:
@@ -478,6 +505,7 @@ class hallway(G.array_map):
                     Morena_s = Morena_s + 1
                 else:
                     G.write("Maybe later.")
+                return True
 
         if til is [4,0]:
             if plyr is True:
@@ -568,6 +596,7 @@ class hallway(G.array_map):
                     G.write("Everything is going black. Your ears are ringing.")
                     G.write("You pass out.")
                     Droxone_s = Droxone_s + 1
+                return True
 
         if til is [4,3]:
             if plyr is True:
@@ -595,11 +624,36 @@ class hallway(G.array_map):
                         head_necromancer.say("ask2")
                         G.write("Nathik slams the door in your face.")
                         Nathik_s = Nathik_s - 1
+                    return True
 
         if til is [6,3]:
             if plyr is True:
+                if curiosity is True:
+                    G.write("After a moment of thought, Greg grins and leads you deep into the fortress.")
+                    G.write("You go down to many staircases to count. Your legs are burning by the time you reach your destination.")
+                    G.write("Steve: What is this place?")
+                    arms_master_npc.say("treasure")
+                    G.write("He takes out a key and opens a small steel door. The sound of metal on stone makes both of you wince.")
+                    arms_master_npc.say("coolstuff")
+                    G.write("Pedestals line the room. Each one has an artifact on it. Giant gems, flashy flasks, astoinding armor, bounties abound.")
+                    G.write("Steve: Where did all this stuff come from?")
+                    arms_master_npc.say("coolstuff2")
+                    G.write("There are three things with your name on them, or Banabas's at least.")
+                    G.write("A blue-silver armor, a red sword, and a ring that seems to be made of pure emerald.")
+                    G.write("Greg insists that you take the items. Maybe they'll help you.")
+                    steve.collection.add_item(shanams_ring, 1)
+                    steve.collection.add_item(dragons_blood, 1)
+                    steve.collection.add_item(mythirl_armor, 1)
+                    arms_master_npc.say("goback")
+                    G.write("He leads you back up to your chambers.")
+                else:
+                    G.write("That way looks boring, and you don't want to go down there.")
+                return True
 
-
+hallway.layout = G.np.array([[G.Tiles.Ice, G.Tiles.Dirt, G.Tiles.Ice, G.Tiles.Dirt, G.Tiles.Ice, G.Tiles.Dirt, G.Tiles.Ice, G.Tiles.Dirt], \
+                                [G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt], \
+                                [G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt], \
+                                [G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Ice, G.Tiles.Dirt, G.Tiles.Ice, G.Tiles.Dirt, G.Tiles.Ice, G.Tiles.Dirt]])
 
 
 
