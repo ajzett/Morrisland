@@ -46,13 +46,12 @@ high_kick = G.attack('High Kick', 'Lean back and kick high with your good leg.',
 low_sweep = G.ammo_attack('Low Sweep', 'Sweep your leg and temporarily disarm the apponent.', 8, stamina, 2, 100, surprise_debuff)
 
 # For pre-buff blacksuit
-shin_kick = G.attack('Shin Kick', "Kick your opponent's shin.", 8)
 pepper_spray = G.ammo_attack('Use Pepper Spray', "Shoot pepper spray into the eyes of your opponent.", 2, spray_can, 1, 90, irritated_eyes)
 throw_chair = G.attack('Throw Chair', 'Grab a nearby chair and throw it at the opponent.', 25, 60)
-punch = G.attack('Punch', 'Deliver a flurry of punches to your opponent.', 13, 90)
+punch = G.attack('Punch', 'Deliver a flurry of punches to your opponent.', 11)
 
 # For buffed blacksuit
-bash = G.attack('Skull Bash', 'Bash your head into the oppnent.', 11)
+bash = G.attack('Skull Bash', 'Bash your head into the oppnent.', 15, 90)
 throw_table = G.attack('Throw Table', 'Throw a table at your opponent.', 30, 45)
 
 # Weapons #
@@ -62,8 +61,8 @@ katana = G.weapon('Katana', 'A weapon proven deadly when used in the right hands
 black_belt = G.weapon('Black Belt', 'A weapon worn around the waist. Grants user impeccable hand-to-hand combat ability. Or, supposedly, it could be used to towel-snap your opponent.', 5, [charge, flying_kick, low_sweep, high_kick], 10, 8, 5)
 
 # Boss Weapons
-black_suit_prebuff = G.weapon("Agent's Arsenal", 'An array of items and techniques known and used by the FBI.', 1000, [punch, shin_kick, pepper_spray, throw_chair])
-black_suit_buffed = G.weapon('Herculean Brawn', "After injection of a mysterious liquid, the FBI agent has turned into a terrifying bruiser.", 5000, [bash, punch, shin_kick, throw_table])
+black_suit_prebuff = G.weapon("Agent's Arsenal", 'An array of items and techniques known and used by the FBI.', 1000, [punch, charge, pepper_spray, throw_chair])
+black_suit_buffed = G.weapon('Herculean Brawn', "After injection of a mysterious liquid, the FBI agent has turned into a terrifying bruiser.", 5000, [bash, punch, charge, throw_table])
 
 # Entity-related #
 
