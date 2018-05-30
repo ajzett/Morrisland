@@ -25,31 +25,580 @@ Dredall_s = 0
 
 
 #Maps!
+appartment.layout = G.np.array([[G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building,]
+                                [G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Ice, G.Tiles.Building,]
+                                [G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building,]])
+class appartment(G.array_map):
+    def __init__(self, name):
+        super().__init__(name)
+
+    def send_data(self, til, plyr=False):
+        if til is [0,1]:
+            G.write("7:10am")
+            G.write("Monday, March 4th.")
+            G.write("Your apartment.")
+            os.system('cls')
+            phone.say("hello")
+            G.write("Your cat knocks your phone on the floor")
+            G.write("Wait... You don't own a cat. You're not that sad!")
+            G.write("Yet...")
+            cat.say("meowl")
+            os.system('cls')
+            G.write("The cat jumps down onto the floor and goes into the other room. You hear the TV turn on.")
+            G.write("Do you follow the cat?")
+            morning = int(input("1: yes, 2: no"))
+                if morning is 1:
+                    os.system('cls')
+                    G.write("You follow the cat into the other room. The news is on the TV.")
+                    news_reader.say("news3")
+                    G.write("A picture of your street shows up on the news.")
+                    G.write("You might not want to go to work early.")
+                    G.write("How did the cat turn on the TV?")
+                    G.write("It's staring at you.")
+                    cat.say("meow")
+                    os.system('cls')
+                    G.write("As you walk out of your door you see a lot of cops on the other side of the street.")
+                    G.write("The knifeman you saw on TV is in the back of one of the patrol cars.")
+                    os.system('cls')
+                    G.write("You get to work without a problem")
+                    steves_boss.say("greating")
+                    G.write("*Gulp*")
+                    G.write("You quickly get down to work.")
+                    co_worker.say("greating")
+                    G.write("Steve: I don't know.")
+                    co_worker.say("fired")
+                    G.write("Steve: I'm sure you could find someone. I won't be able to make rent if I'm fired.")
+                    co_worker.say("weekend")
+                    G.write("Steve: I don't know.")
+                    os.system('cls')
+                    G.write("You go to get coffee")
+                    cat.say("meowq")
+                    G.write("Steve: Why are you still here!?")
+                    os.system('cls')
+                    G.write("At the end of the day you go to the Boss's office")
+                    steves_boss.say("fired")
+                    G.write("You leave the room and start packing up.")
+                    G.write("The cat is sitting on your desk.")
+                    cat.say("purr")
+                    os.system('cls')
+                    G.write("You leave the office building with a medium box of stuff.")
+                    G.write("You look back up at your old office building.")
+                    G.write("The cat is sitting on a ledge, staring at you.")
+                    pes_emily.say("move")
+                    G.write("Steve: Sorry")
+                    G.write("What is with that cat? We does it keep following you?")
+                    cat.say("meowl")
+                    G.write("While staring at the cat, you hear brakes scretching")
+                    pes_emily.say("look_out")
+                    G.write("You hear a crunch and everything goes black.")
+                    curiosity = True
+
+                else:
+                    os.system('cls')
+                    G.write("You ignore the cat and get ready to go to work.")
+                    news_reader.say("news1")
+                    news_reader.say("news2")
+                    G.write("You hope you don't get laid off. This world is horrible.")
+                    cat.say("meowl")
+                    G.write("You should get to work early.")
+                    os.system('cls')
+                    G.write("You walk out onto the street.")
+                    G.write("You hear sirens.")
+                    G.write("That's not important. You take your usual route to work.")
+                    G.write("If you cut through this ally it will be faster.")
+                    G.write("You here someone walking behind you.")
+                    os.system('cls')
+                    knifeman.say("cops")
+                    G.write("Before you can respond to the man he thrusts his hand toward your stomach.")
+                    G.write("Did he punch you?")
+                    G.write("You look down.")
+                    G.write("There's a knife sticking out of your gut.")
+                    G.write("The last thing you see is the cat.")
+                    cat.say("purr")
+                    os.system('cls')
+
+
+
+
+
 fortess_room.layout = G.np.array([[G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall]
+                            [G.Tiles.Wall, G.Tiles.Ice, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Wall]
+                            [G.Tiles.Wall, G.Tiles.Dirt, G.Tiles.Ice, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Wall]
+                            [G.Tiles.Wall, G.Tiles.Ice, G.Tiles.Cave, G.Tiles.Ice, G.Tiles.Dirt, G.Tiles.Dirt]
                             [G.Tiles.Wall, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Wall]
-                            [G.Tiles.Wall, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Wall]
-                            [G.Tiles.Wall, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt]
-                            [G.Tiles.Wall, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Wall]
+                            [G.Tiles.Wall, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Ice, G.Tiles.Wall]
                             [G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall]])
 class fortress_chamber(G.array_map):
     def __init__(self, name):
         super().__init__(name)
 
     def send_data(self, til, plyr=False):
+        talk = 0
+        done = False
+        head_witch.say("first")
+        head_necromancer.say("first")
+        head_summoner.say('first')
+        G.write("Steve: Whaaa?")
+        G.write("Steve: Who are y...")
+        G.write("You voice trails off as you look up at five old 'people'.")
+        os.system('cls')
+        G.write("A super old and croutched woman started crowing.")
+        head_witch.say("insult_n")
+        head_witch.say("insult_n2")
+        head_necromancer.say("insult_w")
+        G.write("The woman, Morena, slapped the talking corpse.")
+        G.write("The two started squabbling even more.")
+        os.system('cls')
+        head_summoner.say("calm")
+        G.write("The man who had just spoken was really tall.")
+        G.write("You look down from his face to his body.")
+        G.write("He has a horses body.")
+        os.system('cls')
+        head_wizard.say("hello")
+        G.write("Steve: B-b-b-barn who?")
+        head_wizard.say("confustion")
+        head_wizard.say("blame")
+        head_alchemist.say("sigh")
+        head_wizard.say("hearinglose")
+        head_alchemist.say("backtrack")
+        G.write("Now the other two start squablling")
+        os.system('cls')
+        G.write("Who do you want to talk to?")
         if til is [0,0] or [1,0] or [2,0] or [3,0] or [4,0] or [5,0] or \
-                [5,1] or [5,2] or [5,4] or [5,5] or [0,1] or \
-                [0,2] or [0,3] or [0,4] or [0,5] or [1,5] or [2,5] or \
-                [3,5] or [4,5] or [5,5]:
+                [5,1] or [5,2] or [5,4] or [5,5] or [5,6] or [0,1] or \
+                [0,2] or [0,3] or [0,4] or [0,6] or [0,5] or [1,6] or [2,6] or \
+                [3,6] or [4,6] or [5,6]:
             if plyr is True:
                 G.write("That is a wall. You just walked into a wall.")
-            return True
+            return False
 
-        elif til is [5, 3]:
+        elif til is [5,3]:
             if plyr is True:
                 G.write("You walk to the door leading out of the room.")
+            return False
+
+        if til is [2,3]:
+            if plyr is True:
+                G.write("That is the table you were on.")
+            return False
+
+        if til is [1,1]:
+            if plyr is True:
+                G.write("Would you like to talk to Droxone?")
+                talk = int(input("1:yes, 2:no"))
+                if talk is 1 and done != True:
+                    done = True
+                    G.write("You get up off the table.")
+                    G.write("You walk over to Droxone, who is by far the youngest of all the five.")
+                    G.write("Steve: Hello?")
+                    head_alchemist.say("get1")
+                    G.write("Steve: I'll start with a simple question, where am I?")
+                    G.write("The men, who can't be much older than you, looks very confused.")
+                    head_alchemist.say("get2")
+                    G.write("Steve: My name isn't Barnabas, it's Steve.")
+                    G.write("Before he can say anything else someone calls everyone to attention.")
+                    Droxone_s = Droxone_s + 1
+                else:
+                    G.write("You don't talk to him yet.")
+                return True
+
+        if til is [1,3]:
+            G.write("Would you like to talk to Tenaxx?")
+            talk = int(input("1:yes, 2:no"))
+            if talk is 1 and done != True:
+                done = True
+                G.write("The older guy seems like the most aprotchable of the five.")
+                G.write("The think his name is Tenaxx?")
+                G.write("Steve: Hello... sir.")
+                head_wizard.say("get1")
+                G.write("Steve: I'm sorry sir, but I don't think I am who you think I am.")
+                head_wizard.say("get2")
+                head_wizard.say("get3")
+                G.write("Tenaxx calls everyone over.")
+                Tenaxx_s = Tenaxx_s + 1
+            else:
+                G.write("You don't talk to him yet.")
             return True
 
-        if til is []
+        if til is [2,2]:
+            G.write("Would you like to talk to Dredall?")
+            talk = int(input("1:yes, 2:no"))
+            if talk is 1 and done != True:
+                done = True
+                G.write("You get off the table and cautiously aproutch the horse person. What are they called again?")
+                G.write("Really what are they called?")
+                head_summoner.say("get1")
+                G.write("He's got to be at least nine feet tall.")
+                head_summoner.say("get2")
+                head_summoner.say("get3")
+                G.write("Steve: Uhhh.... What?")
+                head_summoner.say("get4")
+                G.write("Before you can say anything else, the old man calls everyone over.")
+                Dredall_s = Dredall_s + 1
+            else:
+                G.write("You don't talk to him yet.")
+            return True
+
+        if til is [3,3]:
+            G.write("Would you like to talk to Morena?")
+            talk = int(input("1:yes, 2:no"))
+            if talk is 1 and done != True:
+                done = True
+                G.write("You walk over to the old lady. You can just run if she starts screaming again.")
+                G.write("Steve: Hello Ma'am")
+                head_witch.say("get1")
+                G.write("Steve: I'm sorry, but I don't know who you think I am.")
+                G.write("The woman looks at you through squinted eyes.")
+                head_witch.say("get2")
+                head_witch.say("get3")
+                head_witch.say("get4")
+                G.write("Steve: A witch? Those are real?")
+                G.write("At this Morena laughs.")
+                head_witch.say("get5")
+                G.write("Before you can say anything the oldest men of the five calls everyone over.")
+                Morena_s = Morena_s + 1
+            else:
+                G.write("You don't talk to her yet.")
+            return True
+
+        if til is [4,5]:
+            G.write("Would you like to talk to Nathik?")
+            talk = int(input("1:yes, 2:no"))
+            if talk is 1 and done != True:
+                done = True
+                G.write("For some reason, you walk over to the courpse, Nathik.")
+                G.write("Maybe it's because you liked his joke.")
+                G.write("Steve: Hello, sir?")
+                head_necromancer.say("get1")
+                G.write("Steve: Umm... Where am I and who do you think I am?")
+                G.write("This brings an actual expression of shock to Nathik's face.")
+                head_necromancer.say("get2")
+                head_necromancer.say("get3")
+                head_necromancer.say("get4")
+                G.write("You keep you mouth shut. Nathik seems to be brooding now. You slowly walk away.")
+                Nathik_s = Nathik_s + 1
+            else:
+                G.write("You don't talk to him yet.")
+            return True
+
+        if done is True:
+            os.system('cls')
+            head_wizard.say("expo1")
+            head_wizard.say("expo2")
+            head_wizard.say("expo3")
+            G.write("Steve: There was a creepy cat, and I had cerial for breakfast.")
+            os.system('cls')
+            G.write("They all blink at you.")
+            head_alchemist.say("shock")
+            head_summoner.say("solution")
+            G.write("Dredall grabs you and you find your self on his back. You all walk out a side door and down a coridor.")
+            os.system('cls')
+
+
+arena.layout = G.np.array([[G.Tiles.Building, G.Tiles.Ice, G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Building]
+                            [G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Grass]
+                            [G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Ice, G.Tiles.Grass, G.Tiles.Grass]
+                            [G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Grass]
+                            [G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Grass]
+                            [G.Tiles.Building, G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Building]])
+class arena(G.array_map):
+    def __init__(self, name):
+        super().__init__(name)
+    def send_data(self, til, plyr=False):
+        if til is [0,0] or [5,0] or [0,5], or [5,5]:
+            if plyr is True:
+                G.write("Those are pillars. You just walked into a pillar.")
+            return False
+
+        if til is [0,1]:
+            if plyr is True:
+                for i in range(len(weapon_choice)):
+                    stdout.write(str(i))
+                    stdout.write(": ")
+                    print(weapon_choice[i].name)
+
+                wc = int(input("What will you choice?"))
+                os.system('clr')
+                steve_inv.add_item(weapon_choice[wc], 1)
+                steve_inv.equip(weapon_choice[wc])
+                G.write(weapon_choice[wc].dscrpt)
+                if weapon_choice[wc].name is "War Hammer":
+                    head_summoner.say("warhammer")
+                    Dredall_s = Dredall_s + 1
+
+                elif weapon_choice[wc].name is "Wand":
+                    head_witch.say("wand")
+
+                    help = int(input("1: yes, 2: no"))
+                    if help is 1:
+                        G.write("You don't know how this works. Some help sounds like a great idea.")
+                        head_witch.say("(:")
+                        Morena_s = Morena_s + 1
+
+                    else:
+                        G.write("You aren't sure you trust her just yet.")
+                        head_witch.say("wait")
+
+                else:
+                    head_summoner.say("wrong_weapon")
+                os.system('clr')
+                head_summoner.say("train")
+                G.write("Steve: Does it have to be a master? Why not a beginner?")
+                G.write("Steve: Not that I don't know what I'm doing, which I totally do.")
+                G.write("Steve: I may be rusty.")
+                head_necromancer.say("rust")
+                G.write("It occurs to you that these people might not know the same sayings as you.")
+                os.system('clr')
+                G.write("Dredall leads a grizled looking man in leather armor over to you.")
+                head_summoner.say("spar")
+                G.write("Steve: Right to the main fight? Don't we have, like, special items to gather or something?")
+                head_wizard.say("already")
+                G.write("Steve: Oh, yes... O-of course you have everything.")
+                head_alchemist.say("yahn")
+                G.write("Droxone just walks off and leaves everyone else.")
+                if help is 1:
+
+                    G.write("Before leaving, Morena walks over and says in a lowered voice,")
+                    head_witch.say("come")
+
+                G.write("The other four walk away in different dirrections with little more than a word.")
+                os.system('clr')
+            return False
+
+        if til is [3,2]:
+            if plyr is True:
+                G.write("You hear the Arms Master cough.")
+                arms_master_npc.say("first")
+                G.write("Oh, umm... I don't now how.")
+                arms_master_npc.say("confus")
+                G.write("You have to pass for this guy. You think about your answer.")
+                G.write("Steve: Something went amiss in this resurection. I seem to have lost all my memories.")
+                os.system('clr')
+                G.write("A thoughtful expression comes over Gregs face.")
+                arms_master_npc.say("realize")
+                arms_master_npc.say("sad")
+                G.write("Steve: I don't even know where I am or what I'm supose to do.")
+                arms_master_npc.say("expl1")
+                arms_master_npc.say("expl2")
+                arms_master_npc.say("expl3")
+                os.system('clr')
+                arms_master_npc.say("ask")
+                G.write("Steve: No.")
+                arms_master_npc.say("expl4")
+                arms_master_npc.say("expl5")
+                arms_master_npc.say("expl6")
+                arms_master_npc.say("expl7")
+                arms_master_npc.say("expl8")
+                os.system('clr')
+                arms_master_npc.say("ask")
+                G.write("You could just lie? You could tell him it rings a bell.")
+                G.write("Will you lie?")
+
+                lie = int(input("1: yes, 2:no"))
+                if lie is 1:
+                    G.write("Steve: All of that sounds very familiar. I still can't remember specifics though.")
+                    arms_master_npc.say("lieyes")
+                    honesty = honesty - 1
+                    arms_master_npc.say("lieyes2")
+                    bat_man.battle(steve, arms_master)
+
+                else:
+                    G.write("Steve: I still don't know what you're talking about.")
+                    arms_master_npc.say("lieno")
+                    arms_master_npc.say("lieno2")
+                    honesty = honesty + 1
+
+
+hallway.layout = G.np.array([[G.Tiles.Ice, G.Tiles.Dirt, G.Tiles.Ice, G.Tiles.Dirt, G.Tiles.Ice, G.Tiles.Dirt, G.Tiles.Ice, G.Tiles.Dirt]
+                                [G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt]
+                                [G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt]
+                                [G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Ice, G.Tiles.Dirt, G.Tiles.Ice, G.Tiles.Dirt, G.Tiles.Ice, G.Tiles.Dirt]])
+class hallway(G.array_map):
+    def __init__(self, name):
+        super().__init__(name)
+
+    def send_data(self, til, plyr=False):
+        go = 0
+        if til is [0,1]:
+            if plyr is True:
+                arms_master_npc.say("gowhere")
+            return True
+
+        if til is [0,0]:
+            if plyr is True:
+                G.write("Would you like to go to your room?")
+                go = int(input("1:yes, 2:no"))
+                if go is 1:
+                    G.write("The Arms Master takes you to you chambers. A small but nice stone room. There's a bed in the corner.")
+                    G.write("As you lay down of the bed you think maybe you'll wake up from this dream soon.")
+                else:
+                    G.write("Maybe later.")
+            return False
+
+        if til is [2,0]:
+            if plyr is True:
+                G.write("Would you like to go to The library?")
+                go = int(input("1:yes, 2:no"))
+                if go is 1:
+                    G.write("Greg takes you to a section of the fortresses massive library. Morena is sitting in a well hidden side room.")
+                    G.write("Plants are hanging from the cieling. There are tanks with salamanders and frogs. Anything that you would think a witch would have is somehow crammed into this tiny room.")
+
+                    if help is 1:
+                        head_witch.say("training")
+                        G.write("Steve: What did you want to show me?")
+                        head_witch.say("training2")
+                        G.write("Out of somewhere Morena pulls out three items. A bottle full of blue liquid, a braclet covered in charms, and an engraved wand.")
+                        head_witch.say("training3")
+                        head_witch.say("training4")
+                        G.write("Do you take the items?")
+
+                        witch_items = int(input("1: yes, 2: no"))
+                        if witch_items is 1:
+                            G.write("Steve: Okay. I'll take them")
+                            steve.collection.add_item(sheild_charm, 1)
+                            steve.collection.add_item(giant_potion, 1)
+                            steve.collection.add_item(morenas_wand, 1)
+                            head_witch.say("takeitems")
+                            Morena_s = Morena_s + 1
+
+                        else:
+                            G.write("Steve: I don't even know how to use these things. I can't take them.")
+                            head_witch.say("regect")
+                            Morena_s = Morena_s - 1
+
+                        honesty = honesty + 1
+
+                    else:
+                        head_witch.say("curio")
+                        G.write("Steve: I just want to know what's going on.")
+                        head_witch.say("curio2")
+                        head_witch.say("curio3")
+
+                    head_witch.say("endtalk")
+                    Morena_s = Morena_s + 1
+                else:
+                    G.write("Maybe later.")
+
+        if til is [4,0]:
+            if plyr is True:
+                G.write("Would you like to go talk to Tenaxx?")
+                go = int(input("1:yes, 2:no"))
+                if go is 1:
+                    G.write("While taking you to Tenaxx, Greg tells you that he is so old because he's a wizard. This place is so weird you don't even question it.")
+                    G.write("The Arms Master leaves you at the door to Tenaxx's study. You knock, and here a muffled invitation to enter.")
+                    head_wizard.say("studyhello")
+                    G.write("Steve: Sparing was fine. I was wondering what the plan was exsactly for dealing with this world dragon?")
+                    head_wizard.say("plan1")
+                    head_wizard.say("plan2")
+                    head_wizard.say("plan3")
+                    head_wizard.say("plan4")
+                    G.write("Steve: Okay, how do you do that?")
+                    head_wizard.say("roles")
+                    G.write("Steve: Uhh... okay.")
+                    G.write("You pretend to understand a word he's talking about.")
+                    G.write("He doesn't seem to notice and is now rambling on using words you don't understand.")
+                    G.write("You think he's talking about his powers, but you can't be sure.")
+                    G.write("You look around. The study is full of interesting stuff that probably shouldn't be touched.")
+
+                    if curiosity is True:
+                        G.write("While the old wizard keeps rambling, you walk over to a shelf covered in odd things.")
+                        G.write("You pick up an odd contraption that looks like a box made of filigree.")
+                        G.write("Particles start swirling inside and glowing green. There is a little ingraved N on the metal.")
+                        G.write("You pocket the box.")
+                        steve.collection.add_item(nathiks_soul_box)
+                        box = True
+
+                    G.write("You leave the room. Tenaxx doesn't notice. You can hear him still talking as you close the door.")
+                    Tenaxx_s = Tenaxx_s + 1
+                else:
+                    G.write("Maybe later.")
+                return True
+
+        if til is [6,0]:
+            if plyr is True:
+                G.write("Would you like to talk to Dredall?")
+                go = int(input("1:yes, 2:no"))
+                if go is 1:
+                    G.write("Centaur! That's what he's called! Greg seems to take it for granted that Centaurs are real.")
+                    G.write("The door to his study is really tall, but you suppose it has to be.")
+                    G.write("Greg leaves you at the door.")
+                    G.write("Before you can knock the door opens.")
+                    head_summoner.say("great")
+                    G.write("Steve: I was wondering when I can go home?")
+                    head_summoner.say("home")
+                    G.write("Steve: I mean earth. My home is earth, and I want to go back to it?")
+                    head_summoner.say("earth")
+                    G.write("Steve: But I've never held a sword in my life. I didn't even get into fights at school. I'm useless.")
+                    head_summoner.say("useless")
+                    head_summoner.say("truth")
+                    G.write("Steve: Have you ever gotten the right person?!")
+                    head_summoner.say("defen")
+                    head_summoner.say("goaway")
+                    G.write("With that you're shoed out the door. You hear it lock behind you.")
+                    Dredall_s = Dredall_s + 1
+                return True
+
+        if til is [2,3]:
+            if plyr is True:
+                G.write("Would you like to talk to Droxone?")
+                go = int(input("1:yes, 2:no"))
+                if go is 1:
+                    G.write("Droxone seemed like the nicest one there. He's also your age. Greg admits that he's a little wierd, but you don't care anymore.")
+                    G.write("As soon as you stop in front of the door Greg indicated, you can hear ticking from inside.")
+                    G.write("A voice that sounds like it's coming through a really old radio eminates from a point behind the door.")
+                    G.write("Radio: Droxone will be with you in a moment. Please do not open the door for your own safety.")
+                    G.write("There's more crashing and banging from inside. Was that a small explosion?")
+                    head_alchemist.say("radio")
+                    G.write("You open the door with a lot of caution. The room beyond is the biggest and most confusing mess you've ever seem.")
+                    G.write("The smell of burning chemicals permiates the air. You can see burn marks on the wall behind a metal table covered in gizmozes of all shapes.")
+                    G.write("Another table is covered in what looked like a chemistry set of steroids.")
+                    G.write("Smoke covers the ceiling. Some of the machines are whirring, some glowing, most are skaing and making noise.")
+                    G.write("Droxone is standing over at the third table covered in parts. It's exident what he was building blew up in him face.")
+                    head_alchemist.say("blewup")
+                    G.write("Steve: I don't mind. It's your lab.")
+                    head_alchemist.say("memoryloss")
+                    G.write("Steve: I think you have the wrong person. I'm not Barnabas. My name is Steve.")
+                    G.write("At that he turns and looks at you.")
+                    head_alchemist.say("thought")
+                    G.write("Steve: What do you mean prep the body?")
+                    head_alchemist.say("body")
+                    head_alchemist.say("body2")
+                    head_alchemist.say("body3")
+                    head_alchemist.say("concern")
+                    G.write("Everything is going black. Your ears are ringing.")
+                    G.write("You pass out.")
+                    Droxone_s = Droxone_s + 1
+
+        if til is [4,3]:
+            if plyr is True:
+                G.write("Would you like to talk to Nathik?")
+                go = int(input("1:yes, 2:no"))
+                if go is 1:
+                    G.write("For some reason you want to talk to Nathik. The Arms Master looks vissably nervious.")
+                    G.write("He leads you to a place in the dungeon. You suppose that Nathik doesn't want to be around other people.")
+                    G.write("You nerviously knock on the door.")
+                    head_necromancer.say("what")
+                    G.write("Steve: It's me, the person you all brought here.")
+                    G.write("The door flies open and nearly hits you in the face.")
+                    head_necromancer.say("mad")
+                    G.write("Apologize, or Ask?")
+
+                    AorA = int(input("1: Apologize, 2: Ask"))
+                    if AorA is 1:
+                        G.write("Steve: I'm sorry for what I did. Whatever it was I probably thought it was best at the time. It might have been, or might not have been.")
+                        head_necromancer.say("apol")
+                        Nathik_s = Nathik_s + 1
+
+                    else:
+                        G.write("Steve: What did I ever do too you?")
+                        head_necromancer.say("ask")
+                        head_necromancer.say("ask2")
+                        G.write("Nathik slams the door in your face.")
+                        Nathik_s = Nathik_s - 1
+
+        if til is [6,3]:
+            if plyr is True:
+
 
 
 
@@ -584,7 +1133,7 @@ elif one_of_five is 4:
     head_witch.say("get3")
     head_witch.say("get4")
     G.write("Steve: A witch? Those are real?")
-    G.write("At this the Morena laughs.")
+    G.write("At this Morena laughs.")
     head_witch.say("get5")
     G.write("Before you can say anything the oldest men of the five calls everyone over.")
     Morena_s = Morena_s + 1
