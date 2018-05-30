@@ -48,10 +48,10 @@ low_sweep = G.ammo_attack('Low Sweep', 'Sweep your leg and temporarily disarm th
 # For pre-buff blacksuit
 pepper_spray = G.ammo_attack('Use Pepper Spray', "Shoot pepper spray into the eyes of your opponent.", 2, spray_can, 1, 90, irritated_eyes)
 throw_chair = G.attack('Throw Chair', 'Grab a nearby chair and throw it at the opponent.', 25, 60)
-punch = G.attack('Punch', 'Deliver a flurry of punches to your opponent.', 11)
+punch = G.attack('Punch', 'Deliver a flurry of punches to your opponent.', 13, 90)
 
 # For buffed blacksuit
-bash = G.attack('Skull Bash', 'Bash your head into the oppnent.', 15, 90)
+bash = G.attack('Skull Bash', 'Bash your head into the oppnent.', 18, 82)
 throw_table = G.attack('Throw Table', 'Throw a table at your opponent.', 30, 45)
 
 # Weapons #
