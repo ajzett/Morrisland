@@ -24,24 +24,363 @@ Dredall_s = 0
 
 
 
-#Battle Manager
-def win(manager):
-    G.write("You won!")
-    exit()
 
-def lose(manager):
-    G.write("You have lost!")
-    exit()
+#
+# !PUT ALL ITEMS HERE! #
+#
 
-class basic_bat_man(G.battle_manager):
+# Consumables(ie. arrows, mana, etc...)
+mana = G.item("Mana", "Used to fuel spells", 10)
 
-    def player_win(self, plyr, enemy):
-        win(self)
+arrow = G.item("Arrow", "A common arrow, can be found almost anywhere", .1)
+cursed_arrow = G.item("A cursed arrow", "", 10)
+snipers_arrow = G.item("Will always hit and crit", "", 10)
+black_arrow = G.item("Negates all armor", "", 10)
+life_drain_arrow = G.item("Drains the health of anything hit with it", "", 10)
+rope_arrow = G.item("Launches a rope a long distance", "", 5)
 
-    def player_lose(self, plyr, enemy):
-        lose(self)
+bolt = G.item("A plain crossbow bolt", "", 1)
 
-bat_man = basic_bat_man()
+dart = G.item("", "", 1)
+
+# Legendary Items
+nathiks_soul_box = G.item("Green glowing box", "A box that Nathik can store souls in.", 1000)
+philosophers_stone = G.equippable("A stone that can give you eternal life", "", 2000, hp=100)
+shanams_ring = G.equippable("A ring that lets your summon a massive creature to fight for you", "", 2000, hp=100, stren=10)
+bruldrins_stone = G.item("Makes the owner a God of Death", "", 3000)
+
+
+#
+# End of items
+#
+
+
+#
+# End of NPCs
+#
+
+#
+# Attacks
+#
+daggar_stab = G.attack("Daggar", "You stab something with a small knife", 3)
+sword_slash = G.attack("", "You slash at your opponent", 5)
+sword_thrust = G.attack("", "You run your opponent through", 10)
+rapier_slash = G.attack("", "You slash", 4)
+rapier_thrust = G.attack("", "You stab", 8)
+wood_bludgeon = G.attack("", "You hit them really hard", 4)
+brass_punch = G.attack("", "You punch them in the face", 6)
+far_shot = G.ammo_attack("", "You shoot something really far away", 6, arrow, 1, acc=80)
+near_shot = G.ammo_attack("", "You shoot something near you", 4, arrow, 1, acc=90)
+face_shot = G.ammo_attack("", "You shoot someone right in front of you", 8, arrow, 1)
+bolt_shot = G.ammo_attack("", "You shoot a crossbow", 10, bolt, 1, acc=90)
+axe_cleave = G.attack("", "You hit with an axe", 5)
+pike_stab = G.attack("", "You stab something with a pike", 3)
+mace_hit = G.attack("", "You hit them with your mace", 5)
+throw_spear = G.ammo_attack("", "You through your spear", 6, arrow, 1, acc=60)
+spear_stab = G.attack("", "You stab with the spear", 2)
+flail_hit = G.attack("", "You hit with your flail", 5)
+war_hammer_hit = G.attack("", "You hit with a hammer", 4)
+blowgun_shot = G.ammo_attack("", "You hit with a dart", 1, dart, 1)
+push = G.attack("", "You push with your shield", 3)
+#Dragon Attacks
+poison = G.attack("poison", "", 10)
+fire = G.attack("fire", "", 15)
+claws = G.attack("claws", "", 15)
+
+#Magic Attacks
+fire_needle = G.ammo_attack("", "You send a needle of fire at your opponent", 4, mana, 1)
+icicle = G.ammo_attack("", "You send a spike of ice at your opponent", 6, mana, 2)
+eletricute = G.ammo_attack("", "", 7, mana, 2, acc=85)
+blind = G.ammo_attack("", "", 2, mana, 1, acc=70)
+fire_ball = G.ammo_attack("", "", 15, mana, 3)
+possession = G.ammo_attack("", "", 30, mana, 6, acc=70)
+sophocate = G.ammo_attack("", "", 20, mana, 4, acc=60)
+
+# Big attacks
+rot_attack = G.attack(2, 50, "You rot the flesh around the wound", 1)
+zombiefy = G.attack(4, 80, "You turn your opponent into a zombie", 1)
+dragon_fire = G.attack(5, 70, "You shoot dragon fire", 1)
+possession = G.attack(1, 80, "You call up a spirit that kills your opponent", 1)
+
+
+
+
+
+#
+# Weapons
+#
+
+#basic attacks
+daggar_linked = [daggar_stab]
+daggar = G.weapon("Daggar", "", 1, 2, daggar_linked)
+sword_linked = [sword_slash, sword_thrust]
+sword = G.weapon("Sword", "", 10, 3, sword_linked)
+rapier_linked = [rapier_slash, rapier_thrust]
+rapier = G.weapon("Rapier", "", 7, 3, rapier_linked)
+quartterstaff_linked = [wood_bludgeon]
+quarterstaff = G.weapon("Quarterstaff", "", 1, 2, quartterstaff_linked)
+brass_linked = [brass_punch]
+brass_knuckles = G.weapon("Brass Knuckles", "", 2, 2, brass_linked)
+long_bow_linked = [far_shot, near_shot]
+long_bow = G.weapon("Long Bow", "", 3, 3, long_bow_linked)
+short_bow_linked = [near_shot, face_shot]
+short_bow = G.weapon("Short Bow", "", 3, 2, short_bow_linked)
+cross_bow_linked = [bolt_shot]
+cross_bow = G.weapon("Cross Bow", "", 4, 3, cross_bow_linked)
+axe_linked = [wood_bludgeon, axe_cleave]
+axe = G.weapon("Axe", "", 5, 3, axe_linked)
+pike_linked = [pike_stab]
+pike = G.weapon("Pike", "", 1, 2, pike_linked)
+mace_linked = [mace_hit]
+mace = G.weapon("Mace", "", 5, 3, mace_linked)
+spear_linked = [throw_spear, spear_stab]
+spear = G.weapon("Spear", "", 1, 2, spear_linked)
+warhammer_linked = [war_hammer_hit]
+warhammer = G.weapon("War Hammer", "", 3, 3, warhammer_linked)
+blowgun_linked = [blowgun_shot]
+blowgun = G.weapon("Blowgun", "", 1, 1, blowgun_linked)
+club_linked = [wood_bludgeon]
+club = G.weapon("Club", "", 1, 2, club_linked)
+s_and_s_linked = [push, sword_slash, sword_thrust, wood_bludgeon]
+shield_sword = G.weapon("Sword and Shield", "", 12, 3, s_and_s_linked, armr=3)
+oak_wand_linked = [fire_needle, icicle, eletricute, blind]
+oak_wand = G.weapon("Wand", "", 20, 4, oak_wand_linked)
+morenas_wand_linked = [fire_ball, possession, sophocate]
+morenas_wand = G.weapon("Morena's Wand", "", 50, 4, morenas_wand_linked)
+dragons_blood_linked = [sword_slash, sword_thrust, dragon_fire]
+dragons_blood = G.weapon("Dragon's Blood", "", 100, 8, dragons_blood_linked)
+dragon_linked = [poison, fire, claws]
+dragon_weapon = G.weapon("The Dragon", "", 1000, 10, dragon_linked)
+
+#
+# Armor
+#
+basic_armor = G.armor("Leather Armor", "", 4, armr=3)
+steel_armor = G.armor("Steel Armor", "", 15, armr=6)
+ench_basic_armor = G.armor("Enchanted Leather Armor", "", 10, armr=5, agil=2)
+ench_steel_armor = G.armor("Enchanted Steel Armor", "", 25, armr=10, stren=4)
+mythril_armor = G.armor("Mythril Armor", "", 75, armr=25, pwr=1, agil=3, stren=5)
+sheild_charm = G.armor("Shield Bracelet", "", 60, armr=26)
+
+#
+# Potions
+#
+minor_health = G.stat_item("Minor Health Potion", "", 10, 1, hp=10)
+health_potion = G.stat_item("Health Potion", "", 15, 1, hp=15)
+major_health = G.stat_item("Major Health Potion", "", 20, 1, hp=20)
+iron_skin_potion = G.stat_item("Iron Skin Potion", "", 10, 5, armr=5)
+strength_potion = G.stat_item("Stength Potion", "", 10, 5, stren=5)
+grace_potion = G.stat_item("Grace Potion", "", 20, 5, agil=3, pwr=1, armr=1)
+giant_potion = G.stat_item("Giant Potion", "", 20, 5, stren=5, hp=20, pwr=1, agil=-2, armr=4)
+durable_potion = G.stat_item("Durable Potion", "", 10, 5, hp=20, armr=6)
+
+
+
+
+weapon_choice = [daggar, sword, rapier, quarterstaff, brass_knuckles, \
+    long_bow, short_bow, cross_bow, axe, pike, mace, spear, warhammer, blowgun, \
+    club, shield_sword, oak_wand]
+
+steve_stats = G.battler_stats(100, 5, 0, 5, 1)
+arms_master_stats = G.battler_stats(100, 4, 0, 4, 1)
+steve_stuff = []
+steve_using = []
+steve_inv = G.player_collection(10, steve_stuff, steve_using)
+arms_m_stuff = [shield_sword, daggar, basic_armor, minor_health]
+arms_m_using = []
+arms_m_inv = G.battler_collection(50, arms_m_stuff, arms_m_using)
+arms_m_inv.equip(basic_armor)
+
+
+
+arms_master = G.battler("Greg", G.loc_man, 2, 3, arms_m_inv, arms_master_stats)
+
+
+
+
+#
+# NPCs
+#
+
+#The group who is in charge of bringing Barnabas the Dragon Slayer back.
+head_alchemist = G.NPC("Droxone Iseas", G.loc_man, 20, 20)
+head_necromancer = G.NPC("Nathik the Undead", G.loc_man, 20, 20)
+head_wizard = G.NPC("Tenaxx the Storm Master", G.loc_man, 20, 20)
+head_witch = G.NPC("Morena Wyrm", G.loc_man, 20, 20)
+head_summoner = G.NPC("Dredall the Centaur", G.loc_man, 20, 20)
+
+#Group leaders
+king_blaive = G.NPC("King Blaive", G.loc_man, 20, 20)
+queen_gisella = G.NPC("Queen Gisella", G.loc_man, 20, 20)
+lord_basequin = G.NPC("Lord Basequin", G.loc_man, 20, 20)
+lady_aalis = G.NPC("Lady Aalis", G.loc_man, 20, 20)
+count_seri = G.NPC("Count Seri", G.loc_man, 20, 20)
+countess_rohez = G.NPC("Countess Rohez", G.loc_man, 20, 20)
+king_gilford = G.NPC("King Gilford", G.loc_man, 20, 20)
+queen_misuki = G.NPC("Queen Misuki", G.loc_man, 20, 20)
+king_britius = G.NPC("King Britius", G.loc_man, 20, 20)
+lord_wilmot = G.NPC("Lord Wilmot", G.loc_man, 20, 20)
+lady_symonne = G.NPC("Lady Symonne", G.loc_man, 20, 20)
+mirage_paradox = G.NPC("Mirage of Paradox", G.loc_man, 20, 20)
+magroch_natzarson = G.NPC("Magroch Natzarson", G.loc_man, 20, 20)
+zeom_flifnas = G.NPC("Zeom Flifnas", G.loc_man, 20, 20)
+king_artur = G.NPC("King Artur", G.loc_man, 20, 20)
+queen_cusal = G.NPC("Queen Cusal", G.loc_man, 20, 20)
+princess_di = G.NPC("Princess Di", G.loc_man, 20, 20)
+lady_gill = G.NPC("Lady Gill", G.loc_man, 20, 20)
+
+#Higher powers
+
+#Generic NPCs to just use for anything
+phone = G.NPC("Steve's Phone", G.loc_man, 20, 20)
+cat = G.NPC("Fluffy", G.loc_man, 20, 20)
+news_reader = G.NPC("Anchor", G.loc_man, 20, 20)
+steves_boss = G.NPC("The Boss", G.loc_man, 20, 20)
+arms_master_npc = G.NPC("Greg", G.loc_man, 20, 20)
+co_worker = G.NPC("Lary", G.loc_man, 20, 20)
+knifeman = G.NPC("Knifeman", G.loc_man, 20, 20)
+pes_emily = G.NPC("Emily", G.loc_man, 20, 20)
+pes_steven = G.NPC("Steven", G.loc_man, 20, 20)
+
+
+#Adding Dialogue
+news_reader.add_dialogue("news1", "Reporter: Wall street took another big hit today, with the down dropping another 400 points to hit a fifty year low.")
+news_reader.add_dialogue("news2", "Reporter: Many local companies are laying off up to half of their work force.")
+news_reader.add_dialogue("news3", "Reporter: Police are warning people to be careful. A knifeman who killed two people last week was spotted.")
+co_worker.add_dialogue("greating", "Lary: Hey Steve! Are you in trouble?")
+co_worker.add_dialogue("fired", "Lary: I hope you don't get let go too. Who else am I going to complain too?")
+co_worker.add_dialogue("weekend", "Lary: Are we still doing stuff this weekend?")
+cat.add_dialogue("meowq", "Cat: Meow?")
+cat.add_dialogue("meowl", "Cat: Meow!")
+cat.add_dialogue("meow", "Cat: Meow.")
+cat.add_dialogue("purr", "Cat: purrrrrr")
+knifeman.add_dialogue("cops", "Knifeman: Are you a cop?")
+phone.add_dialogue("hello", "Phone: Hello Steve. It is time to wake up. You have work at 8:00. It is going to rain tod...")
+steves_boss.add_dialogue("greating", "Boss: Hello Steve. You are falling behind on all your work. Come see me after your shift.")
+steves_boss.add_dialogue("fired", "Boss: I'm sorry, but we have to let you go. We're downsizing. Please clear out you stuff by tomorrow morning.")
+pes_emily.add_dialogue("move", "Pedestrian: Why are you just standing there? People are walking here!")
+pes_emily.add_dialogue("look_out", "Pedestrian: Look Out! A car!")
+head_witch.add_dialogue("first", "???: We got em! We got em!")
+head_necromancer.add_dialogue("first", "???: I told you we would get the right spirit evetually.")
+head_summoner.add_dialogue("first", "???: Shut up necromancer. I only tolerate you while you're useful.")
+head_witch.add_dialogue("insult_n", "???: He doesn't remember you Nathik! Hehehe! He doesn't remember you!")
+head_witch.add_dialogue("insult_n2", "???: He's the reason you're undead and he doesn't even remember you!")
+head_necromancer.add_dialogue("insult_w", "Nathik: I may be dead, but at least I don't age anymore... Morena.")
+head_summoner.add_dialogue("calm", "???: Now now, Nathik be nice. Morena stop beating up the necromancer with your cane, please.")
+head_wizard.add_dialogue("hello", "???: Dredall will calm them down soon enough. It's been a long time Barnabas.")
+head_wizard.add_dialogue("confustion", "???: Memory loss isn't a normal side effect of resurection.")
+head_wizard.add_dialogue("blame", "???: Droxone, your devises must be off.")
+head_alchemist.add_dialogue("sigh", "Droxone: Not as off as your brain you old sack of glitter.")
+head_wizard.add_dialogue("hearinglose", "???: What did you say? I can't hear so well anymore.")
+head_alchemist.add_dialogue("backtrack", "Droxone: I said none of my stuff is the issue, Tenaxx. Check Morena's potion.")
+head_alchemist.add_dialogue("get1", "Droxone: Hi Barnabus. I'm Droxone, the new alchemist on the team.")
+head_alchemist.add_dialogue("get2", "Droxone: The resurrection chambers, where you're always brought back.")
+head_necromancer.add_dialogue("get1", "Nathik: Oh yes. You...")
+head_necromancer.add_dialogue("get2", "Nathik: You were always stupid Barnabas. You were always forgetful.")
+head_necromancer.add_dialogue("get3", "Nathik: You only ever succeded because of what others did. What we gave up.")
+head_necromancer.add_dialogue("get4", "Nathik: It doesn't surprise me that you don't remember anything. Why worry your pretty head over it, ay?")
+head_wizard.add_dialogue("get1", "Tenaxx: Ah yes, our champion! Young again and ready to save us... again.")
+head_wizard.add_dialogue("get2", "Tenaxx: Nonsence, The memory loss is a slight oddity, but you are still my long time friend.")
+head_wizard.add_dialogue("get3", "Tenaxx: It's great to see you again, Barnabas. Now down to business.")
+head_witch.add_dialogue("get1", "Morena: Don't Ma'am me you little worm. You still owe me for that last card game.")
+head_witch.add_dialogue("get2", "Morena: Oh yes. The memory loss. Ironicly, I forgot about that. We were very good friends before you died.")
+head_witch.add_dialogue("get3", "Morena: I trained you quite a bit back in our day. You were a very powerful witch.")
+head_witch.add_dialogue("get4", "Morena: One of my best aprintises. It is very good that you're now back.")
+head_witch.add_dialogue("get5", "Morena: Well of course. Tell me, what's the last thing you remember?")
+head_summoner.add_dialogue("get1", "Dredall: Hello my old friend. It is good to see you again.")
+head_summoner.add_dialogue("get2", "Dredall: You will be out of practice after all this time in the afterlife.")
+head_summoner.add_dialogue("get3", "Dredall: Maybe this time around you will master some of what I have to teach you.")
+head_summoner.add_dialogue("get4", "Dredall: Why, summoning of course. You were always myserable at it. Maybe you will learn this time.")
+head_wizard.add_dialogue("expo1", "Tenaxx: So now that we have Barnabas back, we may begin preperations for re-killing the world dragon...")
+head_wizard.add_dialogue("expo2", "Tenaxx: Mapoantain.")
+head_wizard.add_dialogue("expo3", "Tenaxx: Now, Barnabas. You seem to be having a few memory troubles. How much do you remember?")
+head_alchemist.add_dialogue("shock", "Droxone: Wait, you actually don't remember anything?")
+head_summoner.add_dialogue("solution", "Dredall: There is a way to test this. Come Barnabas.")
+head_summoner.add_dialogue("weapon", "Dredall: Pick a weapon to use. We shall see how much you remember.")
+head_summoner.add_dialogue("warhammer", "Dredall: I see you must remember something to pick such a weapon.")
+head_summoner.add_dialogue("wrong_weapon", "Dredall: I didn't think you enjoied using that weapon.")
+head_witch.add_dialogue("wand", "Morena: I see you finally want to learn a better way to win battles. May I aid you?")
+head_witch.add_dialogue("(:", "Morena: I look forward to it.")
+head_witch.add_dialogue("wait", "Morena: The offer stays open if you have a change of heart.")
+head_summoner.add_dialogue("train", "Dredall: Now that you have chosen a weapon. You may practice here. I will call our arms master to duel with you.")
+head_necromancer.add_dialogue("rust", "Nathik: Nonsence. You aren't made of metal.")
+head_summoner.add_dialogue("spar", "Dredall: Greg will spar with you. Once you've shaken the rust off we may go to kill the world dragon.")
+head_wizard.add_dialogue("already", "Tenaxx: We did that the first time around. Why would we put them back?")
+head_alchemist.add_dialogue("yahn", "Droxone: Greg will take you to your chambers once you're done. Bye.")
+head_witch.add_dialogue("come", "Morena: If you wish to learn to use that thing, I'll be in the library.")
+arms_master_npc.add_dialogue("first", "Greg: Would you care to start now?")
+arms_master_npc.add_dialogue("confus", "Greg: How is that? You're one of the best swordsmen in the history of this land.")
+arms_master_npc.add_dialogue("realize", "Greg: That would make sense. You aren't holding your weapon correctly. You're clumbsy, and don't know what to do with yourself. That's why you keep wringing your hands.")
+arms_master_npc.add_dialogue("sad", "Greg: That's to bad. I wanted to ask you about some things, but I guess you wouldn't know the answer.")
+arms_master_npc.add_dialogue("expl1", "Greg: I do believe todays sparing session should turn into a history lession. Maybe I can jog your memory.")
+arms_master_npc.add_dialogue("expl2", "Greg: Where you are is easy enough. You are in the resurrection fortress in ______, which is on the continent of _______, in The Ancient Lands.")
+arms_master_npc.add_dialogue("expl3", "Greg: Most people just call it Alnues.")
+arms_master_npc.add_dialogue("ask", "Greg: Is any of this jogging your memory?")
+arms_master_npc.add_dialogue("expl4", "Greg: We have ages that are 300 years long. This is the seventh age. Barnabas was born in the first, as was Tenaxx the Stormmaster.")
+arms_master_npc.add_dialogue("expl5", "Greg: The two of you along with 4 other people who are long sinse dead killed the world dragon.")
+arms_master_npc.add_dialogue("expl6", "Greg: Morena replaced the other witch as high cover leader afterward. The necromancer vanished, as did the summoner.")
+arms_master_npc.add_dialogue("expl7", "Greg: The origonal alchemist died of old age. As have most of the rest. Droxone is in his thirties.")
+arms_master_npc.add_dialogue("expl8", "Greg: Every time the world dragon comes back, the five resurect you to help them kill it.")
+arms_master_npc.add_dialogue("lieyes", "Greg: This perfectly fine. At least we know the memories are there now.")
+arms_master_npc.add_dialogue("lieno", "Greg: We'll keep trying. You'll remember who you were eventually.")
+arms_master_npc.add_dialogue("lieyes2", "Greg: If you remember than we don't need to practice at all. Even rusty you're a better swordsman than I?")
+arms_master_npc.add_dialogue("lieno2", "Greg: I don't believe we should spar today. I don't think you remember how.")
+arms_master_npc.add_dialogue("gowhere", "Greg: Would you like me to take you anywhere?")
+arms_master_npc.add_dialogue("treasure", "Greg: Somewhere very interesting.")
+arms_master_npc.add_dialogue("coolstuff", "Greg: Welcome to the Treasury. This room holds some of the most amazing things in Alnues and beyond.")
+arms_master_npc.add_dialogue("coolstuff2", "Greg: this is all stuff one of the six has at some point aquiered. You're one of them so you can take anything with your name on it.")
+arms_master_npc.add_dialogue("goback", "Greg: I should probably take you back now. If you will, sir.")
+head_wizard.add_dialogue("studyhello", "Tenaxx: Why hello Barnabas. How was your sparing session?")
+head_wizard.add_dialogue("plan1", "Tenaxx: Same as always, but you don't remember.")
+head_wizard.add_dialogue("plan2", "Tenaxx: We go to the Huninst Chain, where the world dragon always appears.")
+head_wizard.add_dialogue("plan3", "Tenaxx: Droxone will prep a battle area with his things to make it easier.")
+head_wizard.add_dialogue("plan4", "Tenaxx: Nathik provides the cannon fodder, Dredall provides the might, I provide protection from his fire, Morena keeps us all alive.")
+head_wizard.add_dialogue("roles", "Tenaxx: I'm a wizard, weilder of elemental powers. Nathik is a necromancer. Dredall is a beast summoner. Droxone is an alchemist. Morena is a witch.")
+head_summoner.add_dialogue("great", "Dredall: Hello, Barnabas. What brings you here?")
+head_summoner.add_dialogue("home", "Dredall: Your home has long sinse fallen into the sea. You know this.")
+head_summoner.add_dialogue("earth", "Dredall: I had feared this. We cannot send you back. You must aid us whether you wish to or not.")
+head_summoner.add_dialogue("useless", "Dredall: It can be anyone. We only need someone to focus our power through. It doesn't matter that you've never weilded a weapon before.")
+head_summoner.add_dialogue("truth", "Dredall: The others just need to believe you're real. As do the people.")
+head_summoner.add_dialogue("defen", "Dredall: Yes, this is the first time we grabbed the wrong soul from the afterlife.")
+head_summoner.add_dialogue("goaway", "Dredall: For the sake of this world you are going to go through with this.")
+head_alchemist.add_dialogue("radio", "Droxone: Just open the door and come in. I can see you, Barnabas.")
+head_alchemist.add_dialogue("blewup", "Droxone: Hey, sorry for my appearance. I just had a mishap.")
+head_alchemist.add_dialogue("memoryloss", "Droxone: Wow, you must have memory loss. Barnabas wouldn't every accept anything less then to prostate at his feet.")
+head_alchemist.add_dialogue("thought", "Droxone: Hmm... It is possible. I don't understand how they track down the right spirit, I just prep the body.")
+head_alchemist.add_dialogue("body", "Droxone: You haven't looked in a mirror have you? You have a different body than you did when you were alive.")
+head_alchemist.add_dialogue("body2", "Droxone: Nathik and I have to make a body before the other three get your spirit.")
+head_alchemist.add_dialogue("body3", "Droxone: Some of your parts are mechanical, others were reanimated. I then tie it all together with a Phylosophers Stone.")
+head_alchemist.add_dialogue("concern", "Droxone: Are you alright? You're looking paler than you should.")
+head_necromancer.add_dialogue("what", "Nathik: Who is it?")
+head_necromancer.add_dialogue("mad", "Nathik: What would cause you to be so stupid as to come here? You aren't welcome!")
+head_necromancer.add_dialogue("apol", "Nathik: It's about three hundred years too late for that, Barnabas.")
+head_necromancer.add_dialogue("ask", "Nathik: You killed me! You stabbed me from behind after tricking me and left me to die of blood loss! Do you know how long that takes?!")
+head_necromancer.add_dialogue("ask2", "Nathik: Hours! It took hours for me too die! When my enchantments kicked in it took even longer because of how bad the death was! You tourchered me for days!")
+head_witch.add_dialogue("training", "Morena: I'm glad you came. I was wondering whether or not you would.")
+head_witch.add_dialogue("training2", "Morena: Well, we don't have time for real training, but I have a few things you may want.")
+head_witch.add_dialogue("training3", "Morena: I've been trying to convince you that my way will kill the world dragon forever for so many centuries. Finally we'll end this!")
+head_witch.add_dialogue("training4", "Morena: Take up these items and end this once and for all!")
+head_witch.add_dialogue("takeitems", "Morena: For the first time in centuries we can kill this thing for good! I won't have to put up with Tenaxx or Dredall ever again!")
+head_witch.add_dialogue("regect", "Morena: Very well. We will put the beast down for a time, but in two hundred years you will come back and do it all again, and again, and, again.")
+head_witch.add_dialogue("curio", "Morena: There are many places you could be right now. Here isn't likely. Why have you come?")
+head_witch.add_dialogue("curio2", "Morena: We're going to continue the endless cycle of killing the world dragon only to have it come back in two hundred years.")
+head_witch.add_dialogue("curio3", "Morena: All because our leadership is in the hands of Tenaxx and Dredall. Two of the biggest idiots to come out of the Cypus Sea shores in eons.")
+head_witch.add_dialogue("endtalk", "Morena: You should go and prepare for the trip. Off with you.")
+head_wizard.add_dialogue("leave", "Tenaxx: Hello, Barnabas. We will be leaving for the Hunirst Chain in just over an hour.")
+head_wizard.add_dialogue("leave2", "Tenaxx: You will be taken to the ship as soon as you've finished your meal/")
+head_necromancer.add_dialogue("box", "Nathik: Yes, where did you find this?")
+head_necromancer.add_dialogue("boxt", "Nathik: That thief! Of course he took it! He can't do anything for himself.")
+head_necromancer.add_dialogue("boxl", "Nathik: That is quite odd. You wouldn't have stollen it, for you have no consept of what it does.")
+head_necromancer.add_dialogue("boxl2", "Nathik: I guess I should thank you for giving it back. Thank you.")
+head_alchemist.add_dialogue("island", "Droxone: It's my first time going to this island. I've never faced the World Dragon before. Can you still remember nothing?")
+head_alchemist.add_dialogue("islandh", "Droxone: Well at least I'm not the only one who's never done this before, or at least can't remember doing it.")
+head_alchemist.add_dialogue("islandl", "Droxone: That's good. Then only one person is new.")
+head_alchemist.add_dialogue("island2", "Droxone: This is like reflex for everyone else. No matter how much you can remember, we'll all be fine. You're turning green again.")
+head_summoner.add_dialogue("fire", "Dredall: No. That is the Dragon.")
+head_summoner.add_dialogue("fire2", "Dredall: Yes. What you're seeing is light from molten rock reflecting off smoke.")
+head_summoner.add_dialogue("fire3", "Dredall: They aren't.")
+
+
 
 
 
@@ -53,16 +392,18 @@ class appartment(G.array_map):
 
     def send_data(self, til, plyr=False):
         if til is [0,1]:
+            if plyr is True:
+                G.write("It's working")
             G.write("7:10am")
             G.write("Monday, March 4th.")
             G.write("Your apartment.")
-            os.system('cls')
+
             phone.say("hello")
             G.write("Your cat knocks your phone on the floor")
             G.write("Wait... You don't own a cat. You're not that sad!")
             G.write("Yet...")
             cat.say("meowl")
-            os.system('cls')
+
             G.write("The cat jumps down onto the floor and goes into the other room. You hear the TV turn on.")
             G.write("Do you follow the cat?")
             morning = int(input("1: yes, 2: no"))
@@ -135,8 +476,11 @@ class appartment(G.array_map):
                 G.write("The last thing you see is the cat.")
                 cat.say("purr")
                 os.system('cls')
+        return True
 
-appartment.layout = G.np.array([[G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building], \
+appartment_map = appartment('appartment_n')
+
+appartment_map.layout = G.np.array([[G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building], \
                                 [G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Ice, G.Tiles.Building], \
                                 [G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building]])
 
@@ -309,7 +653,7 @@ class fortress_chamber(G.array_map):
             G.write("Dredall grabs you and you find your self on his back. You all walk out a side door and down a coridor.")
             os.system('cls')
 
-fortress_room = fortress_chamber('fortress')
+fortess_room = fortress_chamber('fortress')
 
 fortess_room.layout = G.np.array([[G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall], \
                             [G.Tiles.Wall, G.Tiles.Ice, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Wall], \
@@ -421,7 +765,7 @@ class arena(G.array_map):
                     arms_master_npc.say("lieyes")
                     honesty = honesty - 1
                     arms_master_npc.say("lieyes2")
-                    bat_man.battle(steve, arms_master)
+
 
                 else:
                     G.write("Steve: I still don't know what you're talking about.")
@@ -657,364 +1001,28 @@ hallway.layout = G.np.array([[G.Tiles.Ice, G.Tiles.Dirt, G.Tiles.Ice, G.Tiles.Di
 
 
 
+steve = G.player("Steve", appartment_map, 0, 1, steve_inv, steve_stats)
+
+G.loc_man.load_map(appartment_map)
+
+G.write("1")
+G.loc_man.move(steve, G.Directions.Right)
+cords_n = steve.location()
+appartment_map.send_data(cords_n, plyr=True)
+G.write("2")
+G.loc_man.move(steve, G.Directions.Left)
+G.write("3")
+
+#You need to figure this out when you get home! No star trek, just do this!
 
 
 
-#
-# !PUT ALL ITEMS HERE! #
-#
-
-# Consumables(ie. arrows, mana, etc...)
-mana = G.item("Mana", "Used to fuel spells", 10)
-
-arrow = G.item("Arrow", "A common arrow, can be found almost anywhere", .1)
-cursed_arrow = G.item("A cursed arrow", "", 10)
-snipers_arrow = G.item("Will always hit and crit", "", 10)
-black_arrow = G.item("Negates all armor", "", 10)
-life_drain_arrow = G.item("Drains the health of anything hit with it", "", 10)
-rope_arrow = G.item("Launches a rope a long distance", "", 5)
-
-bolt = G.item("A plain crossbow bolt", "", 1)
-
-dart = G.item("", "", 1)
-
-# Legendary Items
-nathiks_soul_box = G.item("Green glowing box", "A box that Nathik can store souls in.", 1000)
-philosophers_stone = G.equippable("A stone that can give you eternal life", "", 2000, hp=100)
-shanams_ring = G.equippable("A ring that lets your summon a massive creature to fight for you", "", 2000, hp=100, stren=10)
-bruldrins_stone = G.item("Makes the owner a God of Death", "", 3000)
-
-
-#
-# End of items
-#
-
-
-
-
-#
-# NPCs
-#
-
-#The group who is in charge of bringing Barnabas the Dragon Slayer back.
-head_alchemist = G.NPC("Droxone Iseas", G.loc_man, 20, 20)
-head_necromancer = G.NPC("Nathik the Undead", G.loc_man, 20, 20)
-head_wizard = G.NPC("Tenaxx the Storm Master", G.loc_man, 20, 20)
-head_witch = G.NPC("Morena Wyrm", G.loc_man, 20, 20)
-head_summoner = G.NPC("Dredall the Centaur", G.loc_man, 20, 20)
-
-#Group leaders
-king_blaive = G.NPC("King Blaive", G.loc_man, 20, 20)
-queen_gisella = G.NPC("Queen Gisella", G.loc_man, 20, 20)
-lord_basequin = G.NPC("Lord Basequin", G.loc_man, 20, 20)
-lady_aalis = G.NPC("Lady Aalis", G.loc_man, 20, 20)
-count_seri = G.NPC("Count Seri", G.loc_man, 20, 20)
-countess_rohez = G.NPC("Countess Rohez", G.loc_man, 20, 20)
-king_gilford = G.NPC("King Gilford", G.loc_man, 20, 20)
-queen_misuki = G.NPC("Queen Misuki", G.loc_man, 20, 20)
-king_britius = G.NPC("King Britius", G.loc_man, 20, 20)
-lord_wilmot = G.NPC("Lord Wilmot", G.loc_man, 20, 20)
-lady_symonne = G.NPC("Lady Symonne", G.loc_man, 20, 20)
-mirage_paradox = G.NPC("Mirage of Paradox", G.loc_man, 20, 20)
-magroch_natzarson = G.NPC("Magroch Natzarson", G.loc_man, 20, 20)
-zeom_flifnas = G.NPC("Zeom Flifnas", G.loc_man, 20, 20)
-king_artur = G.NPC("King Artur", G.loc_man, 20, 20)
-queen_cusal = G.NPC("Queen Cusal", G.loc_man, 20, 20)
-princess_di = G.NPC("Princess Di", G.loc_man, 20, 20)
-lady_gill = G.NPC("Lady Gill", G.loc_man, 20, 20)
-
-#Higher powers
-
-#Generic NPCs to just use for anything
-phone = G.NPC("Steve's Phone", G.loc_man, 20, 20)
-cat = G.NPC("Fluffy", G.loc_man, 20, 20)
-news_reader = G.NPC("Anchor", G.loc_man, 20, 20)
-steves_boss = G.NPC("The Boss", G.loc_man, 20, 20)
-arms_master_npc = G.NPC("Greg", G.loc_man, 20, 20)
-co_worker = G.NPC("Lary", G.loc_man, 20, 20)
-knifeman = G.NPC("Knifeman", G.loc_man, 20, 20)
-pes_emily = G.NPC("Emily", G.loc_man, 20, 20)
-pes_steven = G.NPC("Steven", G.loc_man, 20, 20)
-
-
-#Adding Dialogue
-news_reader.add_dialogue("news1", "Reporter: Wall street took another big hit today, with the down dropping another 400 points to hit a fifty year low.")
-news_reader.add_dialogue("news2", "Reporter: Many local companies are laying off up to half of their work force.")
-news_reader.add_dialogue("news3", "Reporter: Police are warning people to be careful. A knifeman who killed two people last week was spotted.")
-co_worker.add_dialogue("greating", "Lary: Hey Steve! Are you in trouble?")
-co_worker.add_dialogue("fired", "Lary: I hope you don't get let go too. Who else am I going to complain too?")
-co_worker.add_dialogue("weekend", "Lary: Are we still doing stuff this weekend?")
-cat.add_dialogue("meowq", "Cat: Meow?")
-cat.add_dialogue("meowl", "Cat: Meow!")
-cat.add_dialogue("meow", "Cat: Meow.")
-cat.add_dialogue("purr", "Cat: purrrrrr")
-knifeman.add_dialogue("cops", "Knifeman: Are you a cop?")
-phone.add_dialogue("hello", "Phone: Hello Steve. It is time to wake up. You have work at 8:00. It is going to rain tod...")
-steves_boss.add_dialogue("greating", "Boss: Hello Steve. You are falling behind on all your work. Come see me after your shift.")
-steves_boss.add_dialogue("fired", "Boss: I'm sorry, but we have to let you go. We're downsizing. Please clear out you stuff by tomorrow morning.")
-pes_emily.add_dialogue("move", "Pedestrian: Why are you just standing there? People are walking here!")
-pes_emily.add_dialogue("look_out", "Pedestrian: Look Out! A car!")
-head_witch.add_dialogue("first", "???: We got em! We got em!")
-head_necromancer.add_dialogue("first", "???: I told you we would get the right spirit evetually.")
-head_summoner.add_dialogue("first", "???: Shut up necromancer. I only tolerate you while you're useful.")
-head_witch.add_dialogue("insult_n", "???: He doesn't remember you Nathik! Hehehe! He doesn't remember you!")
-head_witch.add_dialogue("insult_n2", "???: He's the reason you're undead and he doesn't even remember you!")
-head_necromancer.add_dialogue("insult_w", "Nathik: I may be dead, but at least I don't age anymore... Morena.")
-head_summoner.add_dialogue("calm", "???: Now now, Nathik be nice. Morena stop beating up the necromancer with your cane, please.")
-head_wizard.add_dialogue("hello", "???: Dredall will calm them down soon enough. It's been a long time Barnabas.")
-head_wizard.add_dialogue("confustion", "???: Memory loss isn't a normal side effect of resurection.")
-head_wizard.add_dialogue("blame", "???: Droxone, your devises must be off.")
-head_alchemist.add_dialogue("sigh", "Droxone: Not as off as your brain you old sack of glitter.")
-head_wizard.add_dialogue("hearinglose", "???: What did you say? I can't hear so well anymore.")
-head_alchemist.add_dialogue("backtrack", "Droxone: I said none of my stuff is the issue, Tenaxx. Check Morena's potion.")
-head_alchemist.add_dialogue("get1", "Droxone: Hi Barnabus. I'm Droxone, the new alchemist on the team.")
-head_alchemist.add_dialogue("get2", "Droxone: The resurrection chambers, where you're always brought back.")
-head_necromancer.add_dialogue("get1", "Nathik: Oh yes. You...")
-head_necromancer.add_dialogue("get2", "Nathik: You were always stupid Barnabas. You were always forgetful.")
-head_necromancer.add_dialogue("get3", "Nathik: You only ever succeded because of what others did. What we gave up.")
-head_necromancer.add_dialogue("get4", "Nathik: It doesn't surprise me that you don't remember anything. Why worry your pretty head over it, ay?")
-head_wizard.add_dialogue("get1", "Tenaxx: Ah yes, our champion! Young again and ready to save us... again.")
-head_wizard.add_dialogue("get2", "Tenaxx: Nonsence, The memory loss is a slight oddity, but you are still my long time friend.")
-head_wizard.add_dialogue("get3", "Tenaxx: It's great to see you again, Barnabas. Now down to business.")
-head_witch.add_dialogue("get1", "Morena: Don't Ma'am me you little worm. You still owe me for that last card game.")
-head_witch.add_dialogue("get2", "Morena: Oh yes. The memory loss. Ironicly, I forgot about that. We were very good friends before you died.")
-head_witch.add_dialogue("get3", "Morena: I trained you quite a bit back in our day. You were a very powerful witch.")
-head_witch.add_dialogue("get4", "Morena: One of my best aprintises. It is very good that you're now back.")
-head_witch.add_dialogue("get5", "Morena: Well of course. Tell me, what's the last thing you remember?")
-head_summoner.add_dialogue("get1", "Dredall: Hello my old friend. It is good to see you again.")
-head_summoner.add_dialogue("get2", "Dredall: You will be out of practice after all this time in the afterlife.")
-head_summoner.add_dialogue("get3", "Dredall: Maybe this time around you will master some of what I have to teach you.")
-head_summoner.add_dialogue("get4", "Dredall: Why, summoning of course. You were always myserable at it. Maybe you will learn this time.")
-head_wizard.add_dialogue("expo1", "Tenaxx: So now that we have Barnabas back, we may begin preperations for re-killing the world dragon...")
-head_wizard.add_dialogue("expo2", "Tenaxx: Mapoantain.")
-head_wizard.add_dialogue("expo3", "Tenaxx: Now, Barnabas. You seem to be having a few memory troubles. How much do you remember?")
-head_alchemist.add_dialogue("shock", "Droxone: Wait, you actually don't remember anything?")
-head_summoner.add_dialogue("solution", "Dredall: There is a way to test this. Come Barnabas.")
-head_summoner.add_dialogue("weapon", "Dredall: Pick a weapon to use. We shall see how much you remember.")
-head_summoner.add_dialogue("warhammer", "Dredall: I see you must remember something to pick such a weapon.")
-head_summoner.add_dialogue("wrong_weapon", "Dredall: I didn't think you enjoied using that weapon.")
-head_witch.add_dialogue("wand", "Morena: I see you finally want to learn a better way to win battles. May I aid you?")
-head_witch.add_dialogue("(:", "Morena: I look forward to it.")
-head_witch.add_dialogue("wait", "Morena: The offer stays open if you have a change of heart.")
-head_summoner.add_dialogue("train", "Dredall: Now that you have chosen a weapon. You may practice here. I will call our arms master to duel with you.")
-head_necromancer.add_dialogue("rust", "Nathik: Nonsence. You aren't made of metal.")
-head_summoner.add_dialogue("spar", "Dredall: Greg will spar with you. Once you've shaken the rust off we may go to kill the world dragon.")
-head_wizard.add_dialogue("already", "Tenaxx: We did that the first time around. Why would we put them back?")
-head_alchemist.add_dialogue("yahn", "Droxone: Greg will take you to your chambers once you're done. Bye.")
-head_witch.add_dialogue("come", "Morena: If you wish to learn to use that thing, I'll be in the library.")
-arms_master_npc.add_dialogue("first", "Greg: Would you care to start now?")
-arms_master_npc.add_dialogue("confus", "Greg: How is that? You're one of the best swordsmen in the history of this land.")
-arms_master_npc.add_dialogue("realize", "Greg: That would make sense. You aren't holding your weapon correctly. You're clumbsy, and don't know what to do with yourself. That's why you keep wringing your hands.")
-arms_master_npc.add_dialogue("sad", "Greg: That's to bad. I wanted to ask you about some things, but I guess you wouldn't know the answer.")
-arms_master_npc.add_dialogue("expl1", "Greg: I do believe todays sparing session should turn into a history lession. Maybe I can jog your memory.")
-arms_master_npc.add_dialogue("expl2", "Greg: Where you are is easy enough. You are in the resurrection fortress in ______, which is on the continent of _______, in The Ancient Lands.")
-arms_master_npc.add_dialogue("expl3", "Greg: Most people just call it Alnues.")
-arms_master_npc.add_dialogue("ask", "Greg: Is any of this jogging your memory?")
-arms_master_npc.add_dialogue("expl4", "Greg: We have ages that are 300 years long. This is the seventh age. Barnabas was born in the first, as was Tenaxx the Stormmaster.")
-arms_master_npc.add_dialogue("expl5", "Greg: The two of you along with 4 other people who are long sinse dead killed the world dragon.")
-arms_master_npc.add_dialogue("expl6", "Greg: Morena replaced the other witch as high cover leader afterward. The necromancer vanished, as did the summoner.")
-arms_master_npc.add_dialogue("expl7", "Greg: The origonal alchemist died of old age. As have most of the rest. Droxone is in his thirties.")
-arms_master_npc.add_dialogue("expl8", "Greg: Every time the world dragon comes back, the five resurect you to help them kill it.")
-arms_master_npc.add_dialogue("lieyes", "Greg: This perfectly fine. At least we know the memories are there now.")
-arms_master_npc.add_dialogue("lieno", "Greg: We'll keep trying. You'll remember who you were eventually.")
-arms_master_npc.add_dialogue("lieyes2", "Greg: Let us see how much you remember of fighting, ay?")
-arms_master_npc.add_dialogue("lieno2", "Greg: I don't believe we should spar today. I don't think you remember how.")
-arms_master_npc.add_dialogue("gowhere", "Greg: Would you like me to take you anywhere?")
-arms_master_npc.add_dialogue("treasure", "Greg: Somewhere very interesting.")
-arms_master_npc.add_dialogue("coolstuff", "Greg: Welcome to the Treasury. This room holds some of the most amazing things in Alnues and beyond.")
-arms_master_npc.add_dialogue("coolstuff2", "Greg: this is all stuff one of the six has at some point aquiered. You're one of them so you can take anything with your name on it.")
-arms_master_npc.add_dialogue("goback", "Greg: I should probably take you back now. If you will, sir.")
-head_wizard.add_dialogue("studyhello", "Tenaxx: Why hello Barnabas. How was your sparing session?")
-head_wizard.add_dialogue("plan1", "Tenaxx: Same as always, but you don't remember.")
-head_wizard.add_dialogue("plan2", "Tenaxx: We go to the Huninst Chain, where the world dragon always appears.")
-head_wizard.add_dialogue("plan3", "Tenaxx: Droxone will prep a battle area with his things to make it easier.")
-head_wizard.add_dialogue("plan4", "Tenaxx: Nathik provides the cannon fodder, Dredall provides the might, I provide protection from his fire, Morena keeps us all alive.")
-head_wizard.add_dialogue("roles", "Tenaxx: I'm a wizard, weilder of elemental powers. Nathik is a necromancer. Dredall is a beast summoner. Droxone is an alchemist. Morena is a witch.")
-head_summoner.add_dialogue("great", "Dredall: Hello, Barnabas. What brings you here?")
-head_summoner.add_dialogue("home", "Dredall: Your home has long sinse fallen into the sea. You know this.")
-head_summoner.add_dialogue("earth", "Dredall: I had feared this. We cannot send you back. You must aid us whether you wish to or not.")
-head_summoner.add_dialogue("useless", "Dredall: It can be anyone. We only need someone to focus our power through. It doesn't matter that you've never weilded a weapon before.")
-head_summoner.add_dialogue("truth", "Dredall: The others just need to believe you're real. As do the people.")
-head_summoner.add_dialogue("defen", "Dredall: Yes, this is the first time we grabbed the wrong soul from the afterlife.")
-head_summoner.add_dialogue("goaway", "Dredall: For the sake of this world you are going to go through with this.")
-head_alchemist.add_dialogue("radio", "Droxone: Just open the door and come in. I can see you, Barnabas.")
-head_alchemist.add_dialogue("blewup", "Droxone: Hey, sorry for my appearance. I just had a mishap.")
-head_alchemist.add_dialogue("memoryloss", "Droxone: Wow, you must have memory loss. Barnabas wouldn't every accept anything less then to prostate at his feet.")
-head_alchemist.add_dialogue("thought", "Droxone: Hmm... It is possible. I don't understand how they track down the right spirit, I just prep the body.")
-head_alchemist.add_dialogue("body", "Droxone: You haven't looked in a mirror have you? You have a different body than you did when you were alive.")
-head_alchemist.add_dialogue("body2", "Droxone: Nathik and I have to make a body before the other three get your spirit.")
-head_alchemist.add_dialogue("body3", "Droxone: Some of your parts are mechanical, others were reanimated. I then tie it all together with a Phylosophers Stone.")
-head_alchemist.add_dialogue("concern", "Droxone: Are you alright? You're looking paler than you should.")
-head_necromancer.add_dialogue("what", "Nathik: Who is it?")
-head_necromancer.add_dialogue("mad", "Nathik: What would cause you to be so stupid as to come here? You aren't welcome!")
-head_necromancer.add_dialogue("apol", "Nathik: It's about three hundred years too late for that, Barnabas.")
-head_necromancer.add_dialogue("ask", "Nathik: You killed me! You stabbed me from behind after tricking me and left me to die of blood loss! Do you know how long that takes?!")
-head_necromancer.add_dialogue("ask2", "Nathik: Hours! It took hours for me too die! When my enchantments kicked in it took even longer because of how bad the death was! You tourchered me for days!")
-head_witch.add_dialogue("training", "Morena: I'm glad you came. I was wondering whether or not you would.")
-head_witch.add_dialogue("training2", "Morena: Well, we don't have time for real training, but I have a few things you may want.")
-head_witch.add_dialogue("training3", "Morena: I've been trying to convince you that my way will kill the world dragon forever for so many centuries. Finally we'll end this!")
-head_witch.add_dialogue("training4", "Morena: Take up these items and end this once and for all!")
-head_witch.add_dialogue("takeitems", "Morena: For the first time in centuries we can kill this thing for good! I won't have to put up with Tenaxx or Dredall ever again!")
-head_witch.add_dialogue("regect", "Morena: Very well. We will put the beast down for a time, but in two hundred years you will come back and do it all again, and again, and, again.")
-head_witch.add_dialogue("curio", "Morena: There are many places you could be right now. Here isn't likely. Why have you come?")
-head_witch.add_dialogue("curio2", "Morena: We're going to continue the endless cycle of killing the world dragon only to have it come back in two hundred years.")
-head_witch.add_dialogue("curio3", "Morena: All because our leadership is in the hands of Tenaxx and Dredall. Two of the biggest idiots to come out of the Cypus Sea shores in eons.")
-head_witch.add_dialogue("endtalk", "Morena: You should go and prepare for the trip. Off with you.")
-head_wizard.add_dialogue("leave", "Tenaxx: Hello, Barnabas. We will be leaving for the Hunirst Chain in just over an hour.")
-head_wizard.add_dialogue("leave2", "Tenaxx: You will be taken to the ship as soon as you've finished your meal/")
-head_necromancer.add_dialogue("box", "Nathik: Yes, where did you find this?")
-head_necromancer.add_dialogue("boxt", "Nathik: That thief! Of course he took it! He can't do anything for himself.")
-head_necromancer.add_dialogue("boxl", "Nathik: That is quite odd. You wouldn't have stollen it, for you have no consept of what it does.")
-head_necromancer.add_dialogue("boxl2", "Nathik: I guess I should thank you for giving it back. Thank you.")
-head_alchemist.add_dialogue("island", "Droxone: It's my first time going to this island. I've never faced the World Dragon before. Can you still remember nothing?")
-head_alchemist.add_dialogue("islandh", "Droxone: Well at least I'm not the only one who's never done this before, or at least can't remember doing it.")
-head_alchemist.add_dialogue("islandl", "Droxone: That's good. Then only one person is new.")
-head_alchemist.add_dialogue("island2", "Droxone: This is like reflex for everyone else. No matter how much you can remember, we'll all be fine. You're turning green again.")
-head_summoner.add_dialogue("fire", "Dredall: No. That is the Dragon.")
-head_summoner.add_dialogue("fire2", "Dredall: Yes. What you're seeing is light from molten rock reflecting off smoke.")
-head_summoner.add_dialogue("fire3", "Dredall: They aren't.")
 
 
 #
 # End of NPCs
 #
 
-#
-# Attacks
-#
-daggar_stab = G.attack("Daggar", "You stab something with a small knife", 3)
-sword_slash = G.attack("", "You slash at your opponent", 5)
-sword_thrust = G.attack("", "You run your opponent through", 10)
-rapier_slash = G.attack("", "You slash", 4)
-rapier_thrust = G.attack("", "You stab", 8)
-wood_bludgeon = G.attack("", "You hit them really hard", 4)
-brass_punch = G.attack("", "You punch them in the face", 6)
-far_shot = G.ammo_attack("", "You shoot something really far away", 6, arrow, 1, acc=80)
-near_shot = G.ammo_attack("", "You shoot something near you", 4, arrow, 1, acc=90)
-face_shot = G.ammo_attack("", "You shoot someone right in front of you", 8, arrow, 1)
-bolt_shot = G.ammo_attack("", "You shoot a crossbow", 10, bolt, 1, acc=90)
-axe_cleave = G.attack("", "You hit with an axe", 5)
-pike_stab = G.attack("", "You stab something with a pike", 3)
-mace_hit = G.attack("", "You hit them with your mace", 5)
-throw_spear = G.ammo_attack("", "You through your spear", 6, arrow, 1, acc=60)
-spear_stab = G.attack("", "You stab with the spear", 2)
-flail_hit = G.attack("", "You hit with your flail", 5)
-war_hammer_hit = G.attack("", "You hit with a hammer", 4)
-blowgun_shot = G.ammo_attack("", "You hit with a dart", 1, dart, 1)
-push = G.attack("", "You push with your shield", 3)
-#Dragon Attacks
-poison = G.attack("poison", "", 10)
-fire = G.attack("fire", "", 15)
-claws = G.attack("claws", "", 15)
-
-#Magic Attacks
-fire_needle = G.ammo_attack("", "You send a needle of fire at your opponent", 4, mana, 1)
-icicle = G.ammo_attack("", "You send a spike of ice at your opponent", 6, mana, 2)
-eletricute = G.ammo_attack("", "", 7, mana, 2, acc=85)
-blind = G.ammo_attack("", "", 2, mana, 1, acc=70)
-fire_ball = G.ammo_attack("", "", 15, mana, 3)
-possession = G.ammo_attack("", "", 30, mana, 6, acc=70)
-sophocate = G.ammo_attack("", "", 20, mana, 4, acc=60)
-
-# Big attacks
-rot_attack = G.attack(2, 50, "You rot the flesh around the wound", 1)
-zombiefy = G.attack(4, 80, "You turn your opponent into a zombie", 1)
-dragon_fire = G.attack(5, 70, "You shoot dragon fire", 1)
-possession = G.attack(1, 80, "You call up a spirit that kills your opponent", 1)
-
-
-
-
-
-#
-# Weapons
-#
-
-#basic attacks
-daggar_linked = [daggar_stab]
-daggar = G.weapon("Daggar", "", 1, 2, daggar_linked)
-sword_linked = [sword_slash, sword_thrust]
-sword = G.weapon("Sword", "", 10, 3, sword_linked)
-rapier_linked = [rapier_slash, rapier_thrust]
-rapier = G.weapon("Rapier", "", 7, 3, rapier_linked)
-quartterstaff_linked = [wood_bludgeon]
-quarterstaff = G.weapon("Quarterstaff", "", 1, 2, quartterstaff_linked)
-brass_linked = [brass_punch]
-brass_knuckles = G.weapon("Brass Knuckles", "", 2, 2, brass_linked)
-long_bow_linked = [far_shot, near_shot]
-long_bow = G.weapon("Long Bow", "", 3, 3, long_bow_linked)
-short_bow_linked = [near_shot, face_shot]
-short_bow = G.weapon("Short Bow", "", 3, 2, short_bow_linked)
-cross_bow_linked = [bolt_shot]
-cross_bow = G.weapon("Cross Bow", "", 4, 3, cross_bow_linked)
-axe_linked = [wood_bludgeon, axe_cleave]
-axe = G.weapon("Axe", "", 5, 3, axe_linked)
-pike_linked = [pike_stab]
-pike = G.weapon("Pike", "", 1, 2, pike_linked)
-mace_linked = [mace_hit]
-mace = G.weapon("Mace", "", 5, 3, mace_linked)
-spear_linked = [throw_spear, spear_stab]
-spear = G.weapon("Spear", "", 1, 2, spear_linked)
-warhammer_linked = [war_hammer_hit]
-warhammer = G.weapon("War Hammer", "", 3, 3, warhammer_linked)
-blowgun_linked = [blowgun_shot]
-blowgun = G.weapon("Blowgun", "", 1, 1, blowgun_linked)
-club_linked = [wood_bludgeon]
-club = G.weapon("Club", "", 1, 2, club_linked)
-s_and_s_linked = [push, sword_slash, sword_thrust, wood_bludgeon]
-shield_sword = G.weapon("Sword and Shield", "", 12, 3, s_and_s_linked, armr=3)
-oak_wand_linked = [fire_needle, icicle, eletricute, blind]
-oak_wand = G.weapon("Wand", "", 20, 4, oak_wand_linked)
-morenas_wand_linked = [fire_ball, possession, sophocate]
-morenas_wand = G.weapon("Morena's Wand", "", 50, 4, morenas_wand_linked)
-dragons_blood_linked = [sword_slash, sword_thrust, dragon_fire]
-dragons_blood = G.weapon("Dragon's Blood", "", 100, 8, dragons_blood_linked)
-dragon_linked = [poison, fire, claws]
-dragon_weapon = G.weapon("The Dragon", "", 1000, 10, dragon_linked)
-
-#
-# Armor
-#
-basic_armor = G.armor("Leather Armor", "", 4, armr=3)
-steel_armor = G.armor("Steel Armor", "", 15, armr=6)
-ench_basic_armor = G.armor("Enchanted Leather Armor", "", 10, armr=5, agil=2)
-ench_steel_armor = G.armor("Enchanted Steel Armor", "", 25, armr=10, stren=4)
-mythril_armor = G.armor("Mythril Armor", "", 75, armr=25, pwr=1, agil=3, stren=5)
-sheild_charm = G.armor("Shield Bracelet", "", 60, armr=26)
-
-#
-# Potions
-#
-minor_health = G.stat_item("Minor Health Potion", "", 10, 1, hp=10)
-health_potion = G.stat_item("Health Potion", "", 15, 1, hp=15)
-major_health = G.stat_item("Major Health Potion", "", 20, 1, hp=20)
-iron_skin_potion = G.stat_item("Iron Skin Potion", "", 10, 5, armr=5)
-strength_potion = G.stat_item("Stength Potion", "", 10, 5, stren=5)
-grace_potion = G.stat_item("Grace Potion", "", 20, 5, agil=3, pwr=1, armr=1)
-giant_potion = G.stat_item("Giant Potion", "", 20, 5, stren=5, hp=20, pwr=1, agil=-2, armr=4)
-durable_potion = G.stat_item("Durable Potion", "", 10, 5, hp=20, armr=6)
-
-
-
-
-weapon_choice = [daggar, sword, rapier, quarterstaff, brass_knuckles, \
-    long_bow, short_bow, cross_bow, axe, pike, mace, spear, warhammer, blowgun, \
-    club, shield_sword, oak_wand]
-
-steve_stats = G.battler_stats(100, 5, 0, 5, 1)
-arms_master_stats = G.battler_stats(100, 4, 0, 4, 1)
-steve_stuff = []
-steve_using = []
-steve_inv = G.player_collection(10, steve_stuff, steve_using)
-arms_m_stuff = [shield_sword, daggar, basic_armor, minor_health]
-arms_m_using = []
-arms_m_inv = G.battler_collection(50, arms_m_stuff, arms_m_using)
-arms_m_inv.equip(basic_armor)
-arms_m_inv.equip(shield_sword)
-
-
-steve = G.player("Steve", G.loc_man, 1, 3, steve_inv, steve_stats)
-arms_master = G.battler("Greg", G.loc_man, 2, 3, arms_m_inv, arms_master_stats)
 #chamber = G.array_map("Chamber")
 #chamber.layout = G.np.array([[G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall][G.Tiles.Wall, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt,]])
 
@@ -1024,7 +1032,7 @@ arms_master = G.battler("Greg", G.loc_man, 2, 3, arms_m_inv, arms_master_stats)
 # Actual Game #
 #
 
-
+"""
 G.write("7:10am")
 G.write("Monday, March 4th.")
 G.write("Your apartment.")
@@ -1304,7 +1312,6 @@ if lie is 1:
     arms_master_npc.say("lieyes")
     honesty = honesty - 1
     arms_master_npc.say("lieyes2")
-    bat_man.battle(steve, arms_master)
 
 else:
     G.write("Steve: I still don't know what you're talking about.")
@@ -1565,4 +1572,4 @@ G.write("You can hear the rowing of the dragon from here. Fire, lava, and ash ca
 G.write("You're dragged along up the slope until you have a line of sight on the dragon.")
 G.write("It's the size of an apartment building. Brown scales cover it from head to toe.")
 G.write("The ground is covered in pools of molten rock.")
-bat_man.battle(steve, world_dragon)
+"""
