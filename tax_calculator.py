@@ -137,49 +137,52 @@ def build_temp_effects(manager):
 
 
 def bat_check():
-    if (bat_man.percent_health(black_suit) < 90) and (monologue[dialogue_index.black_suit] == 0):
-        G.clr_console()
-        G.write(["You call out to your opponent.", '"C\'mon man, do we really have to do this?"'])
-        G.write(['"When did you get the impression that I was doing this because I', f'{Fore.LIGHTRED_EX}HAD{Fore.RESET}', 'to?"', 'he chirps back.'])
-        G.write(['"You do get paid to do this, right?', 'This has to be a paid job."'])
-        G.write([f'{black_suit.name}\'s face suddenly displays an intense tranquility.', '\n\n"This...', f'this is {Fore.BLACK}{Back.WHITE}divine{Style.RESET_ALL} penance!', 'Punishment for the worst of criminals!', 'I would never ask for money."'])
-        advance_dialogue()
-    elif (bat_man.percent_health(black_suit) < 70) and (monologue[dialogue_index.black_suit] == 1):
-        G.clr_console()
-        G.write(['Despite your progress in battle, you attempt to plead with the man.', '\n\n"How is this a solution?"'])
-        G.write(['"What is the alternative?', 'Getting away with tax avoidance?"'])
-        G.write('"You didn\'t even give me a chance to pay for it!" you spit back.')
-        G.write('"Yeah, I\'ve heard that one before. \'I was just about to pay my taxes, IRS!\' It\'s a steaming load."')
-        advance_dialogue()
-    elif (bat_man.percent_health(black_suit) < 30) and (monologue[dialogue_index.black_suit] == 3):
-        G.clr_console()
-        G.write('"It\'s about the terrorists."')
-        G.write(["You're taken aback by that statement.", '\n\n"What?"'])
-        G.write('"We use that money to fend off the terrorists," he continues.')
-        G.write('"..and?"')
-        G.write(['"Choosing to avoid helping the fight against the terrorists is', '\b...', f'{Fore.LIGHTRED_EX}terrorism itself{Fore.RESET}!"'])
-        advance_dialogue()
+    if dialogue is True:
+        if (bat_man.percent_health(black_suit) < 90) and (monologue[dialogue_index.black_suit] == 0):
+            G.clr_console()
+            G.write(["You call out to your opponent.", '"C\'mon man, do we really have to do this?"'])
+            G.write(['"When did you get the impression that I was doing this because I', f'{Fore.LIGHTRED_EX}HAD{Fore.RESET}', 'to?"', 'he chirps back.'])
+            G.write(['"You do get paid to do this, right?', 'This has to be a paid job."'])
+            G.write([f'{black_suit.name}\'s face suddenly displays an intense tranquility.', '\n\n"This...', f'this is {Fore.BLACK}{Back.WHITE}divine{Style.RESET_ALL} penance!', 'Punishment for the worst of criminals!', 'I would never ask for money."'])
+            advance_dialogue()
+        elif (bat_man.percent_health(black_suit) < 70) and (monologue[dialogue_index.black_suit] == 1):
+            G.clr_console()
+            G.write(['Despite your progress in battle, you attempt to plead with the man.', '\n\n"How is this a solution?"'])
+            G.write(['"What is the alternative?', 'Getting away with tax avoidance?"'])
+            G.write('"You didn\'t even give me a chance to pay for it!" you spit back.')
+            G.write('"Yeah, I\'ve heard that one before. \'I was just about to pay my taxes, IRS!\' It\'s a steaming load."')
+            advance_dialogue()
+        elif (bat_man.percent_health(black_suit) < 30) and (monologue[dialogue_index.black_suit] == 3):
+            G.clr_console()
+            G.write('"It\'s about the terrorists."')
+            G.write(["You're taken aback by that statement.", '\n\n"What?"'])
+            G.write('"We use that money to fend off the terrorists," he continues.')
+            G.write('"..and?"')
+            G.write(['"Choosing to avoid helping the fight against the terrorists is', '\b...', f'{Fore.LIGHTRED_EX}terrorism itself{Fore.RESET}!"'])
+            advance_dialogue()
 
     if bat_man.percent_health(black_suit) <= 50:
         if black_suit.entity_dict['used_buff'] is False:
-            G.clr_console()
-            suit_narrator.say('use-buff')
-            narrator.say('use-item')
-            suit_narrator.say('the-plunge')
-            narrator.say('the-plunge')
-            suit_narrator.say('spare-the-cash')
-            let_read()
+            if dialogue is True:
+                G.clr_console()
+                suit_narrator.say('use-buff')
+                narrator.say('use-item')
+                suit_narrator.say('the-plunge')
+                narrator.say('the-plunge')
+                suit_narrator.say('spare-the-cash')
+                let_read()
             black_suit.collection.add_item(black_suit_buff)
             bat_man.use_item(black_suit, black_suit_buff)
             black_suit.collection.equip(black_suit_buffed)
             black_suit.entity_dict['used_buff'] = True
         elif black_suit.entity_dict['used_buff'] is True:
             if black_suit_buff not in build_temp_effects(bat_man):
-                G.clr_console()
-                G.write(['The man shrinks back down to his previous size.'])
+                if dialogue is True:
+                    G.clr_console()
+                    G.write(['The man shrinks back down to his previous size.'])
+                    let_read()
                 black_suit.collection.equip(black_suit_prebuff)
-                let_read()
-            if monologue[dialogue_index.black_suit] == 2:
+            if (monologue[dialogue_index.black_suit] == 2) and (dialogue is True):
                 G.clr_console()
                 G.write(["Let's say that I DID forget to pay tax.", 'What would forgetting one time matter?'])
                 G.write(['"It isn\'t just you, you see?', "It's everyone.", 'If everyone forgot to pay their taxes one time all together...', 'it\'s unthinkable."'])
@@ -263,7 +266,7 @@ def win(manager):
         exit()
 
     except KeyError:
-        if (tso_chicken in build_temp_effects(manager)):
+        if tso_chicken in build_temp_effects(manager):
             G.write(['Sweat drips down your brow as you are knocked back by another attack.'])
 
             if black_suit_buff in build_temp_effects(manager):
@@ -292,10 +295,10 @@ def win(manager):
                 G.write(['Alton takes one step foreward.', "You aren't prepared to deal with another contender, after giving your all to defeat the Man in the Black Suit.", 'Nevertheless, you prepare to defend yourself yet again.', 'Just as he is about to reach you, he is yanked to the ground.', '\n\n"No..." he stammers.', '"...NO!"', f'\n\n{alton.name} tries to pull himself up, but fails repeatedly to do so.', 'He begins to sink into the floor, panicking as he goes.', f'Just as he disappears, you see the silhouette of {tso_chicken.name}.'])
                 let_read()
 
-                print(f"{Fore.BLACK}{Back.WHITE}Ending:{Style.RESET_ALL} tso\'s ch[I]cken of the abyss\n\n{Fore.BLACK}{Back.WHITE}Player Status:{Style.RESET_ALL} Alive\n{Fore.BLACK}{Back.WHITE}Boss Status:{Style.RESET_ALL} In Limbo\n{Fore.BLACK}{Back.WHITE}Alton Brown Status:{Style.RESET_ALL} Alive\n\n")
+                print(f"{Fore.BLACK}{Back.WHITE}Ending:{Style.RESET_ALL} tso's ch[I]cken of the abyss\n\n{Fore.BLACK}{Back.WHITE}Player Status:{Style.RESET_ALL} Alive\n{Fore.BLACK}{Back.WHITE}Boss Status:{Style.RESET_ALL} In Limbo\n{Fore.BLACK}{Back.WHITE}Alton Brown Status:{Style.RESET_ALL} Alive\n\n")
 
             else:
-                print(f"{Fore.BLACK}{Back.WHITE}Ending:{Style.RESET_ALL} general tso's [C]hicken\n\n{Fore.BLACK}{Back.WHITE}Player Status:{Style.RESET_ALL} Alive\n{Fore.BLACK}{Back.WHITE}Boss Status:{Style.RESET_ALL} In Limbo\n{Fore.BLACK}{Back.WHITE}Alton Brown Status:{Style.RESET_ALL} Alive\n\n")
+                print(f"{Fore.BLACK}{Back.WHITE}Ending:{Style.RESET_ALL}  tso's ch[I]cken of the abyss\n\n{Fore.BLACK}{Back.WHITE}Player Status:{Style.RESET_ALL} Alive\n{Fore.BLACK}{Back.WHITE}Boss Status:{Style.RESET_ALL} In Limbo\n{Fore.BLACK}{Back.WHITE}Alton Brown Status:{Style.RESET_ALL} Alive\n\n")
 
         elif user_tipped is True:
             if black_suit_buff in build_temp_effects(manager):
@@ -390,7 +393,7 @@ def lose(manager):
     # Player dies
     G.clr_console()
 
-    if 'Mysterious Orange Liquid' in build_temp_effects(manager):
+    if black_suit_buff in build_temp_effects(manager):
         G.write(['The Giant Governmental Beast rears back to deliver an enormous blow.', 'You try to jump out of the way, but your legs give out.', '\n\nYou fall to the ground in pain.', f'\n\n{black_suit.name} looks as if he pities you, even for but a moment.'])
         G.write(['He takes a step closer.', 'Unable to face your fate, you close my eyes.'])
         let_read()
@@ -574,6 +577,7 @@ def main():
     print('Tax Calculator 2: The Audit\nWritten using Gilbo-API (© 2018 Adam Zett)\n')
     print('Skip dialogue?')
 
+    global dialogue
     dialogue = None
     while dialogue is None:
         user_choice = input('Yes or No: ')
