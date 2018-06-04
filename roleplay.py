@@ -1188,6 +1188,176 @@ treasury.layout = G.np.array([[G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Mount
                                 [G.Tiles.Mountain, G.Tiles.Dirt, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Ice, G.Tiles.Mountain], \
                                 [G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Ice, G.Tiles.Mountain, G.Tiles.Mountain]])
 
+class great_hall(G.array_map):
+    def __init__(self, name):
+        super().__init__(name)
+
+    def on_start(self):
+        G.write("The next morning someone comes and leads you too a dining hall.")
+        G.write("Tenaxx comes over and greets you.")
+        head_wizard.say("leave")
+        head_wizard.say("leave2")
+        G.write("Everone is somewhere in the room.")
+
+    def send_data(self, til, plyr=False):
+        if til == (2,1):
+            if plyr == True:
+                global box
+                if box == True:
+                    G.write("You find that the box you took from Tenaxx is in the chest.")
+                    G.write("It has a N engraved on the side, it must be Nathik's. It looks like his style.")
+                else:
+                    G.write("Someone has packed all your stuff in a chest and left it by the door to the dining hall.")
+            return True
+
+        if til == (1,10):
+            if plyr == True:
+                if box == True:
+                    G.write("You walk over to Nathik.")
+                    G.write("Steve: Hey, Nathik. I found this and was wondering if it was yours.")
+                    G.write("You offer the box.")
+                    G.write("For a moment he stares at it.")
+                    head_necromancer.say("box")
+                    global Dredall_s
+                    Dredall_s = Dredall_s - 1
+                    global Nathik_s
+                    Nathik_s = Nathik_s + 2
+                    box_truth = int(input("1: Tell the truth? 2: Lie?"))
+                    if box_truth is 1:
+                        G.write("Steve: I was in Tenaxx's study and it was there. I was looking over it and thought it might be yours.")
+                        head_necromancer.say("box")
+                        head_necromancer.say("boxt")
+                        G.write("Nathik takes the box, and with a slight nod, storms off to find Tenaxx.")
+                        global Tenaxx_s
+                        Tenaxx_s = Tenaxx_s - 2
+                        global honesty
+                        honesty = honesty + 1
+                        TvsN = True
+                    else:
+                        G.write("Steve: It was in the chambers I was given. I don't know how it got in there.")
+                        head_necromancer.say("boxl")
+                        head_necromancer.say("boxl2")
+                        G.write("He turns on his heels and leaves.")
+                        honesty = honesty - 1
+                else:
+                    G.write("Nathik glares at you until you go away.")
+            return True
+
+        if til == (3,1):
+            if plyr == True:
+                G.write("Tenaxx tells you to hurry up.")
+            return True
+
+        if til == (4,7):
+            if plyr == True:
+                G.write("Droxone seems to be fixing something and ignoring the food. It looks like the item blew up.")
+            return True
+
+        if til == (4,10):
+            if plyr == True:
+                G.write("Dredall is in some arguement with Morena and just waves you off.")
+            return True
+
+        if til == (6,8):
+            if plyr == True:
+                G.write("Morena is in an argument with Dredall.")
+                G.write("A cat jumps up on the table. It really looks familiar.")
+            return True
+
+        if til == (3,0) or til == (4,0):
+            if plyr == True:
+                G.write("Would you like to leave?")
+                leave = int(input("1:yes, 2:no"))
+                if leave is 1:
+                    global end_map
+                    end_map = end_map + 1
+                else:
+                    G.write("Not yet.")
+        return True
+
+
+    def finished_map(self):
+        G.write("You have breakfast, and then are quickly shoed out into a carage.")
+
+great_hall = great_hall('great_hall')
+
+great_hall.layout = G.np.array([[G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, \
+                                G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall], \
+                                [G.Tiles.Wall, G.Tiles.Cave, G.Tiles.Cave, G.Tiles.Cave, G.Tiles.Cave, G.Tiles.Cave, G.Tiles.Cave, \
+                                G.Tiles.Cave, G.Tiles.Cave, G.Tiles.Cave, G.Tiles.Ice, G.Tiles.Cave, G.Tiles.Wall], \
+                                [G.Tiles.Wall, G.Tiles.Ice, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Cave, \
+                                G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Cave, G.Tiles.Wall], \
+                                [G.Tiles.Cave, G.Tiles.Ice, G.Tiles.Cave, G.Tiles.Cave, G.Tiles.Cave, G.Tiles.Cave, G.Tiles.Cave, \
+                                G.Tiles.Cave, G.Tiles.Cave, G.Tiles.Cave, G.Tiles.Cave, G.Tiles.Cave, G.Tiles.Wall], \
+                                [G.Tiles.Cave, G.Tiles.Cave, G.Tiles.Cave, G.Tiles.Cave, G.Tiles.Cave, G.Tiles.Cave, G.Tiles.Cave, \
+                                G.Tiles.Ice, G.Tiles.Cave, G.Tiles.Cave, G.Tiles.Ice, G.Tiles.Cave, G.Tiles.Wall], \
+                                [G.Tiles.Wall, G.Tiles.Cave, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Cave, \
+                                G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Cave, G.Tiles.Wall], \
+                                [G.Tiles.Wall, G.Tiles.Cave, G.Tiles.Cave, G.Tiles.Cave, G.Tiles.Cave, G.Tiles.Cave, G.Tiles.Cave, \
+                                G.Tiles.Cave, G.Tiles.Ice, G.Tiles.Cave, G.Tiles.Cave, G.Tiles.Cave, G.Tiles.Wall], \
+                                [G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, \
+                                G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall]])
+
+class ship(G.array_map):
+    def __init__(self, name):
+        super().__init__(name)
+
+    def on_start():
+        G.write("2 Weeks Later")
+        G.write("The Northern Clyps Ocean")
+        G.write("East of the Island Ashor")
+        G.write("3 Days Out From the Hunirst Chain")
+        G.write("You've been sea sick for the past 2 weeks. You've also been sick with nerves for the past two weeks.")
+
+    def send_data(self, til, plyr=False):
+        if til == (4,5):
+            if plyr == True:
+                G.write("Would you like to leave?")
+                leave = int(input("1:yes, 2:no"))
+                if leave is 1:
+                    global end_map
+                    end_map = end_map + 1
+            return True
+
+        if til == (0,4) or til == (0,6) or til == (1,3) or til == (1,7) \
+            or til == (3,1) or til == (3,9) or til == (4,1) or til == (4,9) \
+            or til == (5,0) or til == (6,0) or til == (7,0) or til == (8,0) \
+            or til == (9,0) or til == (10,0) or til == (5,9) or til == (6,9) \
+            or til == (7,9) or til == (8,9) or til == (9,9) or til == (10,9) \
+            or til == (11,1) or til == (11,9) or til == (12,1) or til == (12,9) \
+            or til == (13,2) or til == (13,8) or til == (14,3) or til == (14,7) \
+            or til == (15,4) or til == (15,6) or til == (2,8) or til == (2,2):
+            if plyr == True:
+                G.write("Don't jump of the ship. You can't jump off the ship.")
+            return False
+
+
+
+    def finished_map(self):
+        G.write("You go bellow deck.")
+
+ship.layout = G.np.array([[G.Tiles.Water, G.Tiles.Water, G.Tiles.Water, G.Tiles.Water, G.Tiles.Water, G.Tiles.Building, G.Tiles.Water, G.Tiles.Water, G.Tiles.Water, G.Tiles.Water, G.Tiles.Water], \
+                            [G.Tiles.Water, G.Tiles.Water, G.Tiles.Water, G.Tiles.Water, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Water, G.Tiles.Water, G.Tiles.Water, G.Tiles.Water], \
+                            [G.Tiles.Water, G.Tiles.Water, G.Tiles.Water, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Water, G.Tiles.Water, G.Tiles.Water], \
+                            [G.Tiles.Water, G.Tiles.Water, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Water, G.Tiles.Water], \
+                            [G.Tiles.Water, G.Tiles.Water, G.Tiles.Building, G.Tiles.Building, G.Tiles.Cave, G.Tiles.Cave, G.Tiles.Cave, G.Tiles.Building, G.Tiles.Building, G.Tiles.Water, G.Tiles.Water], \
+                            [G.Tiles.Water, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Water], \
+                            [G.Tiles.Water, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Water], \
+                            [G.Tiles.Water, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Water], \
+                            [G.Tiles.Water, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Water], \
+                            [G.Tiles.Water, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Water], \
+                            [G.Tiles.Water, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Pit, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Water], \
+                            [G.Tiles.Water, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Water], \
+                            [G.Tiles.Water, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Water], \
+                            [G.Tiles.Water, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Water], \
+                            [G.Tiles.Water, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Water], \
+                            [G.Tiles.Water, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Water], \
+                            [G.Tiles.Water, G.Tiles.Water, G.Tiles.Building, G.Tiles.Building, G.Tiles.Cave, G.Tiles.Cave, G.Tiles.Cave, G.Tiles.Building, G.Tiles.Building, G.Tiles.Water, G.Tiles.Water], \
+                            [G.Tiles.Water, G.Tiles.Water, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Water, G.Tiles.Water], \
+                            [G.Tiles.Water, G.Tiles.Water, G.Tiles.Water, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Water, G.Tiles.Water, G.Tiles.Water], \
+                            [G.Tiles.Water, G.Tiles.Water, G.Tiles.Water, G.Tiles.Water, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Water, G.Tiles.Water, G.Tiles.Water, G.Tiles.Water], \
+                            [G.Tiles.Water, G.Tiles.Water, G.Tiles.Water, G.Tiles.Water, G.Tiles.Water, G.Tiles.Building, G.Tiles.Water, G.Tiles.Water, G.Tiles.Water, G.Tiles.Water, G.Tiles.Water]])
+
 
 #
 # NPCs
@@ -1397,15 +1567,15 @@ def map_move(mapid, you):
 
 
 
-
-#steve = G.player("Steve", G.loc_man, 0, 1, steve_inv, steve_stats)
-#steve_a = G.player("Steve", appartment_map, 0, 1, steve_inv, steve_stats)
-#ap_map = False
-#map_move(appartment_map, steve_a)
-#steve_f = G.player("Steve", fortess_room, 2, 3, steve_inv, steve_stats)
-#map_move(fortess_room, steve_f)
-#steve_ar = G.player("Steve", arena_map, 0, 2, steve_inv, steve_stats)
-#map_move(arena_map, steve_ar)
+'''
+steve = G.player("Steve", G.loc_man, 0, 1, steve_inv, steve_stats)
+steve_a = G.player("Steve", appartment_map, 0, 1, steve_inv, steve_stats)
+ap_map = False
+map_move(appartment_map, steve_a)
+steve_f = G.player("Steve", fortess_room, 2, 3, steve_inv, steve_stats)
+map_move(fortess_room, steve_f)
+steve_ar = G.player("Steve", arena_map, 0, 2, steve_inv, steve_stats)
+map_move(arena_map, steve_ar)
 while current_til != (0,0):
     steve_hall = G.player("Steve", hallway_map, 0, 2, steve_inv, steve_stats)
     map_move(hallway_map, steve_hall)
@@ -1429,7 +1599,11 @@ while current_til != (0,0):
         map_move(treasury, steve_treas)
 steve_room = G.player("Steve", your_room, 2, 4, steve_inv, steve_stats)
 map_move(your_room, steve_room)
-
+steve_gh = G.player("Steve", great_hall, 0, 4, steve_inv, steve_stats)
+map_move(great_hall, steve_gh)
+'''
+steve_ship = G.player("Steve", ship, 5, 5, steve_inv, steve_stats)
+map_move(ship, steve_ship)
 
 
 
@@ -1910,6 +2084,7 @@ if honesty > 0:
     G.write("You're an honest person. You tell the truth.")
     G.write("Steve: I still have no idea what I'm doing. I don't remember any of this.")
     head_alchemist.say("islandh")
+    G.write("Droxone seems to be a little uncomfortable whenever he looks at you.")
 else:
     G.write("You're not that honest, so you lie.")
     G.write("Steve: I think I remember some of this. It's all still a blur.")
@@ -1935,3 +2110,4 @@ G.write("You're dragged along up the slope until you have a line of sight on the
 G.write("It's the size of an apartment building. Brown scales cover it from head to toe.")
 G.write("The ground is covered in pools of molten rock.")
 """
+
