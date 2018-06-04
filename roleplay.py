@@ -6,10 +6,22 @@ import os
 from sys import stdout
 
 
-end_map = False
+end_map = 0
+current_til = 0
 #
 # Story Variables #
 #
+####
+al_talked_mor = False
+al_talked_ten = False
+al_talked_nat = False
+al_talked_dre = False
+al_talked_dro = False
+al_treas = False
+####
+in_hall = 0
+have_wep = 0
+help = 0
 class_type = 0
 honesty = 0
 curiosity = False
@@ -136,7 +148,7 @@ mace = G.weapon("Mace", "", 5, 3, mace_linked)
 spear_linked = [throw_spear, spear_stab]
 spear = G.weapon("Spear", "", 1, 2, spear_linked)
 warhammer_linked = [war_hammer_hit]
-warhammer = G.weapon("War Hammer", "", 3, 3, warhammer_linked)
+warhammer = G.weapon("Warhammer", "", 3, 3, warhammer_linked)
 blowgun_linked = [blowgun_shot]
 blowgun = G.weapon("Blowgun", "", 1, 1, blowgun_linked)
 club_linked = [wood_bludgeon]
@@ -195,7 +207,7 @@ arms_m_inv.equip(basic_armor)
 
 arms_master = G.battler("Greg", G.loc_man, 2, 3, arms_m_inv, arms_master_stats)
 
-
+end_map = 0
 
 
 
@@ -205,26 +217,26 @@ class appartment(G.array_map):
     def __init__(self, name):
         super().__init__(name)
 
+    def on_start(self):
+        G.write("7:10am")
+
+        G.write("Monday, March 4th.")
+        G.write("Your apartment.")
+        phone.say("hello")
+        G.write("Your cat knocks your phone on the floor")
+        G.write("Wait... You don't own a cat. You're not that sad!")
+        G.write("Yet...")
+        cat.say("meowl")
+
+        G.write("The cat jumps down onto the floor and goes into the other room. You hear the TV turn on.")
+
     def send_data(self, til, plyr=False):
-        G.write("In SD")
         print(til)
 
-        if til == (1,0):
-
-            G.write("In til")
+        if til == (1,3):
             if plyr is True:
-                G.write("It's working")
-                G.write("7:10am")
-                G.write("Monday, March 4th.")
-                G.write("Your apartment.")
-
-                phone.say("hello")
-                G.write("Your cat knocks your phone on the floor")
-                G.write("Wait... You don't own a cat. You're not that sad!")
-                G.write("Yet...")
-                cat.say("meowl")
-
-                G.write("The cat jumps down onto the floor and goes into the other room. You hear the TV turn on.")
+                global end_map
+                end_map = end_map + 1
                 G.write("Do you follow the cat?")
                 morning = int(input("1: yes, 2: no"))
                 if morning is 1:
@@ -271,11 +283,13 @@ class appartment(G.array_map):
                     G.write("While staring at the cat, you hear brakes scretching")
                     pes_emily.say("look_out")
                     G.write("You hear a crunch and everything goes black.")
+                    global curiosity
                     curiosity = True
 
                 else:
                     os.system('cls')
                     G.write("You ignore the cat and get ready to go to work.")
+
                     news_reader.say("news1")
                     news_reader.say("news2")
                     G.write("You hope you don't get laid off. This world is horrible.")
@@ -295,8 +309,14 @@ class appartment(G.array_map):
                     G.write("There's a knife sticking out of your gut.")
                     G.write("The last thing you see is the cat.")
                     cat.say("purr")
+
                     os.system('cls')
         return True
+
+    def finished_map(self):
+        G.write("All you can see is blackness.")
+        G.write("A pinprick of light appears and grows bigger.")
+        G.write("You walk toward it.")
 
 appartment_map = appartment('appartment_n')
 
@@ -311,11 +331,10 @@ class fortress_chamber(G.array_map):
     def __init__(self, name):
         super().__init__(name)
 
-    def send_data(self, til, plyr=False):
-        talk = 0
-        done = False
+    def on_start(self):
         head_witch.say("first")
         head_necromancer.say("first")
+
         head_summoner.say('first')
         G.write("Steve: Whaaa?")
         G.write("Steve: Who are y...")
@@ -340,28 +359,25 @@ class fortress_chamber(G.array_map):
         head_alchemist.say("sigh")
         head_wizard.say("hearinglose")
         head_alchemist.say("backtrack")
+
         G.write("Now the other two start squablling")
         os.system('cls')
-        G.write("Who do you want to talk to?")
-        if til is (0,0) or (1,0) or (2,0) or (3,0) or (4,0) or (5,0) or \
-                (5,1) or (5,2) or (5,4) or (5,5) or (5,6) or (0,1) or \
-                (0,2) or (0,3) or (0,4) or (0,6) or (0,5) or (1,6) or (2,6) or \
-                (3,6) or (4,6) or (5,6):
-            if plyr is True:
-                G.write("That is a wall. You just walked into a wall.")
-            return False
 
-        elif til is (5,3):
+    def send_data(self, til, plyr=False):
+        done = False
+        print(til)
+
+        if til == (3,5):
             if plyr is True:
                 G.write("You walk to the door leading out of the room.")
-            return False
+            return True
 
-        if til is (2,3):
+        if til == (3,2):
             if plyr is True:
                 G.write("That is the table you were on.")
-            return False
+            return True
 
-        if til is (1,1):
+        if til == (1,1):
             if plyr is True:
                 G.write("Would you like to talk to Droxone?")
                 talk = int(input("1:yes, 2:no"))
@@ -376,111 +392,128 @@ class fortress_chamber(G.array_map):
                     head_alchemist.say("get2")
                     G.write("Steve: My name isn't Barnabas, it's Steve.")
                     G.write("Before he can say anything else someone calls everyone to attention.")
+                    global Droxone_s
                     Droxone_s = Droxone_s + 1
+                    global end_map
+                    end_map = end_map + 1
                 else:
                     G.write("You don't talk to him yet.")
-                return True
-
-        if til is (1,3):
-            G.write("Would you like to talk to Tenaxx?")
-            talk = int(input("1:yes, 2:no"))
-            if talk is 1 and done != True:
-                done = True
-                G.write("The older guy seems like the most aprotchable of the five.")
-                G.write("The think his name is Tenaxx?")
-                G.write("Steve: Hello... sir.")
-                head_wizard.say("get1")
-                G.write("Steve: I'm sorry sir, but I don't think I am who you think I am.")
-                head_wizard.say("get2")
-                head_wizard.say("get3")
-                G.write("Tenaxx calls everyone over.")
-                Tenaxx_s = Tenaxx_s + 1
-            else:
-                G.write("You don't talk to him yet.")
             return True
 
-        if til is (2,2):
-            G.write("Would you like to talk to Dredall?")
-            talk = int(input("1:yes, 2:no"))
-            if talk is 1 and done != True:
-                done = True
-                G.write("You get off the table and cautiously aproutch the horse person. What are they called again?")
-                G.write("Really what are they called?")
-                head_summoner.say("get1")
-                G.write("He's got to be at least nine feet tall.")
-                head_summoner.say("get2")
-                head_summoner.say("get3")
-                G.write("Steve: Uhhh.... What?")
-                head_summoner.say("get4")
-                G.write("Before you can say anything else, the old man calls everyone over.")
-                Dredall_s = Dredall_s + 1
-            else:
-                G.write("You don't talk to him yet.")
+        if til == (3,1):
+            if plyr is True:
+                G.write("Would you like to talk to Tenaxx?")
+                talk = int(input("1:yes, 2:no"))
+                if talk is 1 and done != True:
+                    done = True
+                    G.write("The older guy seems like the most aprotchable of the five.")
+
+                    G.write("The think his name is Tenaxx?")
+                    G.write("Steve: Hello... sir.")
+                    head_wizard.say("get1")
+                    G.write("Steve: I'm sorry sir, but I don't think I am who you think I am.")
+                    head_wizard.say("get2")
+                    head_wizard.say("get3")
+                    G.write("Tenaxx calls everyone over.")
+                    global Tenaxx_s
+                    Tenaxx_s = Tenaxx_s + 1
+
+                    end_map = end_map + 1
+                else:
+                    G.write("You don't talk to him yet.")
             return True
 
-        if til is (3,3):
-            G.write("Would you like to talk to Morena?")
-            talk = int(input("1:yes, 2:no"))
-            if talk is 1 and done != True:
-                done = True
-                G.write("You walk over to the old lady. You can just run if she starts screaming again.")
-                G.write("Steve: Hello Ma'am")
-                head_witch.say("get1")
-                G.write("Steve: I'm sorry, but I don't know who you think I am.")
-                G.write("The woman looks at you through squinted eyes.")
-                head_witch.say("get2")
-                head_witch.say("get3")
-                head_witch.say("get4")
-                G.write("Steve: A witch? Those are real?")
-                G.write("At this Morena laughs.")
-                head_witch.say("get5")
-                G.write("Before you can say anything the oldest men of the five calls everyone over.")
-                Morena_s = Morena_s + 1
-            else:
-                G.write("You don't talk to her yet.")
+        if til == (2,2):
+            if plyr is True:
+                G.write("Would you like to talk to Dredall?")
+                talk = int(input("1:yes, 2:no"))
+                if talk is 1 and done != True:
+                    done = True
+                    G.write("You get off the table and cautiously aproutch the horse person. What are they called again?")
+                    G.write("Really what are they called?")
+                    head_summoner.say("get1")
+                    G.write("He's got to be at least nine feet tall.")
+                    head_summoner.say("get2")
+                    head_summoner.say("get3")
+                    G.write("Steve: Uhhh.... What?")
+                    head_summoner.say("get4")
+                    G.write("Before you can say anything else, the old man calls everyone over.")
+                    global Dredall_s
+                    Dredall_s = Dredall_s + 1
+                    end_map = end_map + 1
+                else:
+                    G.write("You don't talk to him yet.")
             return True
 
-        if til is (4,5):
-            G.write("Would you like to talk to Nathik?")
-            talk = int(input("1:yes, 2:no"))
-            if talk is 1 and done != True:
-                done = True
-                G.write("For some reason, you walk over to the courpse, Nathik.")
-                G.write("Maybe it's because you liked his joke.")
-                G.write("Steve: Hello, sir?")
-                head_necromancer.say("get1")
-                G.write("Steve: Umm... Where am I and who do you think I am?")
-                G.write("This brings an actual expression of shock to Nathik's face.")
-                head_necromancer.say("get2")
-                head_necromancer.say("get3")
-                head_necromancer.say("get4")
-                G.write("You keep you mouth shut. Nathik seems to be brooding now. You slowly walk away.")
-                Nathik_s = Nathik_s + 1
-            else:
-                G.write("You don't talk to him yet.")
+        if til == (3,3):
+            if plyr is True:
+                G.write("Would you like to talk to Morena?")
+                talk = int(input("1:yes, 2:no"))
+                if talk is 1 and done != True:
+                    done = True
+                    G.write("You walk over to the old lady. You can just run if she starts screaming again.")
+                    G.write("Steve: Hello Ma'am")
+                    head_witch.say("get1")
+                    G.write("Steve: I'm sorry, but I don't know who you think I am.")
+                    G.write("The woman looks at you through squinted eyes.")
+                    head_witch.say("get2")
+                    head_witch.say("get3")
+                    head_witch.say("get4")
+                    G.write("Steve: A witch? Those are real?")
+                    G.write("At this Morena laughs.")
+                    head_witch.say("get5")
+                    G.write("Before you can say anything the oldest men of the five calls everyone over.")
+                    global Morena_s
+                    Morena_s = Morena_s + 1
+                    end_map = end_map + 1
+                else:
+                    G.write("You don't talk to her yet.")
             return True
 
-        if done is True:
-            os.system('cls')
-            head_wizard.say("expo1")
-            head_wizard.say("expo2")
-            head_wizard.say("expo3")
-            G.write("Steve: There was a creepy cat, and I had cerial for breakfast.")
-            os.system('cls')
-            G.write("They all blink at you.")
-            head_alchemist.say("shock")
-            head_summoner.say("solution")
-            G.write("Dredall grabs you and you find your self on his back. You all walk out a side door and down a coridor.")
-            os.system('cls')
+        if til == (5,4):
+            if plyr is True:
+                G.write("Would you like to talk to Nathik?")
+                talk = int(input("1:yes, 2:no"))
+                if talk is 1 and done != True:
+                    done = True
+                    G.write("For some reason, you walk over to the courpse, Nathik.")
+                    G.write("Maybe it's because you liked his joke.")
+                    G.write("Steve: Hello, sir?")
+                    head_necromancer.say("get1")
+                    G.write("Steve: Umm... Where am I and who do you think I am?")
+                    G.write("This brings an actual expression of shock to Nathik's face.")
+                    head_necromancer.say("get2")
+                    head_necromancer.say("get3")
+                    head_necromancer.say("get4")
+                    G.write("You keep you mouth shut. Nathik seems to be brooding now. You slowly walk away.")
+                    global Nathik_s
+                    Nathik_s = Nathik_s + 1
+                    end_map = end_map + 1
+                else:
+                    G.write("You don't talk to him yet.")
+        return True
+    def finished_map(self):
+        head_wizard.say("expo1")
+
+        head_wizard.say("expo2")
+        head_wizard.say("expo3")
+        G.write("Steve: There was a creepy cat, and I had cerial for breakfast.")
+        os.system('cls')
+        G.write("They all blink at you.")
+        head_alchemist.say("shock")
+        head_summoner.say("solution")
+
+        G.write("Dredall grabs you and you find your self on his back. You all walk out a side door and down a coridor.")
+        os.system('cls')
 
 fortess_room = fortress_chamber('fortress')
 
 fortess_room.layout = G.np.array([[G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall], \
-                            [G.Tiles.Wall, G.Tiles.Ice, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Wall], \
-                            [G.Tiles.Wall, G.Tiles.Dirt, G.Tiles.Ice, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Wall], \
-                            [G.Tiles.Wall, G.Tiles.Ice, G.Tiles.Cave, G.Tiles.Ice, G.Tiles.Dirt, G.Tiles.Dirt], \
-                            [G.Tiles.Wall, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Wall], \
-                            [G.Tiles.Wall, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Ice, G.Tiles.Wall], \
+                            [G.Tiles.Wall, G.Tiles.Ice, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Wall], \
+                            [G.Tiles.Wall, G.Tiles.Mountain, G.Tiles.Ice, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Wall], \
+                            [G.Tiles.Wall, G.Tiles.Ice, G.Tiles.Cave, G.Tiles.Ice, G.Tiles.Mountain, G.Tiles.Mountain], \
+                            [G.Tiles.Wall, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Wall], \
+                            [G.Tiles.Wall, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Ice, G.Tiles.Wall], \
                             [G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall]])
 
 
@@ -489,14 +522,37 @@ fortess_room.layout = G.np.array([[G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.T
 class arena(G.array_map):
     def __init__(self, name):
         super().__init__(name)
+
+    def on_start(self):
+        os.system('clr')
+        head_summoner.say("train")
+
+        G.write("Steve: Does it have to be a master? Why not a beginner?")
+        G.write("Steve: Not that I don't know what I'm doing, which I totally do.")
+        G.write("Steve: I may be rusty.")
+        head_necromancer.say("rust")
+        G.write("It occurs to you that these people might not know the same sayings as you.")
+        os.system('clr')
+        G.write("Dredall leads a grizled looking man in leather armor over to you.")
+        head_summoner.say("spar")
+        G.write("Steve: Right to the main fight? Don't we have, like, special items to gather or something?")
+        head_wizard.say("already")
+        G.write("Steve: Oh, yes... O-of course you have everything.")
+        head_alchemist.say("yahn")
+
+        G.write("Droxone just walks off and leaves everyone else.")
+
     def send_data(self, til, plyr=False):
-        if til is (0,0) or (5,0) or (0,5) or (5,5):
+
+        if til == (0,0) or til == (5,0) or til == (0,5) or til == (5,5):
             if plyr is True:
                 G.write("Those are pillars. You just walked into a pillar.")
-            return False
+            return True
 
-        if til is (0,1):
+        if til == (0,1):
             if plyr is True:
+                global have_wep
+                have_wep = have_wep + 1
                 for i in range(len(weapon_choice)):
                     stdout.write(str(i))
                     stdout.write(": ")
@@ -505,19 +561,21 @@ class arena(G.array_map):
                 wc = int(input("What will you choice?"))
                 os.system('clr')
                 steve_inv.add_item(weapon_choice[wc], 1)
-                steve_inv.equip(weapon_choice[wc])
-                G.write(weapon_choice[wc].dscrpt)
-                if weapon_choice[wc].name is "War Hammer":
+                print(weapon_choice[wc].dscrpt)
+                if weapon_choice[wc].name is "Warhammer":
                     head_summoner.say("warhammer")
+                    global Dredall_s
                     Dredall_s = Dredall_s + 1
 
                 elif weapon_choice[wc].name is "Wand":
                     head_witch.say("wand")
 
+                    global help
                     help = int(input("1: yes, 2: no"))
                     if help is 1:
                         G.write("You don't know how this works. Some help sounds like a great idea.")
                         head_witch.say("(:")
+                        global Morena_s
                         Morena_s = Morena_s + 1
 
                     else:
@@ -526,21 +584,7 @@ class arena(G.array_map):
 
                 else:
                     head_summoner.say("wrong_weapon")
-                os.system('clr')
-                head_summoner.say("train")
-                G.write("Steve: Does it have to be a master? Why not a beginner?")
-                G.write("Steve: Not that I don't know what I'm doing, which I totally do.")
-                G.write("Steve: I may be rusty.")
-                head_necromancer.say("rust")
-                G.write("It occurs to you that these people might not know the same sayings as you.")
-                os.system('clr')
-                G.write("Dredall leads a grizled looking man in leather armor over to you.")
-                head_summoner.say("spar")
-                G.write("Steve: Right to the main fight? Don't we have, like, special items to gather or something?")
-                head_wizard.say("already")
-                G.write("Steve: Oh, yes... O-of course you have everything.")
-                head_alchemist.say("yahn")
-                G.write("Droxone just walks off and leaves everyone else.")
+
                 if help is 1:
 
                     G.write("Before leaving, Morena walks over and says in a lowered voice,")
@@ -548,54 +592,65 @@ class arena(G.array_map):
 
                 G.write("The other four walk away in different dirrections with little more than a word.")
                 os.system('clr')
-            return False
 
-        if til is (3,2):
+            return True
+
+        if til == (2,3):
             if plyr is True:
-                G.write("You hear the Arms Master cough.")
-                arms_master_npc.say("first")
-                G.write("Oh, umm... I don't now how.")
-                arms_master_npc.say("confus")
-                G.write("You have to pass for this guy. You think about your answer.")
-                G.write("Steve: Something went amiss in this resurection. I seem to have lost all my memories.")
-                os.system('clr')
-                G.write("A thoughtful expression comes over Gregs face.")
-                arms_master_npc.say("realize")
-                arms_master_npc.say("sad")
-                G.write("Steve: I don't even know where I am or what I'm supose to do.")
-                arms_master_npc.say("expl1")
-                arms_master_npc.say("expl2")
-                arms_master_npc.say("expl3")
-                os.system('clr')
-                arms_master_npc.say("ask")
-                G.write("Steve: No.")
-                arms_master_npc.say("expl4")
-                arms_master_npc.say("expl5")
-                arms_master_npc.say("expl6")
-                arms_master_npc.say("expl7")
-                arms_master_npc.say("expl8")
-                os.system('clr')
-                arms_master_npc.say("ask")
-                G.write("You could just lie? You could tell him it rings a bell.")
-                G.write("Will you lie?")
-
-                lie = int(input("1: yes, 2:no"))
-                if lie is 1:
-                    G.write("Steve: All of that sounds very familiar. I still can't remember specifics though.")
-                    arms_master_npc.say("lieyes")
-                    honesty = honesty - 1
-                    arms_master_npc.say("lieyes2")
-
-
+                if have_wep is 1:
+                    global end_map
+                    end_map = end_map + 1
+                    G.write("You hear the Arms Master cough.")
+                    arms_master_npc.say("first")
+                    G.write("Oh, umm... I don't now how.")
+                    arms_master_npc.say("confus")
+                    G.write("You have to pass for this guy. You think about your answer.")
+                    G.write("Steve: Something went amiss in this resurection. I seem to have lost all my memories.")
+                    os.system('clr')
+                    G.write("A thoughtful expression comes over Gregs face.")
+                    arms_master_npc.say("realize")
+                    arms_master_npc.say("sad")
+                    G.write("Steve: I don't even know where I am or what I'm supose to do.")
+                    arms_master_npc.say("expl1")
+                    arms_master_npc.say("expl2")
+                    arms_master_npc.say("expl3")
+                    os.system('clr')
+                    arms_master_npc.say("ask")
+                    G.write("Steve: No.")
+                    arms_master_npc.say("expl4")
+                    arms_master_npc.say("expl5")
+                    arms_master_npc.say("expl6")
+                    arms_master_npc.say("expl7")
+                    arms_master_npc.say("expl8")
+                    os.system('clr')
+                    arms_master_npc.say("ask")
+                    G.write("You could just lie? You could tell him it rings a bell.")
                 else:
-                    G.write("Steve: I still don't know what you're talking about.")
-                    arms_master_npc.say("lieno")
-                    arms_master_npc.say("lieno2")
-                    honesty = honesty + 1
-            return False
+                    G.write("You don't have a wepaon yet. Go the the weapon wrack and get one.")
+        return True
 
 
-arena.layout = G.np.array([[G.Tiles.Building, G.Tiles.Ice, G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Building], \
+    def finished_map(self):
+        G.write("Will you lie?")
+
+        lie = int(input("1: yes, 2:no"))
+        if lie is 1:
+            G.write("Steve: All of that sounds very familiar. I still can't remember specifics though.")
+            arms_master_npc.say("lieyes")
+            global honesty
+            honesty = honesty - 1
+            arms_master_npc.say("lieyes2")
+
+
+        else:
+            G.write("Steve: I still don't know what you're talking about.")
+            arms_master_npc.say("lieno")
+            arms_master_npc.say("lieno2")
+            honesty = honesty + 1
+
+arena_map = arena('arena_map')
+
+arena_map.layout = G.np.array([[G.Tiles.Building, G.Tiles.Ice, G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Building], \
                             [G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Grass], \
                             [G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Ice, G.Tiles.Grass, G.Tiles.Grass], \
                             [G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Grass, G.Tiles.Grass], \
@@ -608,32 +663,132 @@ class hallway(G.array_map):
     def __init__(self, name):
         super().__init__(name)
 
+    def on_start(self):
+        arms_master_npc.say("gowhere")
+
     def send_data(self, til, plyr=False):
         go = 0
-        if til is (0,1) or (0,2):
-            if plyr is True:
-                arms_master_npc.say("gowhere")
-            return True
-
-        if til is (0,0):
+        global current_til
+        current_til = til
+        if til == (0,0):
             if plyr is True:
                 G.write("Would you like to go to your room?")
+                G.write("Note: You will be taken to the next part of the story if you go to your room.")
                 go = int(input("1:yes, 2:no"))
                 if go is 1:
-                    G.write("The Arms Master takes you to you chambers. A small but nice stone room. There's a bed in the corner.")
-                    G.write("As you lay down of the bed you think maybe you'll wake up from this dream soon.")
+                    global end_map
+                    end_map = end_map + 1
                 else:
                     G.write("Maybe later.")
             return True
 
-        if til is (2,0):
+        if til == (0,2):
             if plyr is True:
                 G.write("Would you like to go to The library?")
                 go = int(input("1:yes, 2:no"))
                 if go is 1:
-                    G.write("Greg takes you to a section of the fortresses massive library. Morena is sitting in a well hidden side room.")
-                    G.write("Plants are hanging from the cieling. There are tanks with salamanders and frogs. Anything that you would think a witch would have is somehow crammed into this tiny room.")
+                    end_map = end_map + 1
+                else:
+                    G.write("Maybe later.")
+            return True
 
+        if til == (0,4):
+            if plyr is True:
+                G.write("Would you like to go talk to Tenaxx?")
+                go = int(input("1:yes, 2:no"))
+                if go is 1:
+                    end_map = end_map + 1
+                else:
+                    G.write("Maybe later.")
+            return True
+
+        if til == (0,6):
+            if plyr is True:
+                G.write("Would you like to talk to Dredall?")
+                go = int(input("1:yes, 2:no"))
+                if go is 1:
+                    end_map = end_map + 1
+                else:
+                    G.write("Maybe later.")
+            return True
+
+        if til == (3,2):
+            if plyr is True:
+                G.write("Would you like to talk to Droxone?")
+                go = int(input("1:yes, 2:no"))
+                if go is 1:
+                    end_map = end_map + 1
+                else:
+                    G.write("Maybe later.")
+            return True
+
+        if til == (3,4):
+            if plyr is True:
+                G.write("Would you like to talk to Nathik?")
+                go = int(input("1:yes, 2:no"))
+                if go is 1:
+                    end_map = end_map + 1
+                else:
+                    G.write("Maybe later.")
+            return True
+
+        if til == (3,6):
+            if plyr is True:#FIX ENTIRE SECTION!!!
+                if curiosity is True:
+                    end_map = end_map + 1
+                else:
+                    G.write("That way looks boring, and you don't want to go down there.")
+        return True
+
+    def finished_map(self):
+        G.write("You leave the hall.")
+
+
+hallway_map = hallway('hallway_map')
+
+hallway_map.layout = G.np.array([[G.Tiles.Ice, G.Tiles.Mountain, G.Tiles.Ice, G.Tiles.Mountain, G.Tiles.Ice, G.Tiles.Mountain, G.Tiles.Ice, G.Tiles.Mountain], \
+                                [G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Mountain], \
+                                [G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Mountain], \
+                                [G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Ice, G.Tiles.Mountain, G.Tiles.Ice, G.Tiles.Mountain, G.Tiles.Ice, G.Tiles.Mountain]])
+
+class your_room(G.array_map):
+    def __init__(self, name):
+        super().__init__(name)
+
+    def on_start(self):
+        G.write("You enter your room.")
+
+    def send_data(self, til, plry=False):
+        if til == (1,2):
+            global end_map
+            end_map = end_map + 1
+            G.write("As you lay down of the bed you think maybe you'll wake up from this dream soon.")
+        return True
+
+    def finished_map(self):
+        G.write("You wake up the next morning.")
+
+your_room = your_room('your_room')
+
+your_room.layout = G.np.array([[G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall], \
+                                [G.Tiles.Wall, G.Tiles.Mountain, G.Tiles.Dirt, G.Tiles.Mountain, G.Tiles.Wall], \
+                                [G.Tiles.Wall, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Wall], \
+                                [G.Tiles.Wall, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Wall], \
+                                [G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Mountain, G.Tiles.Wall, G.Tiles.Wall]])
+
+class library(G.array_map):
+    def __init__(self, name):
+        super().__init__(name)
+
+    def on_start(self):
+        G.write("Greg takes you to a section of the fortresses massive library. Morena is sitting in a well hidden side room.")
+        G.write("Plants are hanging from the cieling. There are tanks with salamanders and frogs. Anything that you would think a witch would have is somehow crammed into this tiny room.")
+
+    def send_data(self, til, plyr=False):
+        if til == (1,8):
+            if plyr is True:
+                global al_talked_mor
+                if al_talked_mor == False:
                     if help is 1:
                         head_witch.say("training")
                         G.write("Steve: What did you want to show me?")
@@ -650,13 +805,14 @@ class hallway(G.array_map):
                             steve.collection.add_item(giant_potion, 1)
                             steve.collection.add_item(morenas_wand, 1)
                             head_witch.say("takeitems")
+                            global Morena_s
                             Morena_s = Morena_s + 1
 
                         else:
                             G.write("Steve: I don't even know how to use these things. I can't take them.")
                             head_witch.say("regect")
                             Morena_s = Morena_s - 1
-
+                        global honesty
                         honesty = honesty + 1
 
                     else:
@@ -667,17 +823,59 @@ class hallway(G.array_map):
 
                     head_witch.say("endtalk")
                     Morena_s = Morena_s + 1
+                    al_talked_mor = True
                 else:
-                    G.write("Maybe later.")
-                return True
+                    G.write("You already talked to her.")
+            return True
 
-        if til is (4,0):
+        if til == (0,6) or til == (1,6) or til == (3,6) or til == (3,7) or til == (3,8) or til == (3,9):
             if plyr is True:
-                G.write("Would you like to go talk to Tenaxx?")
-                go = int(input("1:yes, 2:no"))
-                if go is 1:
-                    G.write("While taking you to Tenaxx, Greg tells you that he is so old because he's a wizard. This place is so weird you don't even question it.")
-                    G.write("The Arms Master leaves you at the door to Tenaxx's study. You knock, and here a muffled invitation to enter.")
+                G.write("That's a wall. You just walked into a wall.")
+            return False
+
+        if til == (2,1) or til == (2,2) or til == (2,3) or til == (2,4) or til == (4,1) or til == (4,2) or til == (4,3) or til == (4,4):
+            if plyr is True:
+                G.write("That's a bookshelf")
+            return True
+
+        if til == (5,7):
+            if plyr is True:
+                G.write("Would you like to leave?")
+                leave = int(input("1:yes, 2:no"))
+                if leave is 1:
+                    global end_map
+                    end_map = end_map + 1
+                else:
+                    G.write("Not yet.")
+        return True
+
+
+    def finished_map(self):
+        G.write("You leave the Library")
+
+library_room = library('library_room')
+
+library_room.layout = G.np.array([[G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall], \
+                                    [G.Tiles.Wall, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Wall, G.Tiles.Mountain, G.Tiles.Ice, G.Tiles.Wall], \
+                                    [G.Tiles.Wall, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Wall], \
+                                    [G.Tiles.Wall, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall], \
+                                    [G.Tiles.Wall, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Wall], \
+                                    [G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Mountain, G.Tiles.Wall, G.Tiles.Wall]])
+
+class tenaxx_study(G.array_map):
+    def __init__(self, name):
+        super().__init__(name)
+
+    def on_start(self):
+        G.write("While taking you to Tenaxx, Greg tells you that he is so old because he's a wizard. This place is so weird you don't even question it.")
+        G.write("The Arms Master leaves you at the door to Tenaxx's study. You knock, and here a muffled invitation to enter.")
+
+    def send_data(self, til, plyr=False):
+        if til == (2,1):
+            if plyr is True:
+                global al_talked_ten
+                if al_talked_ten is False:
+                    al_talked_ten = True
                     head_wizard.say("studyhello")
                     G.write("Steve: Sparing was fine. I was wondering what the plan was exsactly for dealing with this world dragon?")
                     head_wizard.say("plan1")
@@ -691,30 +889,74 @@ class hallway(G.array_map):
                     G.write("He doesn't seem to notice and is now rambling on using words you don't understand.")
                     G.write("You think he's talking about his powers, but you can't be sure.")
                     G.write("You look around. The study is full of interesting stuff that probably shouldn't be touched.")
+                    global Tenaxx_s
+                    Tenaxx_s = Tenaxx_s + 1
+                else:
+                    G.write("You already talked to him")
+            return True
 
-                    if curiosity is True:
+        if til == (2,2):
+            if plyr is True:
+                G.write("You're standing on his desk.")
+            return True
+
+        if til == (1,4):
+            if plyr is True:
+                if curiosity is True:
+                    global box
+                    if box is False:
                         G.write("While the old wizard keeps rambling, you walk over to a shelf covered in odd things.")
                         G.write("You pick up an odd contraption that looks like a box made of filigree.")
                         G.write("Particles start swirling inside and glowing green. There is a little ingraved N on the metal.")
                         G.write("You pocket the box.")
                         steve.collection.add_item(nathiks_soul_box)
                         box = True
-
-                    G.write("You leave the room. Tenaxx doesn't notice. You can hear him still talking as you close the door.")
-                    Tenaxx_s = Tenaxx_s + 1
+                    else:
+                        G.write("You've already gathered everything here.")
                 else:
-                    G.write("Maybe later.")
-                return True
+                    G.write("There's some stuff here, but none of it's interesting.")
+            return True
 
-        if til is (6,0):
+        if til == (5,2):
             if plyr is True:
-                G.write("Would you like to talk to Dredall?")
-                go = int(input("1:yes, 2:no"))
-                if go is 1:
-                    G.write("Centaur! That's what he's called! Greg seems to take it for granted that Centaurs are real.")
-                    G.write("The door to his study is really tall, but you suppose it has to be.")
-                    G.write("Greg leaves you at the door.")
-                    G.write("Before you can knock the door opens.")
+                G.write("Would yo like to leave?")
+                leave = int(input("1:yes, 2:no"))
+                if leave is 1:
+                    global end_map
+                    end_map = end_map + 1
+                else:
+                    G.write("Not yet.")
+        return True
+
+    def finished_map(self):
+        G.write("You leave the room. Tenaxx doesn't notice. You can hear him still talking as you close the door.")
+
+
+tenaxx_study = tenaxx_study('tenaxx_study')
+
+tenaxx_study.layout = G.np.array([[G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall], \
+                                    [G.Tiles.Wall, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Ice, G.Tiles.Wall], \
+                                    [G.Tiles.Wall, G.Tiles.Ice, G.Tiles.Dirt, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Wall], \
+                                    [G.Tiles.Wall, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Wall], \
+                                    [G.Tiles.Wall, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Wall], \
+                                    [G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Mountain, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall]])
+
+class dradall_study(G.array_map):
+    def __init__(self, name):
+        super().__init__(name)
+
+    def on_start(self):
+        G.write("Centaur! That's what he's called! Greg seems to take it for granted that Centaurs are real.")
+        G.write("The door to his study is really tall, but you suppose it has to be.")
+        G.write("Greg leaves you at the door.")
+        G.write("Before you can knock the door opens.")
+
+    def send_data(self, til, plyr=False):
+        if til == (4,2):
+            if plyr is True:
+                global al_talked_dre
+                if al_talked_dre is False:
+                    al_talked_dre = True
                     head_summoner.say("great")
                     G.write("Steve: I was wondering when I can go home?")
                     head_summoner.say("home")
@@ -726,26 +968,59 @@ class hallway(G.array_map):
                     G.write("Steve: Have you ever gotten the right person?!")
                     head_summoner.say("defen")
                     head_summoner.say("goaway")
-                    G.write("With that you're shoed out the door. You hear it lock behind you.")
-                    Dredall_s = Dredall_s + 1
-                return True
+                else:
+                    G.write("You've already talked to him.")
+            return True
 
-        if til is (2,3):
+        if til == (5,2):
             if plyr is True:
-                G.write("Would you like to talk to Droxone?")
-                go = int(input("1:yes, 2:no"))
-                if go is 1:
-                    G.write("Droxone seemed like the nicest one there. He's also your age. Greg admits that he's a little wierd, but you don't care anymore.")
-                    G.write("As soon as you stop in front of the door Greg indicated, you can hear ticking from inside.")
-                    G.write("A voice that sounds like it's coming through a really old radio eminates from a point behind the door.")
-                    G.write("Radio: Droxone will be with you in a moment. Please do not open the door for your own safety.")
-                    G.write("There's more crashing and banging from inside. Was that a small explosion?")
-                    head_alchemist.say("radio")
-                    G.write("You open the door with a lot of caution. The room beyond is the biggest and most confusing mess you've ever seem.")
-                    G.write("The smell of burning chemicals permiates the air. You can see burn marks on the wall behind a metal table covered in gizmozes of all shapes.")
-                    G.write("Another table is covered in what looked like a chemistry set of steroids.")
-                    G.write("Smoke covers the ceiling. Some of the machines are whirring, some glowing, most are skaing and making noise.")
-                    G.write("Droxone is standing over at the third table covered in parts. It's exident what he was building blew up in him face.")
+                G.write("Would you like to leave?")
+                leave = int(input("1:yes, 2:no"))
+                if leave is 1:
+                    global end_map
+                    end_map = end_map + 1
+                else:
+                    G.write("Not yet.")
+        return True
+
+    def finished_map(self):
+        G.write("With that you're shoed out the door. You hear it lock behind you.")
+        global Dredall_s
+        Dredall_s = Dredall_s + 1
+
+
+dradall_study = dradall_study('dradall_study')
+
+dradall_study.layout = G.np.array([[G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall], \
+                                    [G.Tiles.Wall, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Wall], \
+                                    [G.Tiles.Wall, G.Tiles.Mountain, G.Tiles.Dirt, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Wall], \
+                                    [G.Tiles.Wall, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Wall], \
+                                    [G.Tiles.Wall, G.Tiles.Mountain, G.Tiles.Ice, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Wall], \
+                                    [G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Mountain, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall]])
+
+class droxone_study(G.array_map):
+    def __init__(self, name):
+        super().__init__(name)
+
+    def on_start(self):
+        G.write("Droxone seemed like the nicest one there. He's also your age. Greg admits that he's a little wierd, but you don't care anymore.")
+        G.write("As soon as you stop in front of the door Greg indicated, you can hear ticking from inside.")
+        G.write("A voice that sounds like it's coming through a really old radio eminates from a point behind the door.")
+        G.write("Radio: Droxone will be with you in a moment. Please do not open the door for your own safety.")
+        G.write("There's more crashing and banging from inside. Was that a small explosion?")
+        head_alchemist.say("radio")
+        G.write("You open the door with a lot of caution. The room beyond is the biggest and most confusing mess you've ever seem.")
+        G.write("The smell of burning chemicals permiates the air. You can see burn marks on the wall behind a metal table covered in gizmozes of all shapes.")
+        G.write("Another table is covered in what looked like a chemistry set of steroids.")
+        G.write("Smoke covers the ceiling. Some of the machines are whirring, some glowing, most are skaing and making noise.")
+        G.write("Droxone is standing over at the third table covered in parts. It's exident what he was building blew up in him face.")
+
+    def send_data(self, til, plyr=False):
+        if til == (2,3):
+            if plyr is True:
+                global al_talked_dro
+                if al_talked_dro is False:
+                    al_talked_dro = True
                     head_alchemist.say("blewup")
                     G.write("Steve: I don't mind. It's your lab.")
                     head_alchemist.say("memoryloss")
@@ -759,20 +1034,48 @@ class hallway(G.array_map):
                     head_alchemist.say("concern")
                     G.write("Everything is going black. Your ears are ringing.")
                     G.write("You pass out.")
+                    global Droxone_s
                     Droxone_s = Droxone_s + 1
-                return True
+                    global end_map
+                    end_map = end_map + 1
+                else:
+                    G.write("You already talked to him.")
+        return True
 
-        if til is (4,3):
+    def finished_map(self):
+        G.write("You wake up on the floor")
+        G.write("How did you get here?")
+        G.write("Oh that's right")
+        G.write("You're a magic android.")
+        G.write("Droxone says you should go and sleep. You agree.")
+
+droxone_study = droxone_study('droxone_study')
+
+droxone_study.layout = G.np.array([[G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall], \
+                                    [G.Tiles.Wall, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Wall], \
+                                    [G.Tiles.Wall, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Ice, G.Tiles.Dirt, G.Tiles.Wall], \
+                                    [G.Tiles.Wall, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Dirt, G.Tiles.Wall], \
+                                    [G.Tiles.Wall, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Dirt, G.Tiles.Wall], \
+                                    [G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Mountain, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall]])
+
+class nathik_study(G.array_map):
+    def __init__(self, name):
+        super().__init__(name)
+
+    def on_start(self):
+        G.write("For some reason you want to talk to Nathik. The Arms Master looks vissably nervious.")
+        G.write("He leads you to a place in the dungeon. You suppose that Nathik doesn't want to be around other people.")
+        G.write("You nerviously knock on the door.")
+        head_necromancer.say("what")
+        G.write("Steve: It's me, the person you all brought here.")
+        G.write("The door flies open and nearly hits you in the face.")
+
+    def send_data(self, til, plyr=False):
+        if til == (2,1):
             if plyr is True:
-                G.write("Would you like to talk to Nathik?")
-                go = int(input("1:yes, 2:no"))
-                if go is 1:
-                    G.write("For some reason you want to talk to Nathik. The Arms Master looks vissably nervious.")
-                    G.write("He leads you to a place in the dungeon. You suppose that Nathik doesn't want to be around other people.")
-                    G.write("You nerviously knock on the door.")
-                    head_necromancer.say("what")
-                    G.write("Steve: It's me, the person you all brought here.")
-                    G.write("The door flies open and nearly hits you in the face.")
+                global al_talked_nat
+                if al_talked_nat is False:
+                    al_talked_nat = True
                     head_necromancer.say("mad")
                     G.write("Apologize, or Ask?")
 
@@ -780,44 +1083,111 @@ class hallway(G.array_map):
                     if AorA is 1:
                         G.write("Steve: I'm sorry for what I did. Whatever it was I probably thought it was best at the time. It might have been, or might not have been.")
                         head_necromancer.say("apol")
+                        global Nathik_s
                         Nathik_s = Nathik_s + 1
 
                     else:
                         G.write("Steve: What did I ever do too you?")
                         head_necromancer.say("ask")
                         head_necromancer.say("ask2")
-                        G.write("Nathik slams the door in your face.")
                         Nathik_s = Nathik_s - 1
-                    return True
-
-        if til is (6,3):
-            if plyr is True:
-                if curiosity is True:
-                    G.write("After a moment of thought, Greg grins and leads you deep into the fortress.")
-                    G.write("You go down to many staircases to count. Your legs are burning by the time you reach your destination.")
-                    G.write("Steve: What is this place?")
-                    arms_master_npc.say("treasure")
-                    G.write("He takes out a key and opens a small steel door. The sound of metal on stone makes both of you wince.")
-                    arms_master_npc.say("coolstuff")
-                    G.write("Pedestals line the room. Each one has an artifact on it. Giant gems, flashy flasks, astoinding armor, bounties abound.")
-                    G.write("Steve: Where did all this stuff come from?")
-                    arms_master_npc.say("coolstuff2")
-                    G.write("There are three things with your name on them, or Banabas's at least.")
-                    G.write("A blue-silver armor, a red sword, and a ring that seems to be made of pure emerald.")
-                    G.write("Greg insists that you take the items. Maybe they'll help you.")
-                    steve.collection.add_item(shanams_ring, 1)
-                    steve.collection.add_item(dragons_blood, 1)
-                    steve.collection.add_item(mythirl_armor, 1)
-                    arms_master_npc.say("goback")
-                    G.write("He leads you back up to your chambers.")
                 else:
-                    G.write("That way looks boring, and you don't want to go down there.")
-                return True
+                    G.write("You already talked to him.")
+            return True
 
-hallway.layout = G.np.array([[G.Tiles.Ice, G.Tiles.Dirt, G.Tiles.Ice, G.Tiles.Dirt, G.Tiles.Ice, G.Tiles.Dirt, G.Tiles.Ice, G.Tiles.Dirt], \
-                                [G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt], \
-                                [G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt], \
-                                [G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Ice, G.Tiles.Dirt, G.Tiles.Ice, G.Tiles.Dirt, G.Tiles.Ice, G.Tiles.Dirt]])
+        if til == (5,2):
+            if plyr is True:
+                G.write("Would you like to leave?")
+                leave = int(input("1:yes, 2:no"))
+                if leave is 1:
+                    global end_map
+                    end_map = end_map + 1
+                else:
+                    G.write("Not yet.")
+        return True
+
+    def finished_map(self):
+        G.write("Nathik shuts the door in your face.")
+
+
+nathik_study = nathik_study('nathik_study')
+
+nathik_study.layout = G.np.array([[G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall], \
+                                    [G.Tiles.Wall, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Wall], \
+                                    [G.Tiles.Wall, G.Tiles.Ice, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Wall], \
+                                    [G.Tiles.Wall, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Wall], \
+                                    [G.Tiles.Wall, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Wall], \
+                                    [G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Mountain, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall]])
+
+class treasury(G.array_map):
+    def __init__(self, name):
+        super().__init__(name)
+
+    def on_start(self):
+        G.write("After a moment of thought, Greg grins and leads you deep into the fortress.")
+        G.write("You go down to many staircases to count. Your legs are burning by the time you reach your destination.")
+        G.write("Steve: What is this place?")
+        arms_master_npc.say("treasure")
+        G.write("He takes out a key and opens a small steel door. The sound of metal on stone makes both of you wince.")
+        arms_master_npc.say("coolstuff")
+        G.write("Pedestals line the room. Each one has an artifact on it. Giant gems, flashy flasks, astoinding armor, bounties abound.")
+        G.write("Steve: Where did all this stuff come from?")
+        arms_master_npc.say("coolstuff2")
+        G.write("There are three things with your name on them, or Banabas's at least.")
+        G.write("A blue-silver armor, a red sword, and a ring that seems to be made of pure emerald.")
+        G.write("Greg insists that you take the items. Maybe they'll help you.")
+
+    def send_data(self, til, plyr=False):
+        if til == (1,1):
+            if plyr is True:
+                G.write("You pick up a ring.")
+                steve.collection.add_item(shanams_ring, 1)
+            return True
+
+        if til == (1,3):
+            if plyr is True:
+                G.write("You pick up a red sword.")
+                steve.collection.add_item(dragons_blood, 1)
+            return True
+
+        if til == (3,5):
+            if plyr is True:
+                G.write("You pick up a armor.")
+                steve.collection.add_item(mythirl_armor, 1)
+            return True
+
+        if til == (3,1):
+            if plyr is True:
+                G.write("A stone. It has Dredall's name on it. You leave it.")
+            return True
+
+        if til == (1,5):
+            if plyr is True:
+                G.write("A jar of frog eyes. Why is there a random jar of frog eyes here?")
+            return True
+
+        if til == (4,4):
+            if plyr is True:
+                G.write("Would you like to leave?")
+                leave = int(input("1:yes, 2:no"))
+                if leave is 1:
+                    global end_map
+                    end_map = end_map + 1
+                else:
+                    G.write("Not yet.")
+
+    def finished_map(self):
+        arms_master_npc.say("goback")
+        G.write("He leads you back up to the hall.")
+
+treasury = treasury('treasury')
+
+treasury.layout = G.np.array([[G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Mountain], \
+                                [G.Tiles.Mountain, G.Tiles.Ice, G.Tiles.Mountain, G.Tiles.Ice, G.Tiles.Mountain, G.Tiles.Dirt, G.Tiles.Mountain], \
+                                [G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Mountain], \
+                                [G.Tiles.Mountain, G.Tiles.Dirt, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Ice, G.Tiles.Mountain], \
+                                [G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Mountain, G.Tiles.Ice, G.Tiles.Mountain, G.Tiles.Mountain]])
+
 
 #
 # NPCs
@@ -1002,34 +1372,63 @@ head_summoner.add_dialogue("fire2", "Dredall: Yes. What you're seeing is light f
 head_summoner.add_dialogue("fire3", "Dredall: They aren't.")
 
 
-
-def map_move(mapid, done, you):
-    end_map = False
+def map_move(mapid, you):
+    global end_map
+    end_map = 0
+    mapid.on_start()
     G.loc_man.load_map(mapid)
-    while end_map is False:
+    while end_map != 1:
+        print(end_map)
         direct_m = str(input("Move: wasd"))
         if direct_m == "w":
             G.loc_man.move(you, G.Directions.Up)
+            print("in w")
         if direct_m == "s":
             G.loc_man.move(you, G.Directions.Down)
+            print("in s")
         if direct_m == "a":
             G.loc_man.move(you, G.Directions.Left)
+            print("in a")
         if direct_m == "d":
             G.loc_man.move(you, G.Directions.Right)
-        if mapid.send_data(til) == done:
-            end_map = True
+            print("in d")
+    G.loc_man.load_map(mapid)
+    mapid.finished_map()
 
 
 
 
-
-
-steve = G.player("Steve", appartment_map, 0, 1, steve_inv, steve_stats)
-ap_map = False
-map_move(appartment_map, 1, steve)
-
-
-#You need to figure this out when you get home! No star trek, just do this!
+#steve = G.player("Steve", G.loc_man, 0, 1, steve_inv, steve_stats)
+#steve_a = G.player("Steve", appartment_map, 0, 1, steve_inv, steve_stats)
+#ap_map = False
+#map_move(appartment_map, steve_a)
+#steve_f = G.player("Steve", fortess_room, 2, 3, steve_inv, steve_stats)
+#map_move(fortess_room, steve_f)
+#steve_ar = G.player("Steve", arena_map, 0, 2, steve_inv, steve_stats)
+#map_move(arena_map, steve_ar)
+while current_til != (0,0):
+    steve_hall = G.player("Steve", hallway_map, 0, 2, steve_inv, steve_stats)
+    map_move(hallway_map, steve_hall)
+    if current_til == (0,2):
+        steve_lib = G.player("Steve", library_room, 7, 5, steve_inv, steve_stats)
+        map_move(library_room, steve_lib)
+    if current_til == (0,4):
+        steve_ten = G.player("Steve", tenaxx_study, 2, 5, steve_inv, steve_stats)
+        map_move(tenaxx_study, steve_ten)
+    if current_til == (0,6):
+        steve_dre = G.player("Steve", dradall_study, 2, 5, steve_inv, steve_stats)
+        map_move(dradall_study, steve_dre)
+    if current_til == (3,2):
+        steve_dro = G.player("Steve", droxone_study, 2, 5, steve_inv, steve_stats)
+        map_move(droxone_study, steve_dro)
+    if current_til == (3,4):
+        steve_nat = G.player("Steve", nathik_study, 2, 5, steve_inv, steve_stats)
+        map_move(nathik_study, steve_nat)
+    if current_til == (3,6):
+        steve_treas = G.player("Steve", treasury, 3, 4, steve_inv, steve_stats)
+        map_move(treasury, steve_treas)
+steve_room = G.player("Steve", your_room, 2, 4, steve_inv, steve_stats)
+map_move(your_room, steve_room)
 
 
 
