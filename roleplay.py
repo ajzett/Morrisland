@@ -19,8 +19,7 @@ al_talked_dre = False
 al_talked_dro = False
 al_treas = False
 ####
-spair = 0
-kill = 0
+shelf = 0
 in_hall = 0
 have_wep = 0
 help = 0
@@ -250,9 +249,11 @@ class appartment(G.array_map):
                     G.write("How did the cat turn on the TV?")
                     G.write("It's staring at you.")
                     cat.say("meow")
+                    os.system("PAUSE")
                     os.system('cls')
                     G.write("As you walk out of your door you see a lot of cops on the other side of the street.")
                     G.write("The knifeman you saw on TV is in the back of one of the patrol cars.")
+                    os.system("PAUSE")
                     os.system('cls')
                     G.write("You get to work without a problem")
                     steves_boss.say("greating")
@@ -263,17 +264,29 @@ class appartment(G.array_map):
                     co_worker.say("fired")
                     G.write("Steve: I'm sure you could find someone. I won't be able to make rent if I'm fired.")
                     co_worker.say("weekend")
-                    G.write("Steve: I don't know.")
+                    G.write("1: Of course we're on! Why would I cancel?")
+                    G.write("2: If I get laid off I'll be job hunting.")
+                    choice = int(input(""))
+                    if choice is 1:
+                        G.write("Lary: Great! Beers on me if you get fired.")
+                        honesty = honesty - 1
+                    else:
+                        G.write("Lary: That's probably for the best.")
+                        honesty = honesty + 1
+                    os.system("PAUSE")
                     os.system('cls')
-                    G.write("You go to get coffee")
+                    G.write("You get lunch in the middle of the day.")
+                    G.write("Someone else is in the lunch room.")
                     cat.say("meowq")
                     G.write("Steve: Why are you still here!?")
+                    os.system("PAUSE")
                     os.system('cls')
                     G.write("At the end of the day you go to the Boss's office")
                     steves_boss.say("fired")
                     G.write("You leave the room and start packing up.")
                     G.write("The cat is sitting on your desk.")
                     cat.say("purr")
+                    os.system("PAUSE")
                     os.system('cls')
                     G.write("You leave the office building with a medium box of stuff.")
                     G.write("You look back up at your old office building.")
@@ -297,12 +310,14 @@ class appartment(G.array_map):
                     G.write("You hope you don't get laid off. This world is horrible.")
                     cat.say("meowl")
                     G.write("You should get to work early.")
+                    os.system("PAUSE")
                     os.system('cls')
                     G.write("You walk out onto the street.")
                     G.write("You hear sirens.")
                     G.write("That's not important. You take your usual route to work.")
                     G.write("If you cut through this ally it will be faster.")
                     G.write("You here someone walking behind you.")
+                    os.system("PAUSE")
                     os.system('cls')
                     knifeman.say("cops")
                     G.write("Before you can respond to the man he thrusts his hand toward your stomach.")
@@ -311,7 +326,7 @@ class appartment(G.array_map):
                     G.write("There's a knife sticking out of your gut.")
                     G.write("The last thing you see is the cat.")
                     cat.say("purr")
-
+                    os.system("PAUSE")
                     os.system('cls')
         return True
 
@@ -336,11 +351,11 @@ class fortress_chamber(G.array_map):
     def on_start(self):
         head_witch.say("first")
         head_necromancer.say("first")
-
         head_summoner.say('first')
         G.write("Steve: Whaaa?")
         G.write("Steve: Who are y...")
         G.write("You voice trails off as you look up at five old 'people'.")
+        os.system("PAUSE")
         os.system('cls')
         G.write("A super old and croutched woman started crowing.")
         head_witch.say("insult_n")
@@ -348,11 +363,13 @@ class fortress_chamber(G.array_map):
         head_necromancer.say("insult_w")
         G.write("The woman, Morena, slapped the talking corpse.")
         G.write("The two started squabbling even more.")
+        os.system("PAUSE")
         os.system('cls')
         head_summoner.say("calm")
         G.write("The man who had just spoken was really tall.")
         G.write("You look down from his face to his body.")
         G.write("He has a horses body.")
+        os.system("PAUSE")
         os.system('cls')
         head_wizard.say("hello")
         G.write("Steve: B-b-b-barn who?")
@@ -363,7 +380,7 @@ class fortress_chamber(G.array_map):
         head_alchemist.say("backtrack")
 
         G.write("Now the other two start squablling")
-        os.system('cls')
+
 
     def send_data(self, til, plyr=False):
         done = False
@@ -394,6 +411,7 @@ class fortress_chamber(G.array_map):
                     head_alchemist.say("get2")
                     G.write("Steve: My name isn't Barnabas, it's Steve.")
                     G.write("Before he can say anything else someone calls everyone to attention.")
+                    os.system("PAUSE")
                     global Droxone_s
                     Droxone_s = Droxone_s + 1
                     global end_map
@@ -417,6 +435,7 @@ class fortress_chamber(G.array_map):
                     head_wizard.say("get2")
                     head_wizard.say("get3")
                     G.write("Tenaxx calls everyone over.")
+                    os.system("PAUSE")
                     global Tenaxx_s
                     Tenaxx_s = Tenaxx_s + 1
 
@@ -440,6 +459,7 @@ class fortress_chamber(G.array_map):
                     G.write("Steve: Uhhh.... What?")
                     head_summoner.say("get4")
                     G.write("Before you can say anything else, the old man calls everyone over.")
+                    os.system("PAUSE")
                     global Dredall_s
                     Dredall_s = Dredall_s + 1
                     end_map = end_map + 1
@@ -465,6 +485,7 @@ class fortress_chamber(G.array_map):
                     G.write("At this Morena laughs.")
                     head_witch.say("get5")
                     G.write("Before you can say anything the oldest men of the five calls everyone over.")
+                    os.system("PAUSE")
                     global Morena_s
                     Morena_s = Morena_s + 1
                     end_map = end_map + 1
@@ -488,6 +509,7 @@ class fortress_chamber(G.array_map):
                     head_necromancer.say("get3")
                     head_necromancer.say("get4")
                     G.write("You keep you mouth shut. Nathik seems to be brooding now. You slowly walk away.")
+                    os.system("PAUSE")
                     global Nathik_s
                     Nathik_s = Nathik_s + 1
                     end_map = end_map + 1
@@ -500,13 +522,14 @@ class fortress_chamber(G.array_map):
         head_wizard.say("expo2")
         head_wizard.say("expo3")
         G.write("Steve: There was a creepy cat, and I had cerial for breakfast.")
+        os.system("PAUSE")
         os.system('cls')
         G.write("They all blink at you.")
         head_alchemist.say("shock")
         head_summoner.say("solution")
 
         G.write("Dredall grabs you and you find your self on his back. You all walk out a side door and down a coridor.")
-        os.system('cls')
+
 
 fortess_room = fortress_chamber('fortress')
 
@@ -526,7 +549,7 @@ class arena(G.array_map):
         super().__init__(name)
 
     def on_start(self):
-        os.system('clr')
+        os.system('cls')
         head_summoner.say("train")
 
         G.write("Steve: Does it have to be a master? Why not a beginner?")
@@ -534,7 +557,8 @@ class arena(G.array_map):
         G.write("Steve: I may be rusty.")
         head_necromancer.say("rust")
         G.write("It occurs to you that these people might not know the same sayings as you.")
-        os.system('clr')
+        os.system("PAUSE")
+        os.system('cls')
         G.write("Dredall leads a grizled looking man in leather armor over to you.")
         head_summoner.say("spar")
         G.write("Steve: Right to the main fight? Don't we have, like, special items to gather or something?")
@@ -561,7 +585,7 @@ class arena(G.array_map):
                     print(weapon_choice[i].name)
 
                 wc = int(input("What will you choice?"))
-                os.system('clr')
+                os.system('cls')
                 steve_inv.add_item(weapon_choice[wc], 1)
                 print(weapon_choice[wc].dscrpt)
                 if weapon_choice[wc].name is "Warhammer":
@@ -593,6 +617,7 @@ class arena(G.array_map):
                     head_witch.say("come")
 
                 G.write("The other four walk away in different dirrections with little more than a word.")
+                os.system("PAUSE")
                 os.system('clr')
 
             return True
@@ -608,7 +633,8 @@ class arena(G.array_map):
                     arms_master_npc.say("confus")
                     G.write("You have to pass for this guy. You think about your answer.")
                     G.write("Steve: Something went amiss in this resurection. I seem to have lost all my memories.")
-                    os.system('clr')
+                    os.system("PAUSE")
+                    os.system('cls')
                     G.write("A thoughtful expression comes over Gregs face.")
                     arms_master_npc.say("realize")
                     arms_master_npc.say("sad")
@@ -616,7 +642,8 @@ class arena(G.array_map):
                     arms_master_npc.say("expl1")
                     arms_master_npc.say("expl2")
                     arms_master_npc.say("expl3")
-                    os.system('clr')
+                    os.system("PAUSE")
+                    os.system('cls')
                     arms_master_npc.say("ask")
                     G.write("Steve: No.")
                     arms_master_npc.say("expl4")
@@ -624,7 +651,8 @@ class arena(G.array_map):
                     arms_master_npc.say("expl6")
                     arms_master_npc.say("expl7")
                     arms_master_npc.say("expl8")
-                    os.system('clr')
+                    os.system("PAUSE")
+                    os.system('cls')
                     arms_master_npc.say("ask")
                     G.write("You could just lie? You could tell him it rings a bell.")
                 else:
@@ -760,11 +788,13 @@ class your_room(G.array_map):
     def on_start(self):
         G.write("You enter your room.")
 
-    def send_data(self, til, plry=False):
+    def send_data(self, til, plyr=False):
         if til == (1,2):
-            global end_map
-            end_map = end_map + 1
-            G.write("As you lay down of the bed you think maybe you'll wake up from this dream soon.")
+            if plyr == True:
+                global end_map
+                end_map = end_map + 1
+                G.write("As you lay down of the bed you think maybe you'll wake up from this dream soon.")
+                os.system("PAUSE")
         return True
 
     def finished_map(self):
@@ -803,9 +833,9 @@ class library(G.array_map):
                         witch_items = int(input("1: yes, 2: no"))
                         if witch_items is 1:
                             G.write("Steve: Okay. I'll take them")
-                            steve.collection.add_item(sheild_charm, 1)
-                            steve.collection.add_item(giant_potion, 1)
-                            steve.collection.add_item(morenas_wand, 1)
+                            #steve.collection.add_item(sheild_charm, 1)
+                            #steve.collection.add_item(giant_potion, 1)
+                            #steve.collection.add_item(morenas_wand, 1)
                             head_witch.say("takeitems")
                             global Morena_s
                             Morena_s = Morena_s + 1
@@ -828,6 +858,7 @@ class library(G.array_map):
                     al_talked_mor = True
                 else:
                     G.write("You already talked to her.")
+                os.system("PAUSE")
             return True
 
         if til == (0,6) or til == (1,6) or til == (3,6) or til == (3,7) or til == (3,8) or til == (3,9):
@@ -838,6 +869,11 @@ class library(G.array_map):
         if til == (2,1) or til == (2,2) or til == (2,3) or til == (2,4) or til == (4,1) or til == (4,2) or til == (4,3) or til == (4,4):
             if plyr is True:
                 G.write("That's a bookshelf")
+                shelf = shelf + 1
+                if shelf > 2:
+                    G.write("Why are you climbing the shelves?")
+                elif sehlf > 3:
+                    G.write("STOP CLIMBING THE SHELVES!")
             return True
 
         if til == (5,7):
@@ -884,6 +920,8 @@ class tenaxx_study(G.array_map):
                     head_wizard.say("plan2")
                     head_wizard.say("plan3")
                     head_wizard.say("plan4")
+                    os.system("PAUSE")
+                    os.system('cls')
                     G.write("Steve: Okay, how do you do that?")
                     head_wizard.say("roles")
                     G.write("Steve: Uhh... okay.")
@@ -891,6 +929,7 @@ class tenaxx_study(G.array_map):
                     G.write("He doesn't seem to notice and is now rambling on using words you don't understand.")
                     G.write("You think he's talking about his powers, but you can't be sure.")
                     G.write("You look around. The study is full of interesting stuff that probably shouldn't be touched.")
+                    os.system("PAUSE")
                     global Tenaxx_s
                     Tenaxx_s = Tenaxx_s + 1
                 else:
@@ -911,6 +950,7 @@ class tenaxx_study(G.array_map):
                         G.write("You pick up an odd contraption that looks like a box made of filigree.")
                         G.write("Particles start swirling inside and glowing green. There is a little ingraved N on the metal.")
                         G.write("You pocket the box.")
+                        os.system("PAUSE")
                         steve.collection.add_item(nathiks_soul_box)
                         box = True
                     else:
@@ -970,6 +1010,7 @@ class dradall_study(G.array_map):
                     G.write("Steve: Have you ever gotten the right person?!")
                     head_summoner.say("defen")
                     head_summoner.say("goaway")
+                    os.system("PAUSE")
                 else:
                     G.write("You've already talked to him.")
             return True
@@ -1010,6 +1051,8 @@ class droxone_study(G.array_map):
         G.write("A voice that sounds like it's coming through a really old radio eminates from a point behind the door.")
         G.write("Radio: Droxone will be with you in a moment. Please do not open the door for your own safety.")
         G.write("There's more crashing and banging from inside. Was that a small explosion?")
+        os.system("PAUSE")
+        os.system('cls')
         head_alchemist.say("radio")
         G.write("You open the door with a lot of caution. The room beyond is the biggest and most confusing mess you've ever seem.")
         G.write("The smell of burning chemicals permiates the air. You can see burn marks on the wall behind a metal table covered in gizmozes of all shapes.")
@@ -1029,6 +1072,8 @@ class droxone_study(G.array_map):
                     G.write("Steve: I think you have the wrong person. I'm not Barnabas. My name is Steve.")
                     G.write("At that he turns and looks at you.")
                     head_alchemist.say("thought")
+                    os.system("PAUSE")
+                    os.system('cls')
                     G.write("Steve: What do you mean prep the body?")
                     head_alchemist.say("body")
                     head_alchemist.say("body2")
@@ -1036,6 +1081,7 @@ class droxone_study(G.array_map):
                     head_alchemist.say("concern")
                     G.write("Everything is going black. Your ears are ringing.")
                     G.write("You pass out.")
+                    os.system("PAUSE")
                     global Droxone_s
                     Droxone_s = Droxone_s + 1
                     global end_map
@@ -1050,6 +1096,7 @@ class droxone_study(G.array_map):
         G.write("Oh that's right")
         G.write("You're a magic android.")
         G.write("Droxone says you should go and sleep. You agree.")
+        os.system("PAUSE")
 
 droxone_study = droxone_study('droxone_study')
 
@@ -1093,6 +1140,7 @@ class nathik_study(G.array_map):
                         head_necromancer.say("ask")
                         head_necromancer.say("ask2")
                         Nathik_s = Nathik_s - 1
+                    os.system("PAUSE")
                 else:
                     G.write("You already talked to him.")
             return True
@@ -1132,6 +1180,8 @@ class treasury(G.array_map):
         arms_master_npc.say("treasure")
         G.write("He takes out a key and opens a small steel door. The sound of metal on stone makes both of you wince.")
         arms_master_npc.say("coolstuff")
+        os.system("PAUSE")
+        os.system('cls')
         G.write("Pedestals line the room. Each one has an artifact on it. Giant gems, flashy flasks, astoinding armor, bounties abound.")
         G.write("Steve: Where did all this stuff come from?")
         arms_master_npc.say("coolstuff2")
@@ -1143,19 +1193,19 @@ class treasury(G.array_map):
         if til == (1,1):
             if plyr is True:
                 G.write("You pick up a ring.")
-                steve.collection.add_item(shanams_ring, 1)
+                #steve.collection.add_item(shanams_ring, 1)
             return True
 
         if til == (1,3):
             if plyr is True:
                 G.write("You pick up a red sword.")
-                steve.collection.add_item(dragons_blood, 1)
+                #steve.collection.add_item(dragons_blood, 1)
             return True
 
         if til == (3,5):
             if plyr is True:
                 G.write("You pick up a armor.")
-                steve.collection.add_item(mythirl_armor, 1)
+                #steve.collection.add_item(mythirl_armor, 1)
             return True
 
         if til == (3,1):
@@ -1177,6 +1227,7 @@ class treasury(G.array_map):
                     end_map = end_map + 1
                 else:
                     G.write("Not yet.")
+        return True
 
     def finished_map(self):
         arms_master_npc.say("goback")
@@ -1210,6 +1261,7 @@ class great_hall(G.array_map):
                     G.write("It has a N engraved on the side, it must be Nathik's. It looks like his style.")
                 else:
                     G.write("Someone has packed all your stuff in a chest and left it by the door to the dining hall.")
+                os.system("PAUSE")
             return True
 
         if til == (1,10):
@@ -1220,6 +1272,7 @@ class great_hall(G.array_map):
                     G.write("You offer the box.")
                     G.write("For a moment he stares at it.")
                     head_necromancer.say("box")
+                    os.system("PAUSE")
                     global Dredall_s
                     Dredall_s = Dredall_s - 1
                     global Nathik_s
@@ -1241,6 +1294,8 @@ class great_hall(G.array_map):
                         head_necromancer.say("boxl2")
                         G.write("He turns on his heels and leaves.")
                         honesty = honesty - 1
+                    box = False
+                    os.system("PAUSE")
                 else:
                     G.write("Nathik glares at you until you go away.")
             return True
@@ -1338,7 +1393,7 @@ class ship(G.array_map):
             return False
 
         if til == (10,5):
-            G.write("That's the main mast. You can't climb the main mast.")
+            G.write("That's the main mast. You try and climb the mast, but just look really dumb.")
             if plyr is True:
                 G.write("That's the main mast. You can't climb the main mast.")
             return False
@@ -1357,6 +1412,7 @@ class ship(G.array_map):
                     G.write("Steve: I think I remember some of this. It's all still a blur.")
                     head_alchemist.say("islandl")
                 head_alchemist.say("island2")
+                os.system("PAUSE")
             return True
 
         if til == (15,4):
@@ -1364,7 +1420,28 @@ class ship(G.array_map):
                 G.write("Go away")
                 global TvsN
                 if TvsN is True:
-                    G.write("You hear shouting from ")
+                    G.write("You hear shouting.")
+                    G.write("Nathik and Tenaxx seem to be having some sort of arguement.")
+                    G.write("You walk closer to listen.")
+                    G.write("Nathik: Is it not enough that you killed me? Is it not enough that you always make it clear I'm unwelcome?")
+                    G.write("Nathik: Must you steal from me too?")
+                    G.write("He brandishes the box you gave him back.")
+                    G.write("Tenaxx: I don't know what you're talking about. That isn't yours.")
+                    G.write("Nathik: It actually has my name on it! Right there! That is my name!")
+                    G.write("Tenaxx: That's fake. That box is mine.")
+                    G.write("Nathik: How would you even make a soul box? I'm the only one who knows how and I never told you.")
+                    G.write("Tenaxx: There are other ways to do things other than necromancy.")
+                    G.write("Nathik looks at Tenaxx with a flat expression.")
+                    G.write("Nathik: Whose soul is in this? Because the last one I put in here before you stole it was someone who died of the blight.")
+                    G.write("Before Tenaxx can do anything Nathik flicks the box. I starts floating next to him. Green light poors from it untill someone is standing where the box was.")
+                    G.write("The person looks like a hologram. You can see that the box is floating inside where her heart would be.")
+                    G.write("Soul: Where am I? The last thing I remember was... Nathik? What are we doing here.")
+                    G.write("Tenaxx: That doesn't prove anything!")
+                    G.write("Nathik: There will be wreckoning for this one day. Mark my words.")
+                    G.write("With that Nathik storms off with the ghost girl walking behind him.")
+                else:
+                    G.write("Nathik: Don't you have someone else to talk to?")
+                os.system("PAUSE")
         return True
 
 
@@ -1390,7 +1467,7 @@ ship.layout = G.np.array([[G.Tiles.Water, G.Tiles.Water, G.Tiles.Water, G.Tiles.
                             [G.Tiles.Water, G.Tiles.Water, G.Tiles.Building, G.Tiles.Building, G.Tiles.Cave, G.Tiles.Cave, G.Tiles.Cave, G.Tiles.Building, G.Tiles.Building, G.Tiles.Water, G.Tiles.Water], \
                             [G.Tiles.Water, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Water], \
                             [G.Tiles.Water, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Water], \
-                            [G.Tiles.Water, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Ice, G.Tiles.Building, G.Tiles.Water], \
+                            [G.Tiles.Water, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Water], \
                             [G.Tiles.Water, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Water], \
                             [G.Tiles.Water, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Water], \
                             [G.Tiles.Water, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Pit, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Water], \
@@ -1398,13 +1475,12 @@ ship.layout = G.np.array([[G.Tiles.Water, G.Tiles.Water, G.Tiles.Water, G.Tiles.
                             [G.Tiles.Water, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Water], \
                             [G.Tiles.Water, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Water], \
                             [G.Tiles.Water, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Water], \
-                            [G.Tiles.Water, G.Tiles.Building, G.Tiles.Building, G.Tiles.Ice, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Water], \
+                            [G.Tiles.Water, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Water], \
                             [G.Tiles.Water, G.Tiles.Water, G.Tiles.Building, G.Tiles.Building, G.Tiles.Cave, G.Tiles.Cave, G.Tiles.Cave, G.Tiles.Building, G.Tiles.Building, G.Tiles.Water, G.Tiles.Water], \
                             [G.Tiles.Water, G.Tiles.Water, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Water, G.Tiles.Water], \
                             [G.Tiles.Water, G.Tiles.Water, G.Tiles.Water, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Water, G.Tiles.Water, G.Tiles.Water], \
                             [G.Tiles.Water, G.Tiles.Water, G.Tiles.Water, G.Tiles.Water, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Water, G.Tiles.Water, G.Tiles.Water, G.Tiles.Water], \
                             [G.Tiles.Water, G.Tiles.Water, G.Tiles.Water, G.Tiles.Water, G.Tiles.Water, G.Tiles.Building, G.Tiles.Water, G.Tiles.Water, G.Tiles.Water, G.Tiles.Water, G.Tiles.Water]])
-
 
 
 class island(G.array_map):
@@ -1433,6 +1509,7 @@ class island(G.array_map):
                 G.write("He seems to be talking to you.")
                 G.write("Steve: Umm... What do you mean?")
                 G.write("Dredall: You were never meant to actually fight the dragon. We'll explain everything later. Morena.")
+                os.system("PAUSE")
                 global end_map
                 end_map = end_map + 1
         return True
@@ -1469,6 +1546,8 @@ class ship_hull(G.array_map):
         G.write("Tenaxx: As is turns out, Barnabas is quit popular. We don't need him, but if he's not here several countries don't care about this.")
         G.write("Nathik: If they knew how easy it was they really wouldn't care.")
         G.write("Tenaxx: That too.")
+        os.system("PAUSE")
+        os.system('cls')
         G.write("Steve: So you killed me because you wanted countries to keep giving you stuff?")
         G.write("Dredall: We didn't kill you.")
         G.write("Steve: Then what about the cat?")
@@ -1476,6 +1555,8 @@ class ship_hull(G.array_map):
         G.write("At this point you see a cat walk up to Morena. It rubs up against her.")
         G.write("Steve: That cat! That cat was following me the whole day I died. It tried to lead me around.")
         G.write("Everyone looks at Morena.")
+        os.system("PAUSE")
+        os.system('cls')
         G.write("Morena: I may have sent Fluffy out that day. I didn't tell him to kill someone though.")
         G.write("One of Droxone's many gadets starts wirring and flashing. He looks at it for a moment.")
         G.write("Droxone: My lie detector doesn't believe you and neither do I.")
@@ -1607,7 +1688,7 @@ class ship_hull(G.array_map):
             G.write("Tenaxx snaps his fingers and everything goes black.")
         else:
             G.write("Tenaxx: It appears we shall spair you, today.")
-            G.write("Steve: Thank you.")
+            G.write("")
 
 
 
@@ -1620,6 +1701,7 @@ ship_hull.layout = G.np.array([[G.Tiles.Building, G.Tiles.Building, G.Tiles.Buil
                                 [G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Ice, G.Tiles.Building, G.Tiles.Building], \
                                 [G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building], \
                                 [G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building]])
+
 
 
 
@@ -1670,7 +1752,7 @@ pes_steven = G.NPC("Steven", G.loc_man, 20, 20)
 
 
 #Adding Dialogue
-news_reader.add_dialogue("news1", "Reporter: Wall street took another big hit today, with the down dropping another 400 points to hit a fifty year low.")
+news_reader.add_dialogue("news1", "Reporter: Wall street took another big hit today, with the dow dropping another 40 points to hit a fifty year low.")
 news_reader.add_dialogue("news2", "Reporter: Many local companies are laying off up to half of their work force.")
 news_reader.add_dialogue("news3", "Reporter: Police are warning people to be careful. A knifeman who killed two people last week was spotted.")
 co_worker.add_dialogue("greating", "Lary: Hey Steve! Are you in trouble?")
@@ -1682,13 +1764,13 @@ cat.add_dialogue("meow", "Cat: Meow.")
 cat.add_dialogue("purr", "Cat: purrrrrr")
 knifeman.add_dialogue("cops", "Knifeman: Are you a cop?")
 phone.add_dialogue("hello", "Phone: Hello Steve. It is time to wake up. You have work at 8:00. It is going to rain tod...")
-steves_boss.add_dialogue("greating", "Boss: Hello Steve. You are falling behind on all your work. Come see me after your shift.")
-steves_boss.add_dialogue("fired", "Boss: I'm sorry, but we have to let you go. We're downsizing. Please clear out you stuff by tomorrow morning.")
+steves_boss.add_dialogue("greating", "Boss: Hello Steve, nice to see you. You are falling behind on all your work. Come see me after your shift.")
+steves_boss.add_dialogue("fired", "Boss: I'm sorry, but we have to let you go. We're downsizing. Please clear out you stuff by tomorrow morning, goodbye.")
 pes_emily.add_dialogue("move", "Pedestrian: Why are you just standing there? People are walking here!")
 pes_emily.add_dialogue("look_out", "Pedestrian: Look Out! A car!")
 head_witch.add_dialogue("first", "???: We got em! We got em!")
 head_necromancer.add_dialogue("first", "???: I told you we would get the right spirit evetually.")
-head_summoner.add_dialogue("first", "???: Shut up necromancer. I only tolerate you while you're useful.")
+head_summoner.add_dialogue("first", "???: Shut up Necromancer. I only tolerate you while you're useful.")
 head_witch.add_dialogue("insult_n", "???: He doesn't remember you Nathik! Hehehe! He doesn't remember you!")
 head_witch.add_dialogue("insult_n2", "???: He's the reason you're undead and he doesn't even remember you!")
 head_necromancer.add_dialogue("insult_w", "Nathik: I may be dead, but at least I don't age anymore... Morena.")
@@ -1811,6 +1893,7 @@ def map_move(mapid, you):
     global end_map
     end_map = 0
     mapid.on_start()
+    os.system("PAUSE")
     G.loc_man.load_map(mapid)
     while end_map != 1:
         print(end_map)
@@ -1829,59 +1912,76 @@ def map_move(mapid, you):
             print("in d")
     G.loc_man.load_map(mapid)
     mapid.finished_map()
-
-
-
+    os.system("PAUSE")
+    os.system('cls')
 
 steve = G.player("Steve", G.loc_man, 0, 1, steve_inv, steve_stats)
-steve_a = G.player("Steve", appartment_map, 0, 1, steve_inv, steve_stats)
-ap_map = False
-map_move(appartment_map, steve_a)
-steve_f = G.player("Steve", fortess_room, 2, 3, steve_inv, steve_stats)
-map_move(fortess_room, steve_f)
-steve_ar = G.player("Steve", arena_map, 0, 2, steve_inv, steve_stats)
-map_move(arena_map, steve_ar)
-while current_til != (0,0):
-    steve_hall = G.player("Steve", hallway_map, 0, 2, steve_inv, steve_stats)
-    map_move(hallway_map, steve_hall)
-    if current_til == (0,2):
-        steve_lib = G.player("Steve", library_room, 7, 5, steve_inv, steve_stats)
-        map_move(library_room, steve_lib)
-    if current_til == (0,4):
-        steve_ten = G.player("Steve", tenaxx_study, 2, 5, steve_inv, steve_stats)
-        map_move(tenaxx_study, steve_ten)
-    if current_til == (0,6):
-        steve_dre = G.player("Steve", dradall_study, 2, 5, steve_inv, steve_stats)
-        map_move(dradall_study, steve_dre)
-    if current_til == (3,2):
-        steve_dro = G.player("Steve", droxone_study, 2, 5, steve_inv, steve_stats)
-        map_move(droxone_study, steve_dro)
-    if current_til == (3,4):
-        steve_nat = G.player("Steve", nathik_study, 2, 5, steve_inv, steve_stats)
-        map_move(nathik_study, steve_nat)
-    if current_til == (3,6):
-        steve_treas = G.player("Steve", treasury, 3, 4, steve_inv, steve_stats)
-        map_move(treasury, steve_treas)
-steve_room = G.player("Steve", your_room, 2, 4, steve_inv, steve_stats)
-map_move(your_room, steve_room)
-steve_gh = G.player("Steve", great_hall, 0, 4, steve_inv, steve_stats)
-map_move(great_hall, steve_gh)
-steve_ship = G.player("Steve", ship, 5, 5, steve_inv, steve_stats)
-map_move(ship, steve_ship)
-steve_is = G.player("Steve", island, 1, 3, steve_inv, steve_stats)
-map_move(island, steve_is)
-steve_hull = G.player("Steve", ship_hull, 3, 1, steve_inv, steve_stats)
-map_move(ship_hull, steve_hull)
-os.system('clr')
-G.write("The End")
+while True:
 
-G.write("You final standing with Droxone(max:3):")
-print(str(Droxone_s))
-G.write("You final standing with Nathik(max:5):")
-print(str(Nathik_s))
-G.write("You final standing with Tenaxx(max:3):")
-print(str(Tenaxx_s))
-G.write("You final standing with Morena(max:5):")
-print(str(Morena_s))
-G.write("You final standing with Dredall(max:4):")
-print(str(Dredall_s))
+
+
+    G.write("To move, use 'wasd' keys to indicate dirrection, then hit 'Enter' to confirm.")
+    G.write("Please don't tap on the keys unless indicated. This can interfear with the next choice.")
+    G.write("Bright blue tiles indicate that you are supposed to interact with them.")
+    G.write("You can sometimes do many things in one room. Don't leave unless you're sure you want to.")
+    G.write("Are you ready to start?")
+    os.system("PAUSE")
+    os.system('cls')
+    steve_a = G.player("Steve", appartment_map, 0, 1, steve_inv, steve_stats)
+    ap_map = False
+    map_move(appartment_map, steve_a)
+    steve_f = G.player("Steve", fortess_room, 2, 3, steve_inv, steve_stats)
+    map_move(fortess_room, steve_f)
+    steve_ar = G.player("Steve", arena_map, 0, 2, steve_inv, steve_stats)
+    map_move(arena_map, steve_ar)
+    while current_til != (0,0):
+        steve_hall = G.player("Steve", hallway_map, 0, 2, steve_inv, steve_stats)
+        map_move(hallway_map, steve_hall)
+
+        if current_til == (0,2):
+            steve_lib = G.player("Steve", library_room, 7, 5, steve_inv, steve_stats)
+            map_move(library_room, steve_lib)
+        if current_til == (0,4):
+            steve_ten = G.player("Steve", tenaxx_study, 2, 5, steve_inv, steve_stats)
+            map_move(tenaxx_study, steve_ten)
+        if current_til == (0,6):
+            steve_dre = G.player("Steve", dradall_study, 2, 5, steve_inv, steve_stats)
+            map_move(dradall_study, steve_dre)
+        if current_til == (3,2):
+            steve_dro = G.player("Steve", droxone_study, 2, 5, steve_inv, steve_stats)
+            map_move(droxone_study, steve_dro)
+        if current_til == (3,4):
+            steve_nat = G.player("Steve", nathik_study, 2, 5, steve_inv, steve_stats)
+            map_move(nathik_study, steve_nat)
+        if current_til == (3,6):
+            steve_treas = G.player("Steve", treasury, 3, 4, steve_inv, steve_stats)
+            map_move(treasury, steve_treas)
+    curiosity = True
+    box = True
+    steve_room = G.player("Steve", your_room, 2, 4, steve_inv, steve_stats)
+    map_move(your_room, steve_room)
+    steve_gh = G.player("Steve", great_hall, 0, 4, steve_inv, steve_stats)
+    map_move(great_hall, steve_gh)
+    steve_ship = G.player("Steve", ship, 5, 5, steve_inv, steve_stats)
+    map_move(ship, steve_ship)
+    steve_is = G.player("Steve", island, 1, 3, steve_inv, steve_stats)
+    map_move(island, steve_is)
+    steve_hull = G.player("Steve", ship_hull, 3, 1, steve_inv, steve_stats)
+    map_move(ship_hull, steve_hull)
+    os.system("PAUSE")
+    os.system('cls')
+    G.write("The End")
+
+    G.write("You final standing with Droxone(max:3):")
+    print(str(Droxone_s))
+    G.write("You final standing with Nathik(max:5):")
+    print(str(Nathik_s))
+    G.write("You final standing with Tenaxx(max:3):")
+    print(str(Tenaxx_s))
+    G.write("You final standing with Morena(max:5):")
+    print(str(Morena_s))
+    G.write("You final standing with Dredall(max:4):")
+    print(str(Dredall_s))
+
+
+    os.system("PAUSE")
