@@ -19,6 +19,8 @@ al_talked_dre = False
 al_talked_dro = False
 al_treas = False
 ####
+spair = 0
+kill = 0
 in_hall = 0
 have_wep = 0
 help = 0
@@ -1309,7 +1311,7 @@ class ship(G.array_map):
         G.write("3 Days Out From the Hunirst Chain")
         G.write("You've been sea sick for the past 2 weeks. You've also been sick with nerves for the past two weeks.")
 
-    def send_data(self, til, plyr=False):
+    def send_data(til, plyr=False):
         if til == (4,5):
             if plyr == True:
                 G.write("Would you like to leave?")
@@ -1322,19 +1324,64 @@ class ship(G.array_map):
         if til == (0,4) or til == (0,6) or til == (1,3) or til == (1,7) \
             or til == (3,1) or til == (3,9) or til == (4,1) or til == (4,9) \
             or til == (5,0) or til == (6,0) or til == (7,0) or til == (8,0) \
-            or til == (9,0) or til == (10,0) or til == (5,9) or til == (6,9) \
-            or til == (7,9) or til == (8,9) or til == (9,9) or til == (10,9) \
-            or til == (11,1) or til == (11,9) or til == (12,1) or til == (12,9) \
-            or til == (13,2) or til == (13,8) or til == (14,3) or til == (14,7) \
-            or til == (15,4) or til == (15,6) or til == (2,8) or til == (2,2):
+            or til == (9,0) or til == (10,0) or til == (5,10) or til == (6,10) \
+            or til == (7,10) or til == (8,10) or til == (9,10) or til == (10,10) \
+            or til == (11,0) or til == (11,10) or til == (12,0) or til == (12,10) \
+            or til == (13,0) or til == (13,10) or til == (14,0) or til == (14,10) \
+            or til == (15,0) or til == (15,10) or til == (2,8) or til == (2,2) \
+            or til == (16,1) or til == (16,9) or til == (17,1) or til == (17,9) \
+            or til == (18,2) or til == (18,8) or til == (19,3) or til == (19,7) \
+            or til == (20,4) or til == (20,6):
+            G.write("Don't jump of the ship. You can't jump off the ship.")
             if plyr == True:
                 G.write("Don't jump of the ship. You can't jump off the ship.")
             return False
 
+        if til == (10,5):
+            G.write("That's the main mast. You can't climb the main mast.")
+            if plyr is True:
+                G.write("That's the main mast. You can't climb the main mast.")
+            return False
+
+        if til == (7,8):
+            if plyr is True:
+                G.write("Droxone has been trying to make you feel better.")
+                head_alchemist.say("island")
+                if honesty > 0:
+                    G.write("You're an honest person. You tell the truth.")
+                    G.write("Steve: I still have no idea what I'm doing. I don't remember any of this.")
+                    head_alchemist.say("islandh")
+                    G.write("Droxone seems to be a little uncomfortable whenever he looks at you.")
+                else:
+                    G.write("You're not that honest, so you lie.")
+                    G.write("Steve: I think I remember some of this. It's all still a blur.")
+                    head_alchemist.say("islandl")
+                head_alchemist.say("island2")
+            return True
+
+        if til == (15,4):
+            if plyr is True:
+                G.write("Go away")
+                global TvsN
+                if TvsN is True:
+                    G.write("You hear shouting from ")
+        return True
 
 
-    def finished_map(self):
+
+    def finished_map():
         G.write("You go bellow deck.")
+        G.write("You wake up from your sea sickness induced coma. It's dark out and there are lanterns on deck.")
+        G.write("Coming up on the deck you can see a glow of the horizon.")
+        G.write("Steve: The sun must be rising.")
+        head_summoner.say("fire")
+        G.write("You almost jump into the sea. How did a Centaur sneak up on you?")
+        G.write("Steve: But aren't we still two days sailing from the Islands?")
+        head_summoner.say("fire2")
+        G.write("Steve: No one told me the islands where volcanic.")
+        head_summoner.say("fire3")
+        G.write("Steve: Oh... That's bad.")
+        G.write("Dredall doesn't answer and just walks away.")
 
 ship.layout = G.np.array([[G.Tiles.Water, G.Tiles.Water, G.Tiles.Water, G.Tiles.Water, G.Tiles.Water, G.Tiles.Building, G.Tiles.Water, G.Tiles.Water, G.Tiles.Water, G.Tiles.Water, G.Tiles.Water], \
                             [G.Tiles.Water, G.Tiles.Water, G.Tiles.Water, G.Tiles.Water, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Water, G.Tiles.Water, G.Tiles.Water, G.Tiles.Water], \
@@ -1343,7 +1390,7 @@ ship.layout = G.np.array([[G.Tiles.Water, G.Tiles.Water, G.Tiles.Water, G.Tiles.
                             [G.Tiles.Water, G.Tiles.Water, G.Tiles.Building, G.Tiles.Building, G.Tiles.Cave, G.Tiles.Cave, G.Tiles.Cave, G.Tiles.Building, G.Tiles.Building, G.Tiles.Water, G.Tiles.Water], \
                             [G.Tiles.Water, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Water], \
                             [G.Tiles.Water, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Water], \
-                            [G.Tiles.Water, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Water], \
+                            [G.Tiles.Water, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Ice, G.Tiles.Building, G.Tiles.Water], \
                             [G.Tiles.Water, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Water], \
                             [G.Tiles.Water, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Water], \
                             [G.Tiles.Water, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Pit, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Water], \
@@ -1351,12 +1398,230 @@ ship.layout = G.np.array([[G.Tiles.Water, G.Tiles.Water, G.Tiles.Water, G.Tiles.
                             [G.Tiles.Water, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Water], \
                             [G.Tiles.Water, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Water], \
                             [G.Tiles.Water, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Water], \
-                            [G.Tiles.Water, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Water], \
+                            [G.Tiles.Water, G.Tiles.Building, G.Tiles.Building, G.Tiles.Ice, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Water], \
                             [G.Tiles.Water, G.Tiles.Water, G.Tiles.Building, G.Tiles.Building, G.Tiles.Cave, G.Tiles.Cave, G.Tiles.Cave, G.Tiles.Building, G.Tiles.Building, G.Tiles.Water, G.Tiles.Water], \
                             [G.Tiles.Water, G.Tiles.Water, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Water, G.Tiles.Water], \
                             [G.Tiles.Water, G.Tiles.Water, G.Tiles.Water, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Water, G.Tiles.Water, G.Tiles.Water], \
                             [G.Tiles.Water, G.Tiles.Water, G.Tiles.Water, G.Tiles.Water, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Water, G.Tiles.Water, G.Tiles.Water, G.Tiles.Water], \
                             [G.Tiles.Water, G.Tiles.Water, G.Tiles.Water, G.Tiles.Water, G.Tiles.Water, G.Tiles.Building, G.Tiles.Water, G.Tiles.Water, G.Tiles.Water, G.Tiles.Water, G.Tiles.Water]])
+
+
+
+class island(G.array_map):
+    def __init__(self, name):
+        super().__init__(name)
+
+    def on_start(self):
+        G.write("Landing on the Shores of the Hunirst Chain.")
+        G.write("The entire island is covered in cooled molten rock. It looks like it's been paved over.")
+        G.write("You can hear the rowing of the dragon from here. Fire, lava, and ash can be seen shooting up into the sky.")
+        G.write("You're dragged along up the slope until you have a line of sight on the dragon.")
+        G.write("It's the size of an apartment building. Brown scales cover it from head to toe.")
+        G.write("The ground is covered in pools of molten rock.")
+
+    def send_data(self, til, plyr=False):
+        if til == (0,4) or til == (1,4) or til == (2,4) or til == (3,4) \
+                        or til == (4,4) or til == (5,4) or til == (6,4):
+            if plyr == True:
+                G.write("You can't pass the lava")
+            return False
+
+        if til == (2,1) or til == (4,1) or til == (2,2) or til == (3,3) or til == (4,3):
+            if plyr is True:
+                G.write("Before you can do anything Dredall starts talking.")
+                G.write("Dredall: This is where we must part ways. You survise is no longer required.")
+                G.write("He seems to be talking to you.")
+                G.write("Steve: Umm... What do you mean?")
+                G.write("Dredall: You were never meant to actually fight the dragon. We'll explain everything later. Morena.")
+                global end_map
+                end_map = end_map + 1
+        return True
+
+    def finished_map(self):
+        G.write("You look at Morena just in time to see her grin as she hits you very hard with her cain.")
+        G.write("You fall to the ground as everything goes black.")
+
+
+island = island('island')
+
+island.layout = G.np.array([[G.Tiles.Water, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Lava], \
+                            [G.Tiles.Water, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Lava], \
+                            [G.Tiles.Water, G.Tiles.Ice, G.Tiles.Ice, G.Tiles.Wall, G.Tiles.Lava], \
+                            [G.Tiles.Water, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Ice, G.Tiles.Lava], \
+                            [G.Tiles.Water, G.Tiles.Ice, G.Tiles.Wall, G.Tiles.Ice, G.Tiles.Lava], \
+                            [G.Tiles.Water, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Lava], \
+                            [G.Tiles.Water, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Lava]])
+
+
+class ship_hull(G.array_map):
+    def __init__(self, name):
+        super().__init__(name)
+
+    def on_start(self):
+        G.write("You come to in the hull of the ship. Everyone is standing around you.")
+        G.write("Steve: What's going on.")
+        G.write("Tenaxx: Good, you're awake. I shall explain what happened, and what's going to happen.")
+        G.write("Tenaxx: We don't actually need you. Killing the world dragon is very easy really.")
+        G.write("Tenaxx: However when we aren't doing this. We enjoy doing far more interesting things.")
+        G.write("Tenaxx: Droxone builds things, Morena and I experiment, as does Nathik. Dredall, well he goes home.")
+        G.write("Tenaxx: All the countries back us financially. We can all ask for almost anything and get it.")
+        G.write("Tenaxx: A few countries do so because they like just one of us.")
+        G.write("Tenaxx: As is turns out, Barnabas is quit popular. We don't need him, but if he's not here several countries don't care about this.")
+        G.write("Nathik: If they knew how easy it was they really wouldn't care.")
+        G.write("Tenaxx: That too.")
+        G.write("Steve: So you killed me because you wanted countries to keep giving you stuff?")
+        G.write("Dredall: We didn't kill you.")
+        G.write("Steve: Then what about the cat?")
+        G.write("Droxone: What cat? No one said anything about a cat. You were just a random spirit floating around.")
+        G.write("At this point you see a cat walk up to Morena. It rubs up against her.")
+        G.write("Steve: That cat! That cat was following me the whole day I died. It tried to lead me around.")
+        G.write("Everyone looks at Morena.")
+        G.write("Morena: I may have sent Fluffy out that day. I didn't tell him to kill someone though.")
+        G.write("One of Droxone's many gadets starts wirring and flashing. He looks at it for a moment.")
+        G.write("Droxone: My lie detector doesn't believe you and neither do I.")
+        G.write("Nathik: Nor I.")
+        G.write("Everyone is glaring at Morena.")
+        G.write("Morena: Fine. I get bored after centuries of life.")
+        G.write("Tenaxx: Well, we were going to kill you again, but if you died before your time that wouldn't be fair.")
+        G.write("Steve: So you're aren't going to kill me?")
+        G.write("Tenaxx: We shall vote on it!")
+        G.write("Steve: What?!")
+        G.write("Try and convince them not to kill you.")
+
+    def send_data(self, til, plyr=False):
+        if til == (1,1):
+            if plyr is True:
+                G.write("Nathik: Why should we spair you?")
+                G.write("What do you say?")
+                G.write("1: Because it's your fault that I died, and you should make ammends for that.")
+                G.write("2: Because it will really annoy Morena, and we can both make fun of her for it for years.")
+                choice = int(input(""))
+                if choice is 1:
+                    global Nathik_s
+                    Nathik_s = Nathik_s - 1
+                else:
+                    Nathik_s = Nathik_s + 1
+            return True
+
+        if til == (1,4):#Droxone
+            if plyr is True:
+                G.write("Droxone: Why should we spair you?")
+                G.write("What do you say?")
+                G.write("1: Because you people killed me for no reason!")
+                G.write("2: Because you're con artists and I died because of it.")
+                choice = int(input(""))
+                if choice is 1:
+                    global Droxone_s
+                    Droxone_s = Droxone_s + 1
+                else:
+                    Droxone_s = Droxone_s - 1
+
+        if til == (2,2):#Dredall
+            if plyr is True:
+                G.write("Dredall: Why should we spair you?")
+                G.write("What do you say?")
+                G.write("1: Because I was unjustly killed.")
+                G.write("2: Because I desirve a shot at life.")
+                choice = int(input(""))
+                if choice is 1:
+                    global Dredall_s
+                    Dredall_s = Dredall_s + 1
+                else:
+                    Dredall_s = Dredall_s - 1
+
+        if til == (2,4):#Morena
+            if plyr is True:
+                G.write("Morena: Why should we spair you?")
+                G.write("What do you say?")
+                G.write("1: Because getting bored doesn't justify killing people.")
+                G.write("2: Because I could still be useful to you as Barnabas.")
+                choice = int(input(""))
+                if choice is 1:
+                    global Morena_s
+                    Morena_s = Morena_s - 1
+                else:
+                    Morena_s = Morena_s + 1
+
+        if til == (3,3):#Tenaxx
+            if plyr is True:
+                G.write("If you talk to Tenaxx you can no longer talk to anyone else. Are you sure you would like to go onto the vote?")
+                move_on = int(input("1:yes, 2:no"))
+                if move_on is 1:
+                    G.write("Tenaxx: Why should we spair you?")
+                    G.write("What do you say?")
+                    G.write("1: Because using me for funding is evil.")
+                    G.write("2: You could get more money out of me alive then dead.")
+                    choice = int(input(""))
+                    if choice is 1:
+                        global Tenaxx_s
+                        Tenaxx_s = Tenaxx_s - 1
+                    else:
+                        Tenaxx_s = Tenaxx_s + 1
+                    global end_map
+                    end_map = end_map + 1
+                else:
+                    G.write("Not yet.")
+
+    def finished_map(self):
+        G.write("Tenaxx: Well, shall we vote?")
+        if Droxone_s > 1:
+            global spair
+            spair = spair + 1
+            G.write("Droxone: I vote to spair him.")
+        else:
+            global kill
+            kill = kill + 1
+            G.write("Droxone: I vote we kill him.")
+
+        if Nathik_s > 3:
+            spair = spair + 1
+            G.write("Nathik: I vote to spair him.")
+        else:
+            kill = kill + 1
+            G.write("Nathik: I vote we kill him.")
+
+        if Tenaxx_s > 2:
+            spair = spair + 1
+            G.write("Tenaxx: I vote we spair him.")
+        else:
+            kill = kill + 1
+            G.write("Tenaxx: I vote we kill him.")
+
+        if Morena_s > 1:
+            spair = spair + 1
+            G.write("Morena: I vote we spair him.")
+        else:
+            kill = kill + 1
+            G.write("Morena: I vote we kill him.")
+
+        if Dredall_s > 2:
+            spair = spair + 1
+            G.write("Dredall: I vote we spair him.")
+        else:
+            kill = kill + 1
+            G.write("Dredall: I vote we kill him.")
+
+        if kill > spair:
+            G.write("Tenaxx: Well it appears we shall kill him anyway!")
+            G.write("Steve: Wait wait wa...")
+            G.write("Tenaxx snaps his fingers and everything goes black.")
+        else:
+            G.write("Tenaxx: It appears we shall spair you, today.")
+            G.write("Steve: Thank you.")
+
+
+
+
+ship_hull = ship_hull('ship_hull')
+
+ship_hull.layout = G.np.array([[G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building], \
+                                [G.Tiles.Building, G.Tiles.Ice, G.Tiles.Building, G.Tiles.Building, G.Tiles.Ice, G.Tiles.Building], \
+                                [G.Tiles.Building, G.Tiles.Building, G.Tiles.Ice, G.Tiles.Building, G.Tiles.Ice, G.Tiles.Building], \
+                                [G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Ice, G.Tiles.Building, G.Tiles.Building], \
+                                [G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building], \
+                                [G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building, G.Tiles.Building]])
+
+
 
 
 #
@@ -1567,7 +1832,7 @@ def map_move(mapid, you):
 
 
 
-'''
+
 steve = G.player("Steve", G.loc_man, 0, 1, steve_inv, steve_stats)
 steve_a = G.player("Steve", appartment_map, 0, 1, steve_inv, steve_stats)
 ap_map = False
@@ -1601,513 +1866,22 @@ steve_room = G.player("Steve", your_room, 2, 4, steve_inv, steve_stats)
 map_move(your_room, steve_room)
 steve_gh = G.player("Steve", great_hall, 0, 4, steve_inv, steve_stats)
 map_move(great_hall, steve_gh)
-'''
 steve_ship = G.player("Steve", ship, 5, 5, steve_inv, steve_stats)
 map_move(ship, steve_ship)
-
-
-
-
-#
-# End of NPCs
-#
-
-#chamber = G.array_map("Chamber")
-#chamber.layout = G.np.array([[G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall, G.Tiles.Wall][G.Tiles.Wall, G.Tiles.Dirt, G.Tiles.Dirt, G.Tiles.Dirt,]])
-
-
-
-#
-# Actual Game #
-#
-
-"""
-G.write("7:10am")
-G.write("Monday, March 4th.")
-G.write("Your apartment.")
-os.system('cls')
-phone.say("hello")
-G.write("Your cat knocks your phone on the floor")
-G.write("Wait... You don't own a cat. You're not that sad!")
-G.write("Yet...")
-cat.say("meowl")
-os.system('cls')
-G.write("The cat jumps down onto the floor and goes into the other room. You hear the TV turn on.")
-G.write("Do you follow the cat?")
-morning = int(input("1: yes, 2: no"))
-if morning is 1:
-    os.system('cls')
-    G.write("You follow the cat into the other room. The news is on the TV.")
-    news_reader.say("news3")
-    G.write("A picture of your street shows up on the news.")
-    G.write("You might not want to go to work early.")
-    G.write("How did the cat turn on the TV?")
-    G.write("It's staring at you.")
-    cat.say("meow")
-    os.system('cls')
-    G.write("As you walk out of your door you see a lot of cops on the other side of the street.")
-    G.write("The knifeman you saw on TV is in the back of one of the patrol cars.")
-    os.system('cls')
-    G.write("You get to work without a problem")
-    steves_boss.say("greating")
-    G.write("*Gulp*")
-    G.write("You quickly get down to work.")
-    co_worker.say("greating")
-    G.write("Steve: I don't know.")
-    co_worker.say("fired")
-    G.write("Steve: I'm sure you could find someone. I won't be able to make rent if I'm fired.")
-    co_worker.say("weekend")
-    G.write("Steve: I don't know.")
-    os.system('cls')
-    G.write("You go to get coffee")
-    cat.say("meowq")
-    G.write("Steve: Why are you still here!?")
-    os.system('cls')
-    G.write("At the end of the day you go to the Boss's office")
-    steves_boss.say("fired")
-    G.write("You leave the room and start packing up.")
-    G.write("The cat is sitting on your desk.")
-    cat.say("purr")
-    os.system('cls')
-    G.write("You leave the office building with a medium box of stuff.")
-    G.write("You look back up at your old office building.")
-    G.write("The cat is sitting on a ledge, staring at you.")
-    pes_emily.say("move")
-    G.write("Steve: Sorry")
-    G.write("What is with that cat? We does it keep following you?")
-    cat.say("meowl")
-    G.write("While staring at the cat, you hear brakes scretching")
-    pes_emily.say("look_out")
-    G.write("You hear a crunch and everything goes black.")
-    curiosity = True
-else:
-    os.system('cls')
-    G.write("You ignore the cat and get ready to go to work.")
-    news_reader.say("news1")
-    news_reader.say("news2")
-    G.write("You hope you don't get laid off. This world is horrible.")
-    cat.say("meowl")
-    G.write("You should get to work early.")
-    os.system('cls')
-    G.write("You walk out onto the street.")
-    G.write("You hear sirens.")
-    G.write("That's not important. You take your usual route to work.")
-    G.write("If you cut through this ally it will be faster.")
-    G.write("You here someone walking behind you.")
-    os.system('cls')
-    knifeman.say("cops")
-    G.write("Before you can respond to the man he thrusts his hand toward your stomach.")
-    G.write("Did he punch you?")
-    G.write("You look down.")
-    G.write("There's a knife sticking out of your gut.")
-    G.write("The last thing you see is the cat.")
-    cat.say("purr")
-    os.system('cls')
-head_witch.say("first")
-head_necromancer.say("first")
-head_summoner.say('first')
-G.write("Steve: Whaaa?")
-G.write("Steve: Who are y...")
-G.write("You voice trails off as you look up at five old 'people'.")
-os.system('cls')
-G.write("A super old and croutched woman started crowing.")
-head_witch.say("insult_n")
-head_witch.say("insult_n2")
-head_necromancer.say("insult_w")
-G.write("The woman, Morena, slapped the talking corpse.")
-G.write("The two started squabbling even more.")
-os.system('cls')
-head_summoner.say("calm")
-G.write("The man who had just spoken was really tall.")
-G.write("You look down from his face to his body.")
-G.write("He has a horses body.")
-os.system('cls')
-head_wizard.say("hello")
-G.write("Steve: B-b-b-barn who?")
-head_wizard.say("confustion")
-head_wizard.say("blame")
-head_alchemist.say("sigh")
-head_wizard.say("hearinglose")
-head_alchemist.say("backtrack")
-G.write("Now the other two start squablling")
-os.system('cls')
-G.write("Who do you want to talk to?")
-one_of_five = int(input("1:Droxone, 2:Nathik, 3:Tenaxx, 4:Morena, 5:Dredall"))
-os.system('cls')
-if one_of_five is 1:
-    G.write("You get up off the table.")
-    G.write("You walk over to Droxone, who is by far the youngest of all the five.")
-    G.write("Steve: Hello?")
-    head_alchemist.say("get1")
-    G.write("Steve: I'll start with a simple question, where am I?")
-    G.write("The men, who can't be much older than you, looks very confused.")
-    head_alchemist.say("get2")
-    G.write("Steve: My name isn't Barnabas, it's Steve.")
-    G.write("Before he can say anything else someone calls everyone to attention.")
-    Droxone_s = Droxone_s + 1
-elif one_of_five is 2:
-    G.write("For some reason, you walk over to the courpse, Nathik.")
-    G.write("Maybe it's because you liked his joke.")
-    G.write("Steve: Hello, sir?")
-    head_necromancer.say("get1")
-    G.write("Steve: Umm... Where am I and who do you think I am?")
-    G.write("This brings an actual expression of shock to Nathik's face.")
-    head_necromancer.say("get2")
-    head_necromancer.say("get3")
-    head_necromancer.say("get4")
-    G.write("You keep you mouth shut. Nathik seems to be brooding now. You slowly walk away.")
-    Nathik_s = Nathik_s + 1
-elif one_of_five is 3:
-    G.write("The older guy seems like the most aprotchable of the five.")
-    G.write("The think his name is Tenaxx?")
-    G.write("Steve: Hello... sir.")
-    head_wizard.say("get1")
-    G.write("Steve: I'm sorry sir, but I don't think I am who you think I am.")
-    head_wizard.say("get2")
-    head_wizard.say("get3")
-    G.write("Tenaxx calls everyone over.")
-    Tenaxx_s = Tenaxx_s + 1
-elif one_of_five is 4:
-    G.write("You walk over to the old lady. You can just run if she starts screaming again.")
-    G.write("Steve: Hello Ma'am")
-    head_witch.say("get1")
-    G.write("Steve: I'm sorry, but I don't know who you think I am.")
-    G.write("The woman looks at you through squinted eyes.")
-    head_witch.say("get2")
-    head_witch.say("get3")
-    head_witch.say("get4")
-    G.write("Steve: A witch? Those are real?")
-    G.write("At this Morena laughs.")
-    head_witch.say("get5")
-    G.write("Before you can say anything the oldest men of the five calls everyone over.")
-    Morena_s = Morena_s + 1
-elif one_of_five is 5:
-    G.write("You get off the table and cautiously aproutch the horse person. What are they called again?")
-    G.write("Really what are they called?")
-    head_summoner.say("get1")
-    G.write("He's got to be at least nine feet tall.")
-    head_summoner.say("get2")
-    head_summoner.say("get3")
-    G.write("Steve: Uhhh.... What?")
-    head_summoner.say("get4")
-    G.write("Before you can say anything else, the old man calls everyone over.")
-    Dredall_s = Dredall_s + 1
-os.system('cls')
-head_wizard.say("expo1")
-head_wizard.say("expo2")
-head_wizard.say("expo3")
-G.write("Steve: There was a creepy cat, and I had cerial for breakfast.")
-os.system('cls')
-G.write("They all blink at you.")
-head_alchemist.say("shock")
-head_summoner.say("solution")
-G.write("Dredall grabs you and you find your self on his back. You all walk out a side door and down a coridor.")
-os.system('cls')
-G.write("After a moment you walk into a large room with a clear floor. The walls are lined with weapons.")
-head_summoner.say("weapon")
-for i in range(len(weapon_choice)):
-    stdout.write(str(i))
-    stdout.write(": ")
-    print(weapon_choice[i].name)
-wc = int(input("What will you choice?"))
+steve_is = G.player("Steve", island, 1, 3, steve_inv, steve_stats)
+map_move(island, steve_is)
+steve_hull = G.player("Steve", ship_hull, 3, 1, steve_inv, steve_stats)
+map_move(ship_hull, steve_hull)
 os.system('clr')
-steve_inv.add_item(weapon_choice[wc], 1)
-steve_inv.equip(weapon_choice[wc])
-G.write(weapon_choice[wc].dscrpt)
-if weapon_choice[wc].name is "War Hammer":
-    head_summoner.say("warhammer")
-    Dredall_s = Dredall_s + 1
-elif weapon_choice[wc].name is "Wand":
-    head_witch.say("wand")
-    help = int(input("1: yes, 2: no"))
-    if help is 1:
-        G.write("You don't know how this works. Some help sounds like a great idea.")
-        head_witch.say("(:")
-        Morena_s = Morena_s + 1
-    else:
-        G.write("You aren't sure you trust her just yet.")
-        head_witch.say("wait")
-else:
-    head_summoner.say("wrong_weapon")
-os.system('clr')
-head_summoner.say("train")
-G.write("Steve: Does it have to be a master? Why not a beginner?")
-G.write("Steve: Not that I don't know what I'm doing, which I totally do.")
-G.write("Steve: I may be rusty.")
-head_necromancer.say("rust")
-G.write("It occurs to you that these people might not know the same sayings as you.")
-os.system('clr')
-G.write("Dredall leads a grizled looking man in leather armor over to you.")
-head_summoner.say("spar")
-G.write("Steve: Right to the main fight? Don't we have, like, special items to gather or something?")
-head_wizard.say("already")
-G.write("Steve: Oh, yes... O-of course you have everything.")
-head_alchemist.say("yahn")
-G.write("Droxone just walks off and leaves everyone else.")
-if help is 1:
-    G.write("Before leaving, Morena walks over and says in a lowered voice,")
-    head_witch.say("come")
-G.write("The other four walk away in different dirrections with little more than a word.")
-os.system('clr')
-G.write("You hear the Arms Master cough.")
-arms_master_npc.say("first")
-G.write("Oh, umm... I don't now how.")
-arms_master_npc.say("confus")
-G.write("You have to pass for this guy. You think about your answer.")
-G.write("Steve: Something went amiss in this resurection. I seem to have lost all my memories.")
-os.system('clr')
-G.write("A thoughtful expression comes over Gregs face.")
-arms_master_npc.say("realize")
-arms_master_npc.say("sad")
-G.write("Steve: I don't even know where I am or what I'm supose to do.")
-arms_master_npc.say("expl1")
-arms_master_npc.say("expl2")
-arms_master_npc.say("expl3")
-os.system('clr')
-arms_master_npc.say("ask")
-G.write("Steve: No.")
-arms_master_npc.say("expl4")
-arms_master_npc.say("expl5")
-arms_master_npc.say("expl6")
-arms_master_npc.say("expl7")
-arms_master_npc.say("expl8")
-os.system('clr')
-arms_master_npc.say("ask")
-G.write("You could just lie? You could tell him it rings a bell.")
-G.write("Will you lie?")
-lie = int(input("1: yes, 2:no"))
-if lie is 1:
-    G.write("Steve: All of that sounds very familiar. I still can't remember specifics though.")
-    arms_master_npc.say("lieyes")
-    honesty = honesty - 1
-    arms_master_npc.say("lieyes2")
-else:
-    G.write("Steve: I still don't know what you're talking about.")
-    arms_master_npc.say("lieno")
-    arms_master_npc.say("lieno2")
-    honesty = honesty + 1
-arms_master_npc.say("gowhere")
-G.write("")
-G.write("1: Your Chambers")
-if help is 1:
-    G.write("2: The Library")
-else:
-    G.write("2: To talk to Morena")
-G.write("3: To talk to Tenaxx")
-G.write("4: To talk to Dredall")
-G.write("5: To talk to Droxone")
-G.write("6: To talk to Nathik")
-if curiosity is True:
-    G.write("7: Somewhere interesting")
-going = int(input("Where would you like to go?"))
-if going is 1:
-    G.write("The Arms Master takes you to you chambers. A small but nice stone room. There's a bed in the corner.")
-    G.write("As you lay down of the bed you think maybe you'll wake up from this dream soon.")
-elif going is 2:
-    G.write("Greg takes you to a section of the fortresses massive library. Morena is sitting in a well hidden side room.")
-    G.write("Plants are hanging from the cieling. There are tanks with salamanders and frogs. Anything that you would think a witch would have is somehow crammed into this tiny room.")
-    if help is 1:
-        head_witch.say("training")
-        G.write("Steve: What did you want to show me?")
-        head_witch.say("training2")
-        G.write("Out of somewhere Morena pulls out three items. A bottle full of blue liquid, a braclet covered in charms, and an engraved wand.")
-        head_witch.say("training3")
-        head_witch.say("training4")
-        G.write("Do you take the items?")
-        witch_items = int(input("1: yes, 2: no"))
-        if witch_items is 1:
-            G.write("Steve: Okay. I'll take them")
-            steve.collection.add_item(sheild_charm, 1)
-            steve.collection.add_item(giant_potion, 1)
-            steve.collection.add_item(morenas_wand, 1)
-            head_witch.say("takeitems")
-            Morena_s = Morena_s + 1
-        else:
-            G.write("Steve: I don't even know how to use these things. I can't take them.")
-            head_witch.say("regect")
-            Morena_s = Morena_s - 1
-        honesty = honesty + 1
-    else:
-        head_witch.say("curio")
-        G.write("Steve: I just want to know what's going on.")
-        head_witch.say("curio2")
-        head_witch.say("curio3")
-    head_witch.say("endtalk")
-    Morena_s = Morena_s + 1
-elif going is 3:
-    G.write("While taking you to Tenaxx, Greg tells you that he is so old because he's a wizard. This place is so weird you don't even question it.")
-    G.write("The Arms Master leaves you at the door to Tenaxx's study. You knock, and here a muffled invitation to enter.")
-    head_wizard.say("studyhello")
-    G.write("Steve: Sparing was fine. I was wondering what the plan was exsactly for dealing with this world dragon?")
-    head_wizard.say("plan1")
-    head_wizard.say("plan2")
-    head_wizard.say("plan3")
-    head_wizard.say("plan4")
-    G.write("Steve: Okay, how do you do that?")
-    head_wizard.say("roles")
-    G.write("Steve: Uhh... okay.")
-    G.write("You pretend to understand a word he's talking about.")
-    G.write("He doesn't seem to notice and is now rambling on using words you don't understand.")
-    G.write("You think he's talking about his powers, but you can't be sure.")
-    G.write("You look around. The study is full of interesting stuff that probably shouldn't be touched.")
-    if curiosity is True:
-        G.write("While the old wizard keeps rambling, you walk over to a shelf covered in odd things.")
-        G.write("You pick up an odd contraption that looks like a box made of filigree.")
-        G.write("Particles start swirling inside and glowing green. There is a little ingraved N on the metal.")
-        G.write("You pocket the box.")
-        steve.collection.add_item(nathiks_soul_box)
-        box = True
-    G.write("You leave the room. Tenaxx doesn't notice. You can hear him still talking as you close the door.")
-    Tenaxx_s = Tenaxx_s + 1
-elif going is 4:
-    G.write("Centaur! That's what he's called! Greg seems to take it for granted that Centaurs are real.")
-    G.write("The door to his study is really tall, but you suppose it has to be.")
-    G.write("Greg leaves you at the door.")
-    G.write("Before you can knock the door opens.")
-    head_summoner.say("great")
-    G.write("Steve: I was wondering when I can go home?")
-    head_summoner.say("home")
-    G.write("Steve: I mean earth. My home is earth, and I want to go back to it?")
-    head_summoner.say("earth")
-    G.write("Steve: But I've never held a sword in my life. I didn't even get into fights at school. I'm useless.")
-    head_summoner.say("useless")
-    head_summoner.say("truth")
-    G.write("Steve: Have you ever gotten the right person?!")
-    head_summoner.say("defen")
-    head_summoner.say("goaway")
-    G.write("With that you're shoed out the door. You hear it lock behind you.")
-    Dredall_s = Dredall_s + 1
-elif going is 5:
-    G.write("Droxone seemed like the nicest one there. He's also your age. Greg admits that he's a little wierd, but you don't care anymore.")
-    G.write("As soon as you stop in front of the door Greg indicated, you can hear ticking from inside.")
-    G.write("A voice that sounds like it's coming through a really old radio eminates from a point behind the door.")
-    G.write("Radio: Droxone will be with you in a moment. Please do not open the door for your own safety.")
-    G.write("There's more crashing and banging from inside. Was that a small explosion?")
-    head_alchemist.say("radio")
-    G.write("You open the door with a lot of caution. The room beyond is the biggest and most confusing mess you've ever seem.")
-    G.write("The smell of burning chemicals permiates the air. You can see burn marks on the wall behind a metal table covered in gizmozes of all shapes.")
-    G.write("Another table is covered in what looked like a chemistry set of steroids.")
-    G.write("Smoke covers the ceiling. Some of the machines are whirring, some glowing, most are skaing and making noise.")
-    G.write("Droxone is standing over at the third table covered in parts. It's exident what he was building blew up in him face.")
-    head_alchemist.say("blewup")
-    G.write("Steve: I don't mind. It's your lab.")
-    head_alchemist.say("memoryloss")
-    G.write("Steve: I think you have the wrong person. I'm not Barnabas. My name is Steve.")
-    G.write("At that he turns and looks at you.")
-    head_alchemist.say("thought")
-    G.write("Steve: What do you mean prep the body?")
-    head_alchemist.say("body")
-    head_alchemist.say("body2")
-    head_alchemist.say("body3")
-    head_alchemist.say("concern")
-    G.write("Everything is going black. Your ears are ringing.")
-    G.write("You pass out.")
-    Droxone_s = Droxone_s + 1
-elif going is 6:
-    G.write("For some reason you want to talk to Nathik. The Arms Master looks vissably nervious.")
-    G.write("He leads you to a place in the dungeon. You suppose that Nathik doesn't want to be around other people.")
-    G.write("You nerviously knock on the door.")
-    head_necromancer.say("what")
-    G.write("Steve: It's me, the person you all brought here.")
-    G.write("The door flies open and nearly hits you in the face.")
-    head_necromancer.say("mad")
-    G.write("Apologize, or Ask?")
-    AorA = int(input("1: Apologize, 2: Ask"))
-    if AorA is 1:
-        G.write("Steve: I'm sorry for what I did. Whatever it was I probably thought it was best at the time. It might have been, or might not have been.")
-        head_necromancer.say("apol")
-        Nathik_s = Nathik_s + 1
-    else:
-        G.write("Steve: What did I ever do too you?")
-        head_necromancer.say("ask")
-        head_necromancer.say("ask2")
-        G.write("Nathik slams the door in your face.")
-        Nathik_s = Nathik_s - 1
-elif going is 7:
-    G.write("After a moment of thought, Greg grins and leads you deep into the fortress.")
-    G.write("You go down to many staircases to count. Your legs are burning by the time you reach your destination.")
-    G.write("Steve: What is this place?")
-    arms_master_npc.say("treasure")
-    G.write("He takes out a key and opens a small steel door. The sound of metal on stone makes both of you wince.")
-    arms_master_npc.say("coolstuff")
-    G.write("Pedestals line the room. Each one has an artifact on it. Giant gems, flashy flasks, astoinding armor, bounties abound.")
-    G.write("Steve: Where did all this stuff come from?")
-    arms_master_npc.say("coolstuff2")
-    G.write("There are three things with your name on them, or Banabas's at least.")
-    G.write("A blue-silver armor, a red sword, and a ring that seems to be made of pure emerald.")
-    G.write("Greg insists that you take the items. Maybe they'll help you.")
-    steve.collection.add_item(shanams_ring, 1)
-    steve.collection.add_item(dragons_blood, 1)
-    steve.collection.add_item(mythirl_armor, 1)
-    arms_master_npc.say("goback")
-    G.write("He leads you back up to your chambers.")
-G.write("The next morning someone comes and leads you too a dining hall.")
-G.write("Tenaxx comes over and greets you.")
-head_wizard.say("leave")
-head_wizard.say("leave2")
-G.write("With that Tenaxx leaves.")
-G.write("Someone has packed all your stuff in a chest and left it by the door to the dining hall.")
-G.write("Everone else is somewhere in the room.")
-if box is True:
-    G.write("You find that the box you took from Tenaxx is in the chest.")
-    G.write("It has a N engraved on the side, it must be Nathik's. It looks like his style.")
-    G.write("You walk over to Nathik.")
-    G.write("Steve: Hey, Nathik. I found this and was wondering if it was yours.")
-    G.write("You offer the box.")
-    G.write("For a moment he stares at it.")
-    head_necromancer.say("box")
-    Dredall_s = Dredall_s - 1
-    Nathik_s = Nathik_s + 2
-    box_truth = int(input("1: Tell the truth? 2: Lie?"))
-    if box_truth is 1:
-        G.write("Steve: I was in Tenaxx's study and it was there. I was looking over it and thought it might be yours.")
-        head_necromancer.say("box")
-        head_necromancer.say("boxt")
-        G.write("Nathik takes the box, and with a slight nod, storms off to find Tenaxx.")
-        honesty = honesty + 1
-        TvsN = True
-    else:
-        G.write("Steve: It was in the chambers I was given. I don't know how it got in there.")
-        head_necromancer.say("boxl")
-        head_necromancer.say("boxl2")
-        G.write("He turns on his heels and leaves.")
-        honesty = honesty - 1
-G.write("You have breakfast, and then are quickly shoed out into a carage.")
-G.write("2 Weeks Later")
-G.write("The Northern Clyps Ocean")
-G.write("East of the Island Ashor")
-G.write("3 Days Out From the Hunirst Chain")
-G.write("You've been sea sick for the past 2 weeks. You've also been sick with nerves for the past two weeks.")
-G.write("Droxone has been trying to make you feel better.")
-head_alchemist.say("island")
-if honesty > 0:
-    G.write("You're an honest person. You tell the truth.")
-    G.write("Steve: I still have no idea what I'm doing. I don't remember any of this.")
-    head_alchemist.say("islandh")
-    G.write("Droxone seems to be a little uncomfortable whenever he looks at you.")
-else:
-    G.write("You're not that honest, so you lie.")
-    G.write("Steve: I think I remember some of this. It's all still a blur.")
-    head_alchemist.say("islandl")
-head_alchemist.say("island2")
-G.write("You wake up from your sea sickness induced coma. It's dark out and there are lanterns on deck.")
-G.write("Coming up on the deck you can see a glow of the horizon.")
-G.write("Steve: The sun must be rising.")
-head_summoner.say("fire")
-G.write("You almost jump into the sea. How did a Centaur sneak up on you?")
-G.write("Steve: But aren't we still two days sailing from the Islands?")
-head_summoner.say("fire2")
-G.write("Steve: No one told me the islands where volcanic.")
-head_summoner.say("fire3")
-G.write("Steve: Oh... That's bad.")
-G.write("Dredall doesn't answer and just walks away.")
-if TvsN is True:
-    G.write("You hear shouting from ")
-G.write("Landing on the Shores of the Hunirst Chain.")
-G.write("The entire island is covered in cooled molten rock. It looks like it's been paved over.")
-G.write("You can hear the rowing of the dragon from here. Fire, lava, and ash can be seen shooting up into the sky.")
-G.write("You're dragged along up the slope until you have a line of sight on the dragon.")
-G.write("It's the size of an apartment building. Brown scales cover it from head to toe.")
-G.write("The ground is covered in pools of molten rock.")
-"""
+G.write("The End")
 
+G.write("You final standing with Droxone(max:3):")
+print(str(Droxone_s))
+G.write("You final standing with Nathik(max:5):")
+print(str(Nathik_s))
+G.write("You final standing with Tenaxx(max:3):")
+print(str(Tenaxx_s))
+G.write("You final standing with Morena(max:5):")
+print(str(Morena_s))
+G.write("You final standing with Dredall(max:4):")
+print(str(Dredall_s))
