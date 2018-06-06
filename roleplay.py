@@ -1,4 +1,4 @@
-from sys import path
+from sys import pathfrom sys import path
 path.append('./Gilbo-API/')
 path.append('./Gilbo-API/deps/')
 import Gilbo as G
@@ -26,6 +26,7 @@ help = 0
 class_type = 0
 honesty = 0
 curiosity = False
+book = False
 box = False
 TvsN = False
 #Standing with characters
@@ -806,6 +807,9 @@ class your_room(G.array_map):
             if plyr == True:
                 global end_map
                 end_map = end_map + 1
+                global book
+                if book == True:
+                    
                 G.write("As you lay down of the bed you think maybe you'll wake up from this dream soon.")
                 os.system("PAUSE")
         return True
@@ -885,8 +889,11 @@ class library(G.array_map):
                 shelf = shelf + 1
                 if shelf > 2:
                     G.write("Why are you climbing the shelves?")
-                elif sehlf > 3:
-                    G.write("STOP CLIMBING THE SHELVES!")
+                    G.write("You find a book on top of the shelves. It looks interesting. You pick it up.")
+                    global book
+                    book = True
+                elif shelf > 3:
+                    G.write("STOP CLIMBING ON THE SHELVES!")
             return True
 
         if til == (5,7):
@@ -1998,3 +2005,4 @@ while True:
 
 
     os.system("PAUSE")
+    
