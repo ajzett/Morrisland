@@ -19,6 +19,8 @@ al_talked_dre = False
 al_talked_dro = False
 al_treas = False
 ####
+kill = 0
+spair = 0
 shelf = 0
 in_hall = 0
 have_wep = 0
@@ -221,7 +223,6 @@ class appartment(G.array_map):
 
     def on_start(self):
         G.write("7:10am")
-
         G.write("Monday, March 4th.")
         G.write("Your apartment.")
         phone.say("hello")
@@ -229,7 +230,6 @@ class appartment(G.array_map):
         G.write("Wait... You don't own a cat. You're not that sad!")
         G.write("Yet...")
         cat.say("meowl")
-
         G.write("The cat jumps down onto the floor and goes into the other room. You hear the TV turn on.")
 
     def send_data(self, til, plyr=False):
@@ -306,7 +306,6 @@ class appartment(G.array_map):
                 else:
                     os.system('cls')
                     G.write("You ignore the cat and get ready to go to work.")
-
                     news_reader.say("news1")
                     news_reader.say("news2")
                     G.write("You hope you don't get laid off. This world is horrible.")
@@ -341,6 +340,7 @@ class appartment(G.array_map):
                         G.write("Steve: Get away you stupid cat!")
                         G.write("Pedestrian: LOOK OUT!")
                         G.write("You hear a crunch.")
+
                     os.system("PAUSE")
 
         return True
@@ -393,7 +393,6 @@ class fortress_chamber(G.array_map):
         head_alchemist.say("sigh")
         head_wizard.say("hearinglose")
         head_alchemist.say("backtrack")
-
         G.write("Now the other two start squablling")
 
 
@@ -904,6 +903,7 @@ class library(G.array_map):
         if til == (2,1) or til == (2,2) or til == (2,3) or til == (2,4) or til == (4,1) or til == (4,2) or til == (4,3) or til == (4,4):
             if plyr is True:
                 G.write("That's a bookshelf")
+                global shelf
                 shelf = shelf + 1
                 if shelf > 2:
                     G.write("Why are you climbing the shelves?")
@@ -1673,6 +1673,7 @@ class ship_hull(G.array_map):
                     Droxone_s = Droxone_s + 1
                 else:
                     Droxone_s = Droxone_s - 1
+            return True
 
         if til == (2,2):#Dredall
             if plyr is True:
@@ -1686,6 +1687,7 @@ class ship_hull(G.array_map):
                     Dredall_s = Dredall_s + 1
                 else:
                     Dredall_s = Dredall_s - 1
+            return True
 
         if til == (2,4):#Morena
             if plyr is True:
@@ -1699,6 +1701,7 @@ class ship_hull(G.array_map):
                     Morena_s = Morena_s - 1
                 else:
                     Morena_s = Morena_s + 1
+            return True
 
         if til == (3,3):#Tenaxx
             if plyr is True:
@@ -1719,6 +1722,7 @@ class ship_hull(G.array_map):
                     end_map = end_map + 1
                 else:
                     G.write("Not yet.")
+        return True
 
     def finished_map(self):
         G.write("Tenaxx: Well, shall we vote?")
@@ -1999,7 +2003,6 @@ steve = G.player("Steve", G.loc_man, 0, 1, steve_inv, steve_stats)
 while True:
 
 
-
     G.write("To move, use 'wasd' keys to indicate dirrection, then hit 'Enter' to confirm.")
     G.write("Please don't tap on the keys unless indicated. This can interfear with the next choice.")
     G.write("Bright blue tiles indicate that you are supposed to interact with them.")
@@ -2014,6 +2017,7 @@ while True:
     map_move(fortess_room, steve_f)
     steve_ar = G.player("Steve", arena_map, 0, 2, steve_inv, steve_stats)
     map_move(arena_map, steve_ar)
+    curiosity = True
     while current_til != (0,0):
         steve_hall = G.player("Steve", hallway_map, 0, 2, steve_inv, steve_stats)
         map_move(hallway_map, steve_hall)
