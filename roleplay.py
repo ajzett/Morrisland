@@ -1,4 +1,4 @@
-from sys import pathfrom sys import path
+from sys import path
 path.append('./Gilbo-API/')
 path.append('./Gilbo-API/deps/')
 import Gilbo as G
@@ -270,6 +270,7 @@ class appartment(G.array_map):
                     choice = int(input(""))
                     if choice is 1:
                         G.write("Lary: Great! Beers on me if you get fired.")
+                        global honesty
                         honesty = honesty - 1
                     else:
                         G.write("Lary: That's probably for the best.")
@@ -809,8 +810,25 @@ class your_room(G.array_map):
                 end_map = end_map + 1
                 global book
                 if book == True:
-                    
-                G.write("As you lay down of the bed you think maybe you'll wake up from this dream soon.")
+                    G.write("You open the book you took from the library.")
+                    G.write("It's empty.")
+                    G.write("You put it onto the side table and roll over to go to sleep.")
+                    G.write("???: Who dares try to read me?!")
+                    G.write("You bolt up and look around.")
+                    G.write("???: Who dares try to learn my secrets?!")
+                    G.write("The book is talking. Of course the book is talking, why wouldn't a book talk.")
+                    G.write("Book: Who are you who dares take me from my place?")
+                    G.write("Steve: You were gathering dust on top of the library shelves.")
+                    G.write("Book: I was on display in the great temple and you stole me!")
+                    G.write("Steve: No I didn't. You were in a library.")
+                    G.write("Book: Where have you taken me?")
+                    G.write("Steve: Some fortress in a city. I think the arms master said it's called Gamyll")
+                    G.write("Book: What year is it?")
+                    G.write("Steve: I really don't know.")
+                    G.write("Steve: Now are you going to be quite and let me sleep or should I throught you out a window?")
+                    G.write("The book doesn't respond.")
+
+                G.write("As you lay down on the bed you think maybe you'll wake up from this dream soon.")
                 os.system("PAUSE")
         return True
 
@@ -1268,8 +1286,14 @@ class great_hall(G.array_map):
     def on_start(self):
         G.write("The next morning someone comes and leads you too a dining hall.")
         G.write("Tenaxx comes over and greets you.")
+        if book == True:
+            G.write("The book starts whispering into your ear.")
+            G.write("Book: How do you know Tenaxx? He won't talk to anyone less than a king.")
         head_wizard.say("leave")
         head_wizard.say("leave2")
+        if book == True:
+            G.write("Book: Are you Barnabas?")
+            G.write("Steve: No, but they think I am.")
         G.write("Everone is somewhere in the room.")
 
     def send_data(self, til, plyr=False):
@@ -1279,6 +1303,10 @@ class great_hall(G.array_map):
                 if box == True:
                     G.write("You find that the box you took from Tenaxx is in the chest.")
                     G.write("It has a N engraved on the side, it must be Nathik's. It looks like his style.")
+                    if book == True:
+                        G.write("Book: Why do you have that? That's a soul box.")
+                        G.write("Book: That's some heavy duty Necromancy.")
+                        G.write("Steve: I think Tenaxx stole it from Nathik.")
                 else:
                     G.write("Someone has packed all your stuff in a chest and left it by the door to the dining hall.")
                 os.system("PAUSE")
@@ -1328,17 +1356,26 @@ class great_hall(G.array_map):
         if til == (4,7):
             if plyr == True:
                 G.write("Droxone seems to be fixing something and ignoring the food. It looks like the item blew up.")
+                if book == True:
+                    G.write("Book: Why does he look so guilty?")
+                    G.write("Steve: He does?")
+                    G.write("Book: Yeah. I think something's up.")
+                    G.write("Steve: Why do you use modern slang? How do you even know it?")
             return True
 
         if til == (4,10):
             if plyr == True:
                 G.write("Dredall is in some arguement with Morena and just waves you off.")
+                if book == True:
+                    G.write("Book: There is no way that he doesn't know you're a fake.")
             return True
 
         if til == (6,8):
             if plyr == True:
                 G.write("Morena is in an argument with Dredall.")
                 G.write("A cat jumps up on the table. It really looks familiar.")
+                if book == True:
+                    G.write("Book: I know her. That's her familiar.")
             return True
 
         if til == (3,0) or til == (4,0):
@@ -1385,6 +1422,8 @@ class ship(G.array_map):
         G.write("East of the Island Ashor")
         G.write("3 Days Out From the Hunirst Chain")
         G.write("You've been sea sick for the past 2 weeks. You've also been sick with nerves for the past two weeks.")
+        if book == True:
+            G.write("The book won't stop talking.")
 
     def send_data(til, plyr=False):
         if til == (4,5):
@@ -1408,6 +1447,8 @@ class ship(G.array_map):
             or til == (18,2) or til == (18,8) or til == (19,3) or til == (19,7) \
             or til == (20,4) or til == (20,6):
             G.write("Don't jump of the ship. You can't jump off the ship.")
+            if book == True:
+                G.write("Book: That seems like a bad idea. I don't like water.")
             if plyr == True:
                 G.write("Don't jump of the ship. You can't jump off the ship.")
             return False
@@ -1456,6 +1497,10 @@ class ship(G.array_map):
                     G.write("Before Tenaxx can do anything Nathik flicks the box. I starts floating next to him. Green light poors from it untill someone is standing where the box was.")
                     G.write("The person looks like a hologram. You can see that the box is floating inside where her heart would be.")
                     G.write("Soul: Where am I? The last thing I remember was... Nathik? What are we doing here.")
+                    if book == True:
+                        G.write("Book: I thought she was dead!")
+                        G.write("Steve: Who is she, and how do you know her?")
+                        G.write("Book: I'm a book, I have my ways. She's Nathik's friend, probably.")
                     G.write("Tenaxx: That doesn't prove anything!")
                     G.write("Nathik: There will be wreckoning for this one day. Mark my words.")
                     G.write("With that Nathik storms off with the ghost girl walking behind him.")
@@ -1471,8 +1516,12 @@ class ship(G.array_map):
         G.write("You wake up from your sea sickness induced coma. It's dark out and there are lanterns on deck.")
         G.write("Coming up on the deck you can see a glow of the horizon.")
         G.write("Steve: The sun must be rising.")
-        head_summoner.say("fire")
-        G.write("You almost jump into the sea. How did a Centaur sneak up on you?")
+        if book == True:
+            G.write("Book: Dredall is coming over.")
+            head_summoner.say("fire")
+        else:
+            head_summoner.say("fire")
+            G.write("You almost jump into the sea. How did a Centaur sneak up on you?")
         G.write("Steve: But aren't we still two days sailing from the Islands?")
         head_summoner.say("fire2")
         G.write("Steve: No one told me the islands where volcanic.")
@@ -1526,6 +1575,8 @@ class island(G.array_map):
             if plyr is True:
                 G.write("Before you can do anything Dredall starts talking.")
                 G.write("Dredall: This is where we must part ways. You survise is no longer required.")
+                if book == True:
+                    G.write("Book: You're probably going to die.")
                 G.write("He seems to be talking to you.")
                 G.write("Steve: Umm... What do you mean?")
                 G.write("Dredall: You were never meant to actually fight the dragon. We'll explain everything later. Morena.")
@@ -1560,7 +1611,7 @@ class ship_hull(G.array_map):
         G.write("Tenaxx: Good, you're awake. I shall explain what happened, and what's going to happen.")
         G.write("Tenaxx: We don't actually need you. Killing the world dragon is very easy really.")
         G.write("Tenaxx: However when we aren't doing this. We enjoy doing far more interesting things.")
-        G.write("Tenaxx: Droxone builds things, Morena and I experiment, as does Nathik. Dredall, well he goes home.")
+        G.write("Tenaxx: Droxone builds things, Morena and I experiment, as does Nathik. Dredall, well he just goes home.")
         G.write("Tenaxx: All the countries back us financially. We can all ask for almost anything and get it.")
         G.write("Tenaxx: A few countries do so because they like just one of us.")
         G.write("Tenaxx: As is turns out, Barnabas is quit popular. We don't need him, but if he's not here several countries don't care about this.")
@@ -1568,10 +1619,16 @@ class ship_hull(G.array_map):
         G.write("Tenaxx: That too.")
         os.system("PAUSE")
         os.system('cls')
-        G.write("Steve: So you killed me because you wanted countries to keep giving you stuff?")
-        G.write("Dredall: We didn't kill you.")
-        G.write("Steve: Then what about the cat?")
-        G.write("Droxone: What cat? No one said anything about a cat. You were just a random spirit floating around.")
+        G.write("1: So you killed me because you wanted countries to keep giving you stuff?")
+        G.write("2: Why couldn't you just get the real Barnabas?")
+        choice = int(input(""))
+        if choice is 1:
+            G.write("Dredall: We didn't kill you.")
+            G.write("Steve: Then what about the cat?")
+            G.write("Droxone: What cat? No one said anything about a cat. You were just a random spirit floating around.")
+        else:
+            G.write("Morena: We don't know how. We can't identify spirits after they've been dead for a time.")
+            G.write("Steve: Why did you kill me then?")
         G.write("At this point you see a cat walk up to Morena. It rubs up against her.")
         G.write("Steve: That cat! That cat was following me the whole day I died. It tried to lead me around.")
         G.write("Everyone looks at Morena.")
@@ -1708,7 +1765,10 @@ class ship_hull(G.array_map):
             G.write("Tenaxx snaps his fingers and everything goes black.")
         else:
             G.write("Tenaxx: It appears we shall spair you, today.")
-            G.write("")
+            if book == True:
+                G.write("Book: Hey everyone!")
+                G.write("Dredall: What is that?")
+
 
 
 
@@ -1841,7 +1901,7 @@ arms_master_npc.add_dialogue("confus", "Greg: How is that? You're one of the bes
 arms_master_npc.add_dialogue("realize", "Greg: That would make sense. You aren't holding your weapon correctly. You're clumbsy, and don't know what to do with yourself. That's why you keep wringing your hands.")
 arms_master_npc.add_dialogue("sad", "Greg: That's to bad. I wanted to ask you about some things, but I guess you wouldn't know the answer.")
 arms_master_npc.add_dialogue("expl1", "Greg: I do believe todays sparing session should turn into a history lession. Maybe I can jog your memory.")
-arms_master_npc.add_dialogue("expl2", "Greg: Where you are is easy enough. You are in the resurrection fortress in ______, which is on the continent of _______, in The Ancient Lands.")
+arms_master_npc.add_dialogue("expl2", "Greg: Where you are is easy enough. You are in the resurrection fortress in Gamyll, which is on the continent of Techall, in The Ancient Lands.")
 arms_master_npc.add_dialogue("expl3", "Greg: Most people just call it Alnues.")
 arms_master_npc.add_dialogue("ask", "Greg: Is any of this jogging your memory?")
 arms_master_npc.add_dialogue("expl4", "Greg: We have ages that are 300 years long. This is the seventh age. Barnabas was born in the first, as was Tenaxx the Stormmaster.")
@@ -2005,4 +2065,3 @@ while True:
 
 
     os.system("PAUSE")
-    
