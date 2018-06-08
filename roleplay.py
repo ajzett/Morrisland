@@ -240,8 +240,8 @@ class appartment(G.array_map):
                 global end_map
                 end_map = end_map + 1
                 G.write("Do you follow the cat?")
-                morning = int(input("1: yes, 2: no"))
-                if morning is 1:
+                morning = input("1: yes, 2: no")
+                if morning is '1':
                     os.system('cls')
                     G.write("You follow the cat into the other room. The news is on the TV.")
                     news_reader.say("news3")
@@ -267,8 +267,8 @@ class appartment(G.array_map):
                     co_worker.say("weekend")
                     G.write("1: Of course we're on! Why would I cancel?")
                     G.write("2: If I get laid off I'll be job hunting.")
-                    choice = int(input(""))
-                    if choice is 1:
+                    choice = input("")
+                    if choice is '1':
                         G.write("Lary: Great! Beers on me if you get fired.")
                         global honesty
                         honesty = honesty - 1
@@ -317,9 +317,9 @@ class appartment(G.array_map):
                     G.write("You hear sirens.")
                     G.write("That's not important. You take your usual route to work.")
                     G.write("But if you cut through this ally it will be faster.")
-                    choice = int(input("1:Usual route, 2:Ally"))
+                    choice = input("1:Usual route, 2:Ally")
                     os.system('cls')
-                    if choice is 2:
+                    if choice is '2':
                         G.write("You here someone walking behind you.")
                         knifeman.say("cops")
                         G.write("Before you can respond to the man he thrusts his hand toward your stomach.")
@@ -413,8 +413,8 @@ class fortress_chamber(G.array_map):
         if til == (1,1):
             if plyr is True:
                 G.write("Would you like to talk to Droxone?")
-                talk = int(input("1:yes, 2:no"))
-                if talk is 1 and done != True:
+                talk = input("1:yes, 2:no")
+                if talk is '1' and done != True:
                     done = True
                     G.write("You get up off the table.")
                     G.write("You walk over to Droxone, who is by far the youngest of all the five.")
@@ -437,8 +437,8 @@ class fortress_chamber(G.array_map):
         if til == (3,1):
             if plyr is True:
                 G.write("Would you like to talk to Tenaxx?")
-                talk = int(input("1:yes, 2:no"))
-                if talk is 1 and done != True:
+                talk = input("1:yes, 2:no")
+                if talk is '1' and done != True:
                     done = True
                     G.write("The older guy seems like the most aprotchable of the five.")
 
@@ -461,8 +461,8 @@ class fortress_chamber(G.array_map):
         if til == (2,2):
             if plyr is True:
                 G.write("Would you like to talk to Dredall?")
-                talk = int(input("1:yes, 2:no"))
-                if talk is 1 and done != True:
+                talk = input("1:yes, 2:no")
+                if talk is '1' and done != True:
                     done = True
                     G.write("You get off the table and cautiously aproutch the horse person. What are they called again?")
                     G.write("Really what are they called?")
@@ -484,8 +484,8 @@ class fortress_chamber(G.array_map):
         if til == (3,3):
             if plyr is True:
                 G.write("Would you like to talk to Morena?")
-                talk = int(input("1:yes, 2:no"))
-                if talk is 1 and done != True:
+                talk = input("1:yes, 2:no")
+                if talk is '1' and done != True:
                     done = True
                     G.write("You walk over to the old lady. You can just run if she starts screaming again.")
                     G.write("Steve: Hello Ma'am")
@@ -510,8 +510,8 @@ class fortress_chamber(G.array_map):
         if til == (5,4):
             if plyr is True:
                 G.write("Would you like to talk to Nathik?")
-                talk = int(input("1:yes, 2:no"))
-                if talk is 1 and done != True:
+                talk = input("1:yes, 2:no")
+                if talk is '1' and done != True:
                     done = True
                     G.write("For some reason, you walk over to the courpse, Nathik.")
                     G.write("Maybe it's because you liked his joke.")
@@ -611,8 +611,8 @@ class arena(G.array_map):
                     head_witch.say("wand")
 
                     global help
-                    help = int(input("1: yes, 2: no"))
-                    if help is 1:
+                    help = input("1: yes, 2: no")
+                    if help is '1':
                         G.write("You don't know how this works. Some help sounds like a great idea.")
                         head_witch.say("(:")
                         global Morena_s
@@ -677,8 +677,8 @@ class arena(G.array_map):
     def finished_map(self):
         G.write("Will you lie?")
 
-        lie = int(input("1: yes, 2:no"))
-        if lie is 1:
+        lie = input("1: yes, 2:no")
+        if lie is '1':
             G.write("Steve: All of that sounds very familiar. I still can't remember specifics though.")
             arms_master_npc.say("lieyes")
             global honesty
@@ -718,8 +718,8 @@ class hallway(G.array_map):
             if plyr is True:
                 G.write("Would you like to go to your room?")
                 G.write("Note: You will be taken to the next part of the story if you go to your room.")
-                go = int(input("1:yes, 2:no"))
-                if go is 1:
+                go = input("1:yes, 2:no")
+                if go is '1':
                     global end_map
                     end_map = end_map + 1
                 else:
@@ -729,8 +729,8 @@ class hallway(G.array_map):
         if til == (0,2):
             if plyr is True:
                 G.write("Would you like to go to The library?")
-                go = int(input("1:yes, 2:no"))
-                if go is 1:
+                go = input("1:yes, 2:no")
+                if go is '1':
                     end_map = end_map + 1
                 else:
                     G.write("Maybe later.")
@@ -739,8 +739,8 @@ class hallway(G.array_map):
         if til == (0,4):
             if plyr is True:
                 G.write("Would you like to go talk to Tenaxx?")
-                go = int(input("1:yes, 2:no"))
-                if go is 1:
+                go = input("1:yes, 2:no")
+                if go is '1':
                     end_map = end_map + 1
                 else:
                     G.write("Maybe later.")
@@ -749,8 +749,8 @@ class hallway(G.array_map):
         if til == (0,6):
             if plyr is True:
                 G.write("Would you like to talk to Dredall?")
-                go = int(input("1:yes, 2:no"))
-                if go is 1:
+                go = input("1:yes, 2:no")
+                if go is '1':
                     end_map = end_map + 1
                 else:
                     G.write("Maybe later.")
@@ -759,8 +759,8 @@ class hallway(G.array_map):
         if til == (3,2):
             if plyr is True:
                 G.write("Would you like to talk to Droxone?")
-                go = int(input("1:yes, 2:no"))
-                if go is 1:
+                go = input("1:yes, 2:no")
+                if go is '1':
                     end_map = end_map + 1
                 else:
                     G.write("Maybe later.")
@@ -769,8 +769,8 @@ class hallway(G.array_map):
         if til == (3,4):
             if plyr is True:
                 G.write("Would you like to talk to Nathik?")
-                go = int(input("1:yes, 2:no"))
-                if go is 1:
+                go = input("1:yes, 2:no")
+                if go is '1':
                     end_map = end_map + 1
                 else:
                     G.write("Maybe later.")
@@ -855,7 +855,7 @@ class library(G.array_map):
             if plyr is True:
                 global al_talked_mor
                 if al_talked_mor == False:
-                    if help is 1:
+                    if help is '1':
                         head_witch.say("training")
                         G.write("Steve: What did you want to show me?")
                         head_witch.say("training2")
@@ -864,8 +864,8 @@ class library(G.array_map):
                         head_witch.say("training4")
                         G.write("Do you take the items?")
 
-                        witch_items = int(input("1: yes, 2: no"))
-                        if witch_items is 1:
+                        witch_items = input("1: yes, 2: no")
+                        if witch_items is '1':
                             G.write("Steve: Okay. I'll take them")
                             #steve.collection.add_item(sheild_charm, 1)
                             #steve.collection.add_item(giant_potion, 1)
@@ -917,8 +917,8 @@ class library(G.array_map):
         if til == (5,7):
             if plyr is True:
                 G.write("Would you like to leave?")
-                leave = int(input("1:yes, 2:no"))
-                if leave is 1:
+                leave = input("1:yes, 2:no")
+                if leave is '1':
                     global end_map
                     end_map = end_map + 1
                 else:
@@ -1000,8 +1000,8 @@ class tenaxx_study(G.array_map):
         if til == (5,2):
             if plyr is True:
                 G.write("Would yo like to leave?")
-                leave = int(input("1:yes, 2:no"))
-                if leave is 1:
+                leave = input("1:yes, 2:no")
+                if leave is '1':
                     global end_map
                     end_map = end_map + 1
                 else:
@@ -1056,8 +1056,8 @@ class dradall_study(G.array_map):
         if til == (5,2):
             if plyr is True:
                 G.write("Would you like to leave?")
-                leave = int(input("1:yes, 2:no"))
-                if leave is 1:
+                leave = input("1:yes, 2:no")
+                if leave is '1':
                     global end_map
                     end_map = end_map + 1
                 else:
@@ -1166,8 +1166,8 @@ class nathik_study(G.array_map):
                     head_necromancer.say("mad")
                     G.write("Apologize, or Ask?")
 
-                    AorA = int(input("1: Apologize, 2: Ask"))
-                    if AorA is 1:
+                    AorA = input("1: Apologize, 2: Ask")
+                    if AorA is '1':
                         G.write("Steve: I'm sorry for what I did. Whatever it was I probably thought it was best at the time. It might have been, or might not have been.")
                         head_necromancer.say("apol")
                         global Nathik_s
@@ -1186,8 +1186,8 @@ class nathik_study(G.array_map):
         if til == (5,2):
             if plyr is True:
                 G.write("Would you like to leave?")
-                leave = int(input("1:yes, 2:no"))
-                if leave is 1:
+                leave = input("1:yes, 2:no")
+                if leave is '1':
                     global end_map
                     end_map = end_map + 1
                 else:
@@ -1259,8 +1259,8 @@ class treasury(G.array_map):
         if til == (4,4):
             if plyr is True:
                 G.write("Would you like to leave?")
-                leave = int(input("1:yes, 2:no"))
-                if leave is 1:
+                leave = input("1:yes, 2:no")
+                if leave is '1':
                     global end_map
                     end_map = end_map + 1
                 else:
@@ -1325,8 +1325,8 @@ class great_hall(G.array_map):
                     Dredall_s = Dredall_s - 1
                     global Nathik_s
                     Nathik_s = Nathik_s + 2
-                    box_truth = int(input("1: Tell the truth? 2: Lie?"))
-                    if box_truth is 1:
+                    box_truth = input("1: Tell the truth? 2: Lie?")
+                    if box_truth is '1':
                         G.write("Steve: I was in Tenaxx's study and it was there. I was looking over it and thought it might be yours.")
                         head_necromancer.say("box")
                         head_necromancer.say("boxt")
@@ -1381,8 +1381,8 @@ class great_hall(G.array_map):
         if til == (3,0) or til == (4,0):
             if plyr == True:
                 G.write("Would you like to leave?")
-                leave = int(input("1:yes, 2:no"))
-                if leave is 1:
+                leave = input("1:yes, 2:no")
+                if leave is '1':
                     global end_map
                     end_map = end_map + 1
                 else:
@@ -1429,8 +1429,8 @@ class ship(G.array_map):
         if til == (4,5):
             if plyr == True:
                 G.write("Would you like to leave?")
-                leave = int(input("1:yes, 2:no"))
-                if leave is 1:
+                leave = input("1:yes, 2:no")
+                if leave is '1':
                     global end_map
                     end_map = end_map + 1
             return True
@@ -1621,8 +1621,8 @@ class ship_hull(G.array_map):
         os.system('cls')
         G.write("1: So you killed me because you wanted countries to keep giving you stuff?")
         G.write("2: Why couldn't you just get the real Barnabas?")
-        choice = int(input(""))
-        if choice is 1:
+        choice = input("")
+        if choice is '1':
             G.write("Dredall: We didn't kill you.")
             G.write("Steve: Then what about the cat?")
             G.write("Droxone: What cat? No one said anything about a cat. You were just a random spirit floating around.")
@@ -1653,8 +1653,8 @@ class ship_hull(G.array_map):
                 G.write("What do you say?")
                 G.write("1: Because it's your fault that I died, and you should make ammends for that.")
                 G.write("2: Because it will really annoy Morena, and we can both make fun of her for it for years.")
-                choice = int(input(""))
-                if choice is 1:
+                choice = input("")
+                if choice is '1':
                     global Nathik_s
                     Nathik_s = Nathik_s - 1
                 else:
@@ -1667,8 +1667,8 @@ class ship_hull(G.array_map):
                 G.write("What do you say?")
                 G.write("1: Because you people killed me for no reason!")
                 G.write("2: Because you're con artists and I died because of it.")
-                choice = int(input(""))
-                if choice is 1:
+                choice = input("")
+                if choice is '1':
                     global Droxone_s
                     Droxone_s = Droxone_s + 1
                 else:
@@ -1681,8 +1681,8 @@ class ship_hull(G.array_map):
                 G.write("What do you say?")
                 G.write("1: Because I was unjustly killed.")
                 G.write("2: Because I desirve a shot at life.")
-                choice = int(input(""))
-                if choice is 1:
+                choice = input("")
+                if choice is '1':
                     global Dredall_s
                     Dredall_s = Dredall_s + 1
                 else:
@@ -1695,8 +1695,8 @@ class ship_hull(G.array_map):
                 G.write("What do you say?")
                 G.write("1: Because getting bored doesn't justify killing people.")
                 G.write("2: Because I could still be useful to you as Barnabas.")
-                choice = int(input(""))
-                if choice is 1:
+                choice = input("")
+                if choice is '1':
                     global Morena_s
                     Morena_s = Morena_s - 1
                 else:
@@ -1706,8 +1706,8 @@ class ship_hull(G.array_map):
         if til == (3,3):#Tenaxx
             if plyr is True:
                 G.write("If you talk to Tenaxx you can no longer talk to anyone else. Are you sure you would like to go onto the vote?")
-                move_on = int(input("1:yes, 2:no"))
-                if move_on is 1:
+                move_on = input("1:yes, 2:no")
+                if move_on is '1':
                     G.write("Tenaxx: Why should we spair you?")
                     G.write("What do you say?")
                     G.write("1: Because using me for funding is evil.")
@@ -2000,72 +2000,69 @@ def map_move(mapid, you):
     os.system('cls')
 
 steve = G.player("Steve", G.loc_man, 0, 1, steve_inv, steve_stats)
-while True:
+G.write("To move, use 'wasd' keys to indicate dirrection, then hit 'Enter' to confirm.")
+G.write("Please don't tap on the keys unless indicated. This can interfear with the next choice.")
+G.write("Bright blue tiles indicate that you are supposed to interact with them.")
+G.write("You can sometimes do many things in one room. Don't leave unless you're sure you want to.")
+G.write("Are you ready to start?")
+os.system("PAUSE")
+os.system('cls')
+steve_a = G.player("Steve", appartment_map, 0, 1, steve_inv, steve_stats)
+ap_map = False
+map_move(appartment_map, steve_a)
+steve_f = G.player("Steve", fortess_room, 2, 3, steve_inv, steve_stats)
+map_move(fortess_room, steve_f)
+steve_ar = G.player("Steve", arena_map, 0, 2, steve_inv, steve_stats)
+map_move(arena_map, steve_ar)
+curiosity = True
+while current_til != (0,0):
+    steve_hall = G.player("Steve", hallway_map, 0, 2, steve_inv, steve_stats)
+    map_move(hallway_map, steve_hall)
+
+    if current_til == (0,2):
+        steve_lib = G.player("Steve", library_room, 7, 5, steve_inv, steve_stats)
+        map_move(library_room, steve_lib)
+    if current_til == (0,4):
+        steve_ten = G.player("Steve", tenaxx_study, 2, 5, steve_inv, steve_stats)
+        map_move(tenaxx_study, steve_ten)
+    if current_til == (0,6):
+        steve_dre = G.player("Steve", dradall_study, 2, 5, steve_inv, steve_stats)
+        map_move(dradall_study, steve_dre)
+    if current_til == (3,2):
+        steve_dro = G.player("Steve", droxone_study, 2, 5, steve_inv, steve_stats)
+        map_move(droxone_study, steve_dro)
+    if current_til == (3,4):
+        steve_nat = G.player("Steve", nathik_study, 2, 5, steve_inv, steve_stats)
+        map_move(nathik_study, steve_nat)
+    if current_til == (3,6):
+        steve_treas = G.player("Steve", treasury, 3, 4, steve_inv, steve_stats)
+        map_move(treasury, steve_treas)
+curiosity = True
+box = True
+steve_room = G.player("Steve", your_room, 2, 4, steve_inv, steve_stats)
+map_move(your_room, steve_room)
+steve_gh = G.player("Steve", great_hall, 0, 4, steve_inv, steve_stats)
+map_move(great_hall, steve_gh)
+steve_ship = G.player("Steve", ship, 5, 5, steve_inv, steve_stats)
+map_move(ship, steve_ship)
+steve_is = G.player("Steve", island, 1, 3, steve_inv, steve_stats)
+map_move(island, steve_is)
+steve_hull = G.player("Steve", ship_hull, 3, 1, steve_inv, steve_stats)
+map_move(ship_hull, steve_hull)
+os.system("PAUSE")
+os.system('cls')
+G.write("The End")
+
+G.write("You final standing with Droxone(max:3):")
+print(str(Droxone_s))
+G.write("You final standing with Nathik(max:5):")
+print(str(Nathik_s))
+G.write("You final standing with Tenaxx(max:3):")
+print(str(Tenaxx_s))
+G.write("You final standing with Morena(max:5):")
+print(str(Morena_s))
+G.write("You final standing with Dredall(max:4):")
+print(str(Dredall_s))
 
 
-    G.write("To move, use 'wasd' keys to indicate dirrection, then hit 'Enter' to confirm.")
-    G.write("Please don't tap on the keys unless indicated. This can interfear with the next choice.")
-    G.write("Bright blue tiles indicate that you are supposed to interact with them.")
-    G.write("You can sometimes do many things in one room. Don't leave unless you're sure you want to.")
-    G.write("Are you ready to start?")
-    os.system("PAUSE")
-    os.system('cls')
-    steve_a = G.player("Steve", appartment_map, 0, 1, steve_inv, steve_stats)
-    ap_map = False
-    map_move(appartment_map, steve_a)
-    steve_f = G.player("Steve", fortess_room, 2, 3, steve_inv, steve_stats)
-    map_move(fortess_room, steve_f)
-    steve_ar = G.player("Steve", arena_map, 0, 2, steve_inv, steve_stats)
-    map_move(arena_map, steve_ar)
-    curiosity = True
-    while current_til != (0,0):
-        steve_hall = G.player("Steve", hallway_map, 0, 2, steve_inv, steve_stats)
-        map_move(hallway_map, steve_hall)
-
-        if current_til == (0,2):
-            steve_lib = G.player("Steve", library_room, 7, 5, steve_inv, steve_stats)
-            map_move(library_room, steve_lib)
-        if current_til == (0,4):
-            steve_ten = G.player("Steve", tenaxx_study, 2, 5, steve_inv, steve_stats)
-            map_move(tenaxx_study, steve_ten)
-        if current_til == (0,6):
-            steve_dre = G.player("Steve", dradall_study, 2, 5, steve_inv, steve_stats)
-            map_move(dradall_study, steve_dre)
-        if current_til == (3,2):
-            steve_dro = G.player("Steve", droxone_study, 2, 5, steve_inv, steve_stats)
-            map_move(droxone_study, steve_dro)
-        if current_til == (3,4):
-            steve_nat = G.player("Steve", nathik_study, 2, 5, steve_inv, steve_stats)
-            map_move(nathik_study, steve_nat)
-        if current_til == (3,6):
-            steve_treas = G.player("Steve", treasury, 3, 4, steve_inv, steve_stats)
-            map_move(treasury, steve_treas)
-    curiosity = True
-    box = True
-    steve_room = G.player("Steve", your_room, 2, 4, steve_inv, steve_stats)
-    map_move(your_room, steve_room)
-    steve_gh = G.player("Steve", great_hall, 0, 4, steve_inv, steve_stats)
-    map_move(great_hall, steve_gh)
-    steve_ship = G.player("Steve", ship, 5, 5, steve_inv, steve_stats)
-    map_move(ship, steve_ship)
-    steve_is = G.player("Steve", island, 1, 3, steve_inv, steve_stats)
-    map_move(island, steve_is)
-    steve_hull = G.player("Steve", ship_hull, 3, 1, steve_inv, steve_stats)
-    map_move(ship_hull, steve_hull)
-    os.system("PAUSE")
-    os.system('cls')
-    G.write("The End")
-
-    G.write("You final standing with Droxone(max:3):")
-    print(str(Droxone_s))
-    G.write("You final standing with Nathik(max:5):")
-    print(str(Nathik_s))
-    G.write("You final standing with Tenaxx(max:3):")
-    print(str(Tenaxx_s))
-    G.write("You final standing with Morena(max:5):")
-    print(str(Morena_s))
-    G.write("You final standing with Dredall(max:4):")
-    print(str(Dredall_s))
-
-
-    os.system("PAUSE")
+os.system("PAUSE")
